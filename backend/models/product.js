@@ -5,6 +5,7 @@ const productSchema = new mongoose.Schema({
         required: [true, "Please provide a Product Name"],
         trim: true
     },
+    
     description: {
         type: String,
         required: [true, "Please provide Product Description"]

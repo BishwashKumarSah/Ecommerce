@@ -10,10 +10,7 @@ app.use(bodyParser.urlencoded({ extended: false }))
 const productRoute = require('./routes/product');
 
 
-
 app.use('/api/v1', productRoute)
-
-
 
 app.use(handleError)
 

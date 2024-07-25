@@ -1,0 +1,31 @@
+
+let product = {
+    name: "apple",
+    price: 20,
+    arr: () => {
+        console.log("this arrow outer", this);
+    },
+    prodFun: function () {
+        console.log(30 - this.price)
+        function innner() {
+            console.log("this inner", this);
+        }
+        innner()
+        const inner1 = () => {
+            console.log("this arrow", this);
+        }
+        inner1()
+    }
+}
+product.arr()
+product.prodFun()
+
+here the this in arrow function always points to its parent's parent. 
+ie in prodFun: function () {} we have an const inner1 = () => {} arrow function that means prodFun: function () parent is product. so it will always return its parent's parent
+otherwise arr: () => {
+        console.log("this arrow outer", this);
+    }, here it will simply point it to the window object of the browser.
+
+same is for normal function. it always point it to the window object but when it is on defined on the property of the object it will return the parent object ie Product.
+
+{to make it more clear proacademy yt have explained in the best way : url :https://www.youtube.com/watch?v=6b57_c6LECM&t=8s}

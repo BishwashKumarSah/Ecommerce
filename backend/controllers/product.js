@@ -18,7 +18,9 @@ const createProduct = asyncHandler(async (req, res, next) => {
 // Get All Products
 const getAllProducts = asyncHandler(async (req, res, next) => {
 
-    // const products = await Product.find({})
+    // const produc = await Product.find({})
+    // console.log(produc);
+
     const resultPerPage = 5
 
     queryS = new ProductClass(Product.find(), req.query).search().filter().pagination(resultPerPage)

@@ -7,6 +7,8 @@ const ProductClass = require('../utils/productClass')
 
 const createProduct = asyncHandler(async (req, res, next) => {
 
+    req.body.createdBy = req.user._id;
+
     const product = await Product.create(req.body);
     return res.status(201).json({
         success: true,

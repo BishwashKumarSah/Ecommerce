@@ -12,10 +12,25 @@ const isAuthenticatedUsed = asyncHandler(async (req, res, next) => {
 
     const decodedData = jwt.verify(token, process.env.JWT_SECRET);
 
-    req.user = User.findById(decodedData.id);
+    req.user = await User.findById(decodedData.id);
 
     next()
 
 })
 
-module.exports = { isAuthenticatedUsed }
+const AuthorizedRoles = (...Roles) => {
+    return (req, res, next) => {
+
+        // console.log(Roles); -> here func("admin","user") -> (...Roles) will give an array ["admin","user"]. func(["admin","user"]) -> (...Roles) will give [ [ 'admin', 'user' ] ]
+        
+        
+        if (!Roles.includes(req.user.role)) {
+            return next(new ErrorHandler("You are not authorized to view this page ", 403))
+        }
+
+        next()
+    }
+}
+
+
+module.exports = { isAuthenticatedUsed, AuthorizedRoles }

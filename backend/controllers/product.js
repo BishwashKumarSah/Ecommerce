@@ -74,7 +74,6 @@ const updateProduct = asyncHandler(async (req, res, next) => {
 })
 
 // Delete A Product -- Admin
-
 const deleteProduct = asyncHandler(async (req, res, next) => {
 
     let product = await Product.findById(req.params.id);
@@ -90,4 +89,98 @@ const deleteProduct = asyncHandler(async (req, res, next) => {
     })
 })
 
-module.exports = { getAllProducts, createProduct, updateProduct, deleteProduct, getSingleProduct }
+// Create a New Review or Update the Existing Review of the Product
+const createProductReview = asyncHandler(async (req, res, next) => {
+    const { rating, comment, productId } = req.body;
+
+    const review = {
+        user: req.user.id,
+        name: req.user.name,
+        rating: Number(rating),
+        comment
+    }
+
+    const product = await Product.findById(productId)
+
+    if (!product) {
+        return next(new ErrorHandler("Product does not exist."), 400)
+    }
+
+    const isAlreadyReviewed = product.reviews?.find(prod => {
+        return req.user.id.toString() === prod.user.toString()
+    })
+
+    if (isAlreadyReviewed) {
+        product.reviews?.forEach(prod => {
+            if (req.user.id.toString() === prod.user.toString()) {
+                prod.rating = rating,
+                    prod.comment = comment
+            }
+        })
+    } else {
+        product.reviews.push(review)
+        product.numOfReviews = Number(product.reviews?.length)
+    }
+
+    var total = 0
+    product.reviews?.forEach(prod => {
+        total += Number(prod.rating)
+    })
+
+    product.ratings = Number(total / product.reviews.length)
+
+    await product.save()
+    res.status(201).json({
+        success: true,
+        message: 'Review Created Successfully.',
+    })
+})
+
+// Get All Reviews of the Product.
+const getAllProductReviews = asyncHandler(async (req, res, next) => {
+    
+    const product = await Product.findById(req.query.id);
+
+    if (!product) {
+        return next(new ErrorHandler(`Product with the Id ${req.query.id} does not exists`), 400)
+    }
+    res.status(200).json({
+        success: true,
+        message: 'All Reviews Fetched',
+        reviews: product.reviews
+    })
+})
+
+// Delete Specific Product Review.
+const deleteProductReview = asyncHandler(async (req, res, next) => {
+    const product = await Product.findById(req.query.productId);
+
+    if (!product) {
+        return next(new ErrorHandler(`Product with the Id ${req.query.id} does not exists`), 400)
+    }
+
+    const reviews = product.reviews.filter(prod => prod._id.toString() !== req.query.id.toString())
+
+    let avg = 0
+    reviews?.forEach(prod => {
+        avg += prod.rating
+    })
+
+    product.ratings = reviews.length > 0 ? Number(avg / reviews.length) : 0
+
+    product.numOfReviews = reviews.length
+
+    product.reviews = reviews
+
+    await product.save()
+
+    res.status(200).json({
+        success: true,
+        message: 'Review Deleted Successfully',
+        reviews: product.reviews
+    })
+})
+
+
+
+module.exports = { getAllProducts, createProduct, updateProduct, deleteProduct, getSingleProduct, createProductReview, getAllProductReviews, deleteProductReview }

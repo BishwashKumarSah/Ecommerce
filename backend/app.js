@@ -11,11 +11,13 @@ app.use(bodyParser.urlencoded({ extended: false }))
 //Routes Imports
 const productRoute = require('./routes/product');
 const userRouter = require('./routes/user')
-
+const orderRoute = require('./routes/order')
 
 app.use('/api/v1', productRoute)
 
 app.use('/api/v1', userRouter)
+
+app.use('/api/v1', orderRoute)
 
 app.use(handleError)
 

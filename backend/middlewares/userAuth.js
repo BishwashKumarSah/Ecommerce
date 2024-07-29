@@ -22,8 +22,8 @@ const AuthorizedRoles = (...Roles) => {
     return (req, res, next) => {
 
         // console.log(Roles); -> here func("admin","user") -> (...Roles) will give an array ["admin","user"]. func(["admin","user"]) -> (...Roles) will give [ [ 'admin', 'user' ] ]
-        
-        
+
+
         if (!Roles.includes(req.user.role)) {
             return next(new ErrorHandler("You are not authorized to view this page ", 403))
         }

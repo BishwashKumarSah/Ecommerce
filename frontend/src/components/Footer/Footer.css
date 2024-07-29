@@ -1,0 +1,36 @@
+.footer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.main_footer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.footer_description {
+    margin-right: auto;
+}
+
+.footer_links {
+    margin-right: auto;
+}
+
+.secondary_footer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 1rem;
+    gap: 1rem;
+
+}
+
+
+.rights_footer {
+    font-size: var(--base-font-size);
+    font-weight: 900;
+}

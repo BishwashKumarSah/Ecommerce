@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+
 const productSchema = new mongoose.Schema({
     name: {
         type: String,
@@ -15,7 +16,7 @@ const productSchema = new mongoose.Schema({
         required: [true, "Please provide Product Price"],
         maxLength: [7, "Price cannot exceed 7 character"]
     },
-    rating: {
+    ratings: {
         type: Number,
         default: 0
     },
@@ -51,6 +52,10 @@ const productSchema = new mongoose.Schema({
                 type: String,
                 required: true
 
+            },
+            name: {
+                type: String,
+                required: [true, "Name is a required field"],
             },
             rating: {
                 type: Number,

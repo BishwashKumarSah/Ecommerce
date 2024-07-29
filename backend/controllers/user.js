@@ -4,8 +4,6 @@ const User = require('../models/user');
 const { generateToken } = require('../utils/generateToken');
 const { sendEmail } = require('../utils/sendEmail');
 const crypto = require('crypto');
-const { validate } = require('../models/product');
-
 
 // Register User
 const registerUser = asyncHandler(async (req, res, next) => {
@@ -220,7 +218,7 @@ const getSingleUserDetails = asyncHandler(async (req, res, next) => {
     const user = await User.findById(userId)
 
     if (!user) {
-        return next(new ErrorHandler(`No user found with Id: ${userId}`),400)
+        return next(new ErrorHandler(`No user found with Id: ${userId}`), 400)
     }
 
     res.status(200).json({
@@ -230,8 +228,58 @@ const getSingleUserDetails = asyncHandler(async (req, res, next) => {
     })
 })
 
+// Update Specific User Role - (ADMIN)
+const updateUserRole = asyncHandler(async (req, res, next) => {
+    const userId = req.params.id;
+
+    const { name, email, role } = req.body;
+
+    const newUserData = {
+        name, email, role
+    }
+
+    if (!userId) {
+        return next(new ErrorHandler('Please Provide a Valid UserId'), 400);
+    }
+
+    const user = await User.findByIdAndUpdate(userId, newUserData, {
+        new: true,
+        runValidators: true
+    });
+
+    if (!user) {
+        return next(new ErrorHandler(`No user found with Id: ${user}`), 400);
+    }
+
+    res.status(200).json({
+        success: true,
+        message: 'Role Updated Successfully',
+        user
+    })
+})
+
+// Delete Specific User -(ADMIN)
+const deleteSpecificUser = asyncHandler(async (req, res, next) => {
+    const userId = req.params.id;
+
+    if (!userId) {
+        return next(new ErrorHandler("Please provide a valid userId"), 400);
+    }
+
+    const user = await User.findByIdAndDelete(userId, {
+        new: true
+    })
+
+    if (!user) {
+        return next(new ErrorHandler(`No user found with Id: ${user}`), 400);
+    }
+
+    res.status(200).json({
+        success: true,
+        message: `Deleted User with Id ${userId}`
+    })
+})
 
 
 
-
-module.exports = { registerUser, loginUser, logoutUser, resetUserPasswordToken, resetUserPassword, getUserDetails, updateUserPassword, updateUserProfile, getAllUsers, getSingleUserDetails }
+module.exports = { registerUser, loginUser, logoutUser, resetUserPasswordToken, resetUserPassword, getUserDetails, updateUserPassword, updateUserProfile, getAllUsers, getSingleUserDetails, updateUserRole, deleteSpecificUser }

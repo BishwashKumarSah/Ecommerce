@@ -1,7 +1,8 @@
-nav{
-    position: sticky;
-    top: 0;
+nav {
+    /* position: sticky; */
+    /* top: 0; */
 }
+
 .main_app {
     min-height: 100vh;
     display: grid;
@@ -31,4 +32,8 @@ nav{
     align-items: center;
     justify-content: center;
     gap: 1rem;
+}
+
+.anchor_tag:hover {
+    color: red;
 }

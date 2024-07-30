@@ -1,9 +1,13 @@
-import React from 'react'
+import React from "react";
+import MetaData from "../../utils/MetaData";
 
 const Contact = () => {
   return (
-    <div>Contact</div>
-  )
-}
+    <>
+      <MetaData title="Contact Us" />
+      <div className="contact">Contact</div>
+    </>
+  );
+};
 
-export default Contact
+export default Contact;

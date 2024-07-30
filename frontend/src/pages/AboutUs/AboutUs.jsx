@@ -1,8 +1,12 @@
 import React from 'react'
+import MetaData from '../../utils/MetaData'
 
 const AboutUs = () => {
   return (
-    <div>AboutUs</div>
+    <>
+      <MetaData title="About Us" />
+      <div className="about">About</div>
+    </>
   )
 }
 

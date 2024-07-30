@@ -1,10 +1,14 @@
-import React from 'react'
-import "./product.css"
+import React from "react";
+import "./product.css";
+import MetaData from "../../utils/MetaData";
 
 const Products = () => {
   return (
-    <div className='product'>Products</div>
-  )
-}
+    <>
+      <MetaData title="Products" />
+      <div className="product">Products</div>
+    </>
+  );
+};
 
-export default Products
+export default Products;

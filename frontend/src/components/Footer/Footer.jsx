@@ -8,7 +8,9 @@ const Footer = () => {
       <footer className="footer">
         <div className="main_footer">
           <div className="footer_description">
-            <h3>EKart</h3>
+            <NavLink to="/">
+              <h3>EKart</h3>
+            </NavLink>
             <p>Your One-Stop Shop for Everything</p>
           </div>
           <div className="footer_links">

@@ -1,5 +1,7 @@
 .banner_section {
     width: 100%;
+    aspect-ratio: 50/10;
+    border: 1px solid black;
 }
 
 .hero_section {

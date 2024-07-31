@@ -5,7 +5,7 @@ const { getAllProducts, createProduct, updateProduct, deleteProduct, getSinglePr
 const { isAuthenticatedUsed, AuthorizedRoles } = require('../middlewares/userAuth')
 
 
-router.route('/products').get(isAuthenticatedUsed, getAllProducts)
+router.route('/products').get( getAllProducts)
 
 router.route('/admin/product/new').post(isAuthenticatedUsed, AuthorizedRoles("admin"), createProduct)
 

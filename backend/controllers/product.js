@@ -19,7 +19,7 @@ const createProduct = asyncHandler(async (req, res, next) => {
 
 // Get All Products
 const getAllProducts = asyncHandler(async (req, res, next) => {
-
+    // return next(new ErrorHandler("This is a demo error"),500)
     // const produc = await Product.find({})
     // console.log(produc);
 
@@ -138,7 +138,7 @@ const createProductReview = asyncHandler(async (req, res, next) => {
 
 // Get All Reviews of the Product.
 const getAllProductReviews = asyncHandler(async (req, res, next) => {
-    
+
     const product = await Product.findById(req.query.id);
 
     if (!product) {

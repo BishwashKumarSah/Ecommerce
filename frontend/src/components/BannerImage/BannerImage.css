@@ -1,6 +1,7 @@
 .image-slider {
     position: relative;
     height: 100%;
+    border: 1px solid red;
 }
 
 .banner_image {
@@ -8,8 +9,6 @@
     height: 100%;
     overflow: hidden;
     display: flex;
-
-
 }
 
 .img-slider-img {

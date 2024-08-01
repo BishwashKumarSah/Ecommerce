@@ -32,6 +32,7 @@ body {
     margin: 0;
     max-width: 95%;
     margin: 0 auto;
+    min-height: 100vh;
     /* overflow-x: hidden; */
 }
 
@@ -69,4 +70,9 @@ li {
 
 .main{
     width: 100%;    
+}
+.main_app {
+    min-height: 100dvh;
+    display: grid;
+    grid-template-rows: auto 1fr auto;
 }

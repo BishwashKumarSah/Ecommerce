@@ -6,7 +6,8 @@ const productSlice = createSlice({
     name: 'Products',
     initialState: {
         products: [],
-        status: STATUSES.IDLE,
+        product: null,
+        status: STATUSES.LOADING,
         errorMessage: null
     },
     reducers: {
@@ -19,11 +20,14 @@ const productSlice = createSlice({
         },
         setErrorMessage(state, actions) {
             state.errorMessage = actions.payload
+        },
+        setSingleProduct(state, actions) {
+            state.product = actions.payload
         }
     }
 })
 
-export const { setProducts, setStatus, setErrorMessage } = productSlice.actions;
+export const { setProducts, setStatus, setErrorMessage, setSingleProduct } = productSlice.actions;
 export default productSlice.reducer;
 
 // Thunks
@@ -32,7 +36,7 @@ export const fetchProducts = () => {
         dispatch(setStatus(STATUSES.LOADING))
         try {
             const products = await (await axios.get('http://localhost:8000/api/v1/products')).data
-            console.log(products);
+            // console.log(products);
             dispatch(setProducts(products))
             dispatch(setStatus(STATUSES.IDLE))
         } catch (error) {
@@ -42,4 +46,20 @@ export const fetchProducts = () => {
 
         }
     }
+}
+
+export const fetchProductDetails = (id) => {
+    return async function fetchProductDetailsThunk(dispatch, getState) {
+        dispatch(setStatus(STATUSES.LOADING))
+        try {
+            const product = (await axios.get(`http://localhost:8000/api/v1/product/${id}`)).data     
+            dispatch(setSingleProduct(product))
+            dispatch(setStatus(STATUSES.IDLE))
+        } catch (error) {
+
+            dispatch(setStatus(STATUSES.ERROR))
+            dispatch(setErrorMessage(error.response.data))
+        }
+    }
+
 }

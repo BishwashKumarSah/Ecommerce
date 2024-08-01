@@ -1,0 +1,90 @@
+.product_details_component {
+    width: 100%;
+    height:93%;    
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    border: 1px solid red;
+}
+
+
+.product_details_images {
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    height: 100%;
+    border: 1px solid black;
+    overflow: hidden;
+}
+
+.product_details_image {
+    min-width: 100%;
+    /* Make each image take the full width of the container */
+    height: auto;
+    /* Maintain the aspect ratio */
+    object-fit: contain;
+    border: 2px solid green;
+}
+
+.product_details_description {
+    grid-column: 2 / 3;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+
+.btn_prev {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 50%;
+    cursor: pointer;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    background:none;
+    outline: none;
+    opacity: 0;
+    border: none;
+    transition: opacity 100ms ease-in-out;
+
+}
+
+.btn_prev:hover{
+    opacity: 1;
+}
+
+.btn_prev_icon {
+    margin-left: 1rem;
+    /* border: 1px solid red; */
+}
+
+.btn_next {
+    position: absolute;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    width: 50%;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    background:none;
+    outline: none;
+    opacity: 0;
+    border: none;
+    transition: opacity 100ms ease-in-out;
+}
+.btn_next:hover{
+    opacity: 1;
+}
+
+.btn_next_icon {
+    margin-right: 1rem;
+    /* border: 1px solid red; */
+}
+
+.slider_dots{
+    position: absolute;
+}

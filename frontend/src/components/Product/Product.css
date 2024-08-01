@@ -28,13 +28,14 @@
 }
 
 .card-content>.product_price {
-    color: black;
+    color: green;
     font-weight: 900;
 }
 
 .product-image {
     width: 100%;
-    height: clamp(10rem, 17rem + 1rem, 20rem);
+    /* aspect-ratio: 500/100; */
+    height: clamp(15rem, 18vw + 1rem, 25rem);
 
     /* height: auto; */
 }

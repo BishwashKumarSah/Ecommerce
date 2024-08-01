@@ -7,7 +7,9 @@ const generateToken = (user, res, statusCode) => {
     // Options for Cookies
     const options = {
         expires: new Date(Date.now() + process.env.COOKIE_EXPIRE * 24 * 60 * 60 * 1000),
-        httpOnly: true
+        httpOnly: true,
+        
+        secure: false, // Set to true if using HTTPS
     }
 
     res.status(statusCode).cookie('token', token, options).json({

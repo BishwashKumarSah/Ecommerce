@@ -6,6 +6,7 @@ import { IoIosArrowBack } from "react-icons/io";
 import { BsCircleFill } from "react-icons/bs";
 
 const BannerImage = () => {
+  
   const [imgIndex, setImgIndex] = useState(0);
   const showPrevImages = () => {
     setImgIndex((prev) => {

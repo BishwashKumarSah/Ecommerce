@@ -39,6 +39,7 @@ const getAllProducts = asyncHandler(async (req, res, next) => {
 
 // Get Single Product
 const getSingleProduct = asyncHandler(async (req, res, next) => {
+    // return next(new ErrorHandler("This is a demo error"),500)
 
     const product = await Product.findById(req.params.id)
 

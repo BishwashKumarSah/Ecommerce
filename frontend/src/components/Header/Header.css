@@ -3,11 +3,7 @@ nav {
     /* top: 0; */
 }
 
-.main_app {
-    min-height: 100vh;
-    display: grid;
-    grid-template-rows: auto 1fr auto;
-}
+
 
 .unordered_list {
     display: flex;

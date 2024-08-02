@@ -32,7 +32,7 @@ body {
     margin: 0;
     max-width: 95%;
     margin: 0 auto;
-    min-height: 100vh;
+    min-height: 100dvh;
     /* overflow-x: hidden; */
 }
 
@@ -68,11 +68,14 @@ li {
     list-style-type: none;
 }
 
-.main{
-    width: 100%;    
-}
 .main_app {
-    min-height: 100dvh;
+    min-height: 100vh; /* Corrected to use vh */
     display: grid;
     grid-template-rows: auto 1fr auto;
+}
+
+.main {
+    width: 100%;
+    overflow: hidden;
+    /* border: 5px solid blue; */
 }

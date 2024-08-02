@@ -9,13 +9,14 @@
     border-radius: 10px;
     box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
     overflow: hidden;
+    width: 250px;
 
 
 }
 
 .product-card:hover {
     transform: translateY(-3px);
-    transition:transform 100ms ease-in-out
+    transition: transform 100ms ease-in-out
 }
 
 .card-content>p {
@@ -39,7 +40,9 @@
 
     /* height: auto; */
 }
-
+.product-image>img{
+    object-fit: contain;
+}
 .card-content {
     display: flex;
     flex-direction: column;

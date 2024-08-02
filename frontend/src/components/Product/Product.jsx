@@ -1,7 +1,7 @@
 import React from "react";
 import ReactStars from "react-stars";
 import { Link } from "react-router-dom";
-import Img from "../../images/pexels-photo-2783873.webp";
+import Img from "../../images/3c0e1e3aca8b3c9d.webp";
 import "./Product.css";
 
 const Product = ({ products}) => {
@@ -16,7 +16,7 @@ const Product = ({ products}) => {
   return (
     <Link to={`product/${products._id}`} className="product-card">
       <div className="product-image">
-        <img src={Img} alt={products.name} />
+        <img src={products.images[0].url} alt={products.name} />
       </div>
 
       <div className="card-content">

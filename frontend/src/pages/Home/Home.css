@@ -26,9 +26,11 @@
 }
 
 .product_container {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-    gap: 1rem;
-    padding: 1rem;
+   display: flex;
+   gap: 2rem;
+   flex-wrap: wrap;
+   align-items: stretch;
+   justify-content: space-between;
+   min-width: 100%;
     /* border: 2px solid red */
 }

@@ -95,10 +95,11 @@ const createProductReview = asyncHandler(async (req, res, next) => {
     const { rating, comment, productId } = req.body;
 
     const review = {
-        user: req.user.id,
+        user: req.user._id,
         name: req.user.name,
         rating: Number(rating),
-        comment
+        comment,
+        productId
     }
 
     const product = await Product.findById(productId)
@@ -114,7 +115,7 @@ const createProductReview = asyncHandler(async (req, res, next) => {
     if (isAlreadyReviewed) {
         product.reviews?.forEach(prod => {
             if (req.user.id.toString() === prod.user.toString()) {
-                prod.rating = rating,
+                    prod.rating = rating,
                     prod.comment = comment
             }
         })
@@ -134,6 +135,7 @@ const createProductReview = asyncHandler(async (req, res, next) => {
     res.status(201).json({
         success: true,
         message: 'Review Created Successfully.',
+        reviews:product
     })
 })
 
@@ -178,7 +180,7 @@ const deleteProductReview = asyncHandler(async (req, res, next) => {
     res.status(200).json({
         success: true,
         message: 'Review Deleted Successfully',
-        reviews: product.reviews
+        reviews: product
     })
 })
 

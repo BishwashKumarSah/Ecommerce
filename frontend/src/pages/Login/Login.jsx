@@ -3,8 +3,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 const Login = () => {
-  const [formData, setFormData] = useState({
-    name: "",
+  const [formData, setFormData] = useState({    
     email: "",
     password: "",
   });
@@ -22,11 +21,12 @@ const Login = () => {
     e.preventDefault();
     try {
       const response = await axios.post(
-        "http://localhost:8000/api/v1/user/register",
+        "http://localhost:8000/api/v1/user/login",
         formData,
         { withCredentials: true } // Include this option
       );
       console.log(response.data);
+      
       // Redirect or perform any other actions upon successful registration
       navigate("/");
     } catch (error) {
@@ -37,15 +37,7 @@ const Login = () => {
   return (
     <>
       <form onSubmit={handleSubmit}>
-        <label htmlFor="name">Name:</label>
-        <input
-          type="text"
-          name="name"
-          id="name"
-          value={formData.name}
-          onChange={handleChange}
-          required
-        />
+        
         <label htmlFor="email">Email:</label>
         <input
           type="email"
@@ -64,7 +56,7 @@ const Login = () => {
           onChange={handleChange}
           required
         />
-        <button type="submit">Submit</button>
+        <button type="submit">Login</button>
       </form>
     </>
   );

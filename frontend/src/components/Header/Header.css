@@ -1,7 +1,11 @@
 nav {
     /* position: sticky; */
     /* top: 0; */
+    justify-content: space-between;
+    height: 100px;
+    /* border: 1px solid red; */
 }
+
 
 
 
@@ -9,18 +13,25 @@ nav {
     display: flex;
     align-items: center;
     justify-content: center;
+    gap: 1rem;
+    height: 100%;
 }
 
 
-.shop_logo {
+/* .shop_logo {
     margin-right: auto;
-}
+} */
 
 .nav_links {
+    flex: 1;
     margin-right: auto;
     display: flex;
+    justify-content: center;
+    align-items: center;
     gap: 1.2rem;
     font-size: var(--font-size-links);
+height: 100%;
+
 }
 
 .nav_links_icons {
@@ -31,5 +42,47 @@ nav {
 }
 
 .anchor_tag:hover {
-    color: red;
+    /* color: red; */
+}
+
+.search_products {
+    display: flex;
+    align-items: center;
+    justify-content: center;    
+    border-radius: 5px;
+    /* margin:  0 10px; */    
+    gap: 0.9rem;
+    flex-grow: 1;
+    width: 100%;
+    height: 70%;
+    padding: 0 20px;
+    background-color: #F0F5FF;
+    border: 1px solid #F0F5FF;
+
+
+}
+
+.search_icon>* {
+    /* border: 1px solid red; */
+    /* align-self: flex-start; */
+    cursor: pointer;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.search_field {
+    /* border: 1px solid red; */
+    flex-grow: 1;
+}
+
+.search_field>input {
+    outline: none;
+    all: unset;
+    width: 100%;
+    padding: 0.2rem;
+    font-size: 16px;
+    min-height: 100%;
+        /* border: 1px solid blue; */
 }

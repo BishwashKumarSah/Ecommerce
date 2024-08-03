@@ -67,7 +67,9 @@ h3 {
 li {
     list-style-type: none;
 }
-
+ul{
+    list-style: none;
+}
 .main_app {
     min-height: 100vh; /* Corrected to use vh */
     display: grid;

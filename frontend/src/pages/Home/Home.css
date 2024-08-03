@@ -1,23 +1,21 @@
 .banner_section {
     width: 100%;
-    aspect-ratio: 50/10;
-    /* border: 1px solid black; */
+    aspect-ratio: 50/10;   
 }
 
-.hero_section {
-    /* border: 1px solid red; */
-    text-align: center;
+.hero_section {   
     width: 100%;
     margin-top: 2rem;
+    margin-bottom: 2rem;
 }
 
-.hero_title {
-    border-bottom: 1px solid black;
-    max-width: 20%;
+.hero_title {   
+    text-align: center;
+    width: 15rem;
     margin: 0 auto;
-    margin-bottom: 1rem;
-
+    margin-bottom: 2rem;
     padding: 1rem 0;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.212);
 }
 
 .hero_title>p {
@@ -31,6 +29,5 @@
    flex-wrap: wrap;
    align-items: stretch;
    justify-content: space-between;
-   min-width: 100%;
-    /* border: 2px solid red */
+   min-width: 100%;   
 }

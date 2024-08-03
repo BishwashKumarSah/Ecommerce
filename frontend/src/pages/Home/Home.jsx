@@ -4,17 +4,25 @@ import "./Home.css";
 import Product from "../../components/Product/Product";
 import MetaData from "../../utils/MetaData";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchProducts, setStatus } from "../../store/productSlice";
+import {
+  clearErrorMessage,
+  fetchFeaturedProducts,
+  setStatus,
+} from "../../store/productSlice";
 import { STATUSES } from "../../store/statusEnums";
 
 const Home = () => {
   const dispatch = useDispatch();
-  const { products, status, errorMessage } = useSelector(
+  const { featuredProducts, status, errorMessage } = useSelector(
     (state) => state.products
   );
 
   useEffect(() => {
-    dispatch(fetchProducts());
+    dispatch(fetchFeaturedProducts());
+    return () => {
+      dispatch(clearErrorMessage(""));
+      dispatch(setStatus(STATUSES.IDLE));
+    };
   }, [dispatch]);
   return (
     <>
@@ -29,11 +37,15 @@ const Home = () => {
         {status === STATUSES.LOADING ? (
           <h1>Loading</h1>
         ) : (
-          <div className="product_container">
-            {products.data ? (
-              products.data.map((products, index) => (
-                <Product products={products} key={index} />
-              ))
+          <div className="products_wrapper_main">
+            {featuredProducts.data ? (
+              <ul className="products_wrapper">
+                {featuredProducts.data.map((featuredProduct, index) => (
+                  <li key={index}>
+                    <Product products={featuredProduct} />
+                  </li>
+                ))}
+              </ul>
             ) : (
               <h1>No Products</h1>
             )}

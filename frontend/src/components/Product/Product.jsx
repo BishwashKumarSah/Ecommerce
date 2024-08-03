@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import Img from "../../images/3c0e1e3aca8b3c9d.webp";
 import "./Product.css";
 
-const Product = ({ products}) => {
+const Product = ({ products }) => {
   const options = {
     edit: false,
     color: "rgba(20,20,20,0.1)",
@@ -14,7 +14,7 @@ const Product = ({ products}) => {
     isHalf: true,
   };
   return (
-    <Link to={`product/${products._id}`} className="product-card">
+    <Link to={`/product/${products._id}`}>
       <div className="product-image">
         <img src={products.images[0].url} alt={products.name} />
       </div>
@@ -22,7 +22,11 @@ const Product = ({ products}) => {
       <div className="card-content">
         <p>{products.name}</p>
         <div className="react-stars">
-          <ReactStars {...options} /> <span>(100 reivews)</span>
+          <ReactStars {...options} />{" "}
+          <span>
+            ({products.numOfReviews}{" "}
+            {products.numOfReviews >= 2 ? "reviews" : "review"})
+          </span>
         </div>
         <div className="product_price">${products.price}</div>
       </div>

@@ -23,8 +23,7 @@
     width: 100%;
     overflow: hidden;
     text-overflow: ellipsis;
-    white-space: nowrap;
-    /* color: red; */
+    white-space: nowrap;    
 
 }
 
@@ -40,9 +39,11 @@
 
     /* height: auto; */
 }
-.product-image>img{
+
+.product-image>img {
     object-fit: contain;
 }
+
 .card-content {
     display: flex;
     flex-direction: column;
@@ -54,3 +55,4 @@
     align-items: center;
     justify-content: space-between;
 }
+

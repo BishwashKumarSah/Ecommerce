@@ -23,9 +23,9 @@ const getAllProducts = asyncHandler(async (req, res, next) => {
     // const produc = await Product.find({})
     // console.log(produc);
 
-    const resultPerPage = 5
+    const resultPerPage = 100
 
-    queryS = new ProductClass(Product.find(), req.query).search().filter().pagination(resultPerPage)
+    queryS = new ProductClass(Product.find(), req.query).search().filter().pagination(resultPerPage)    
     let products = await queryS.query
     const totalCount = products.length;
 
@@ -115,7 +115,7 @@ const createProductReview = asyncHandler(async (req, res, next) => {
     if (isAlreadyReviewed) {
         product.reviews?.forEach(prod => {
             if (req.user.id.toString() === prod.user.toString()) {
-                    prod.rating = rating,
+                prod.rating = rating,
                     prod.comment = comment
             }
         })
@@ -135,7 +135,7 @@ const createProductReview = asyncHandler(async (req, res, next) => {
     res.status(201).json({
         success: true,
         message: 'Review Created Successfully.',
-        reviews:product
+        reviews: product
     })
 })
 

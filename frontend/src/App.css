@@ -22,10 +22,13 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+
+
+
 }
 
 body {
-    font-family: 'Poppins', sans-serif;
     color: var(--black);
     font-size: var(--base-font-size);
     background-color: var(--body-color);
@@ -67,11 +70,14 @@ h3 {
 li {
     list-style-type: none;
 }
-ul{
+
+ul {
     list-style: none;
 }
+
 .main_app {
-    min-height: 100vh; /* Corrected to use vh */
+    min-height: 100vh;
+    /* Corrected to use vh */
     display: grid;
     grid-template-rows: auto 1fr auto;
 }

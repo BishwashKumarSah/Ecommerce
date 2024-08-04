@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import "./Products.css";
 import MetaData from "../../utils/MetaData";
 import { useSelector, useDispatch } from "react-redux";
@@ -6,9 +6,9 @@ import { fetchAllProducts } from "../../store/productSlice";
 import { useLocation } from "react-router-dom";
 import { STATUSES } from "../../store/statusEnums";
 import Product from "../../components/Product/Product";
-import NewSlider from "./MinimumDistanceSlider";
 import MinimumDistanceSlider from "./MinimumDistanceSlider";
 import { Slider, Typography } from "@mui/material";
+import Pagination from "../../components/Pagination/Pagination";
 
 const Products = () => {
   const categories = [
@@ -20,60 +20,81 @@ const Products = () => {
     "Bottom",
     "Attire",
   ];
+
   const { search } = useLocation();
   const dispatch = useDispatch();
   const { products, errorMessage, status } = useSelector(
     (state) => state.products
   );
+  const [price, setPrice] = useState([0, 100000]);
+  const [ratings, setRatings] = useState(0);
+  const [category, setCategory] = useState(null);
+  const [activeCategory, setActiveCategory] = useState("");
+
+  const handleRatingChange = (event, newValue) => {
+    setRatings(newValue);
+  };
+
+  const handleCategoryFilter = (category) => {
+    setCategory(category);
+    setActiveCategory(category);
+  };
 
   useEffect(() => {
     const queryParams = new URLSearchParams(search);
     const searchQuery = queryParams.get("search") || ""; // Default to empty string if not present
-    dispatch(fetchAllProducts(searchQuery));
-  }, [dispatch, search]);
+    dispatch(fetchAllProducts(searchQuery, 1, price, category, ratings));
+  }, [dispatch, search, price, category, ratings]);
 
   return (
     <>
       <MetaData title="Products" />
-      <div className="product_section">
-        {status === STATUSES.LOADING ? (
-          <>
-            <h1>Loading</h1>
-          </>
-        ) : (
-          <div className="products_wrapper_grid">
-            <div className="filters">
-              <div className="price_slider">
-                <Typography>Price:</Typography>
-                <MinimumDistanceSlider />
-              </div>
-              <div className="product_categories">
-                <Typography>Categories:</Typography>
-                <ul className="category_box">
-                  {categories.map((category, ind) => (
-                    <li className="category_link" key={ind}>
-                      {category}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-              <fieldset className="product_ratings">
-                <Typography component="legend">Ratings Above</Typography>
-                <Slider
-                  size="small"
-                  defaultValue={0}
-                  aria-label="Small"
-                  valueLabelDisplay="auto"
-                  max={5}
-                  min={0}
-                />
-              </fieldset>
-            </div>
+      <div className="products_wrapper_grid">
+        <div className="filters">
+          <div className="price_slider">
+            <Typography>Price:</Typography>
+            <MinimumDistanceSlider price={price} setPrice={setPrice} />
+          </div>
+          <div className="product_categories">
+            <Typography>Categories:</Typography>
+            <ul className="category_box">
+              {categories.map((category, ind) => (
+                <li
+                  className="category_link"
+                  key={ind}
+                  style={{ color: activeCategory === category ? "red" : "" }}
+                  onClick={() => handleCategoryFilter(category)}
+                >
+                  {category}
+                </li>
+              ))}
+            </ul>
+          </div>
+          <fieldset className="product_ratings">
+            <Typography component="legend">Ratings Above</Typography>
+            <Slider
+              size="small"
+              defaultValue={0}
+              aria-label="Small"
+              valueLabelDisplay="auto"
+              value={ratings}
+              onChange={handleRatingChange}
+              max={5}
+              min={0}
+            />
+          </fieldset>
+        </div>
+        <div className="product_section">
+          {status === STATUSES.LOADING ? (
+            <h1>Loading...</h1>
+          ) : status === STATUSES.ERROR ? (
+            <h1>{errorMessage}</h1>
+          ) : (
             <div className="products_wrapper_main">
               <div className="hero_title">
                 <p>Products</p>
               </div>
-              {products ? (
+              {products && products.length > 0 ? (
                 <ul className="products_wrapper">
                   {products.map((product, index) => (
                     <li key={index}>
@@ -82,12 +103,13 @@ const Products = () => {
                   ))}
                 </ul>
               ) : (
-                <h1>No Products</h1>
+                <h1>No Products Found</h1>
               )}
             </div>
-          </div>
-        )}
+          )}
+        </div>
       </div>
+      <Pagination></Pagination>
     </>
   );
 };

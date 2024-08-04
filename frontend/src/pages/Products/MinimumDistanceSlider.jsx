@@ -8,8 +8,8 @@ function valuetext(value) {
 
 const minDistance = 10;
 
-export default function MinimumDistanceSlider() {
-  const [price, setPrice] = React.useState([0, 100000]);
+export default function MinimumDistanceSlider({price,setPrice}) {
+  
 
   const handleChange1 = (event, newValue, activeThumb) => {
     if (!Array.isArray(newValue)) {

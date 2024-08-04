@@ -50,6 +50,7 @@ class ProductClass {
         })
         queryObjCopy = JSON.stringify(queryObjCopy);
         queryObjCopy = queryObjCopy.replace(/\b(gt|gte|lt|lte)\b/g, (match) => `$${match}`)
+        
 
         this.query = this.query.find(JSON.parse(queryObjCopy));
         return this

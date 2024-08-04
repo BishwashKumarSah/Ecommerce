@@ -17,25 +17,23 @@ const createProduct = asyncHandler(async (req, res, next) => {
     })
 })
 
-// Get All Products
 const getAllProducts = asyncHandler(async (req, res, next) => {
-    // return next(new ErrorHandler("This is a demo error"),500)
-    // const produc = await Product.find({})
-    // console.log(produc);
+    const resultPerPage = 10;
 
-    const resultPerPage = 100
+    const queryS = new ProductClass(Product.find(), req.query).search().filter();
+    const totalProductsCount = await queryS.query.clone().countDocuments();
 
-    queryS = new ProductClass(Product.find(), req.query).search().filter().pagination(resultPerPage)    
-    let products = await queryS.query
-    const totalCount = products.length;
+    const new_query = queryS.pagination(resultPerPage);
+    const products = await new_query.query;
+    
 
     return res.status(200).json({
         success: true,
         message: 'working get all product',
         data: products,
-        count: totalCount
-    })
-})
+        totalProductsCount: totalProductsCount
+    });
+});
 
 // Get Single Product
 const getSingleProduct = asyncHandler(async (req, res, next) => {

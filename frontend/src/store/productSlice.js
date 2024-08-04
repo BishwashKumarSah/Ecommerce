@@ -6,7 +6,8 @@ const productSlice = createSlice({
     name: 'Products',
     initialState: {
         featuredProducts: [],
-        products: [],
+        products: [],    
+        totalProductsCount:0,   
         product: null,
         status: STATUSES.IDLE,
         errorMessage: null,
@@ -16,7 +17,9 @@ const productSlice = createSlice({
             state.featuredProducts = action.payload;
         },
         setProducts(state, action) {
-            state.products = action.payload
+            state.products= action.payload.products
+            state.totalProductsCount = action.payload.totalProductsCount
+            
         },
         setStatus(state, action) {
             state.status = action.payload;
@@ -56,13 +59,19 @@ export const fetchFeaturedProducts = () => {
     };
 };
 
-export const fetchAllProducts = (search, currentPage = 1, price = [0, 50000], category, ratings = 0) => {
+export const fetchAllProducts = (search, currentPage = 1, price = [0, 10000], category, ratings = 0) => {
     return async function fetchAllProducts(dispatch) {
         dispatch(setStatus(STATUSES.LOADING))
         try {
             let URI = `api/v1/products?search=${search}&page=${currentPage}&price[gte]=${price[0]}&price[lte]=${price[1]}&ratings[gte]=${ratings}`;
+            if (category) {
+                URI = `api/v1/products?search=${search}&page=${currentPage}&price[gte]=${price[0]}&price[lte]=${price[1]}&ratings[gte]=${ratings}&category=${category}`;
+            }
+            console.log("url", URI);
             const { data } = await axios.get(`http://localhost:8000/${URI}`)
-            dispatch(setProducts(data.data))
+            console.log("product data",data);
+
+            dispatch(setProducts({products:data.data,totalProductsCount:data.totalProductsCount}))
             dispatch(setStatus(STATUSES.IDLE))
         } catch (error) {
             dispatch(setStatus(STATUSES.ERROR));
@@ -70,6 +79,7 @@ export const fetchAllProducts = (search, currentPage = 1, price = [0, 50000], ca
         }
     }
 }
+
 
 export const fetchProductDetails = (id) => {
     return async function fetchProductDetailsThunk(dispatch) {

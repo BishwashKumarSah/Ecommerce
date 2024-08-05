@@ -67,9 +67,9 @@ export const fetchAllProducts = (search, currentPage = 1, price = [0, 10000], ca
             if (category) {
                 URI = `api/v1/products?search=${search}&page=${currentPage}&price[gte]=${price[0]}&price[lte]=${price[1]}&ratings[gte]=${ratings}&category=${category}`;
             }
-            console.log("url", URI);
+            
             const { data } = await axios.get(`http://localhost:8000/${URI}`)
-            console.log("product data",data);
+            
 
             dispatch(setProducts({products:data.data,totalProductsCount:data.totalProductsCount}))
             dispatch(setStatus(STATUSES.IDLE))

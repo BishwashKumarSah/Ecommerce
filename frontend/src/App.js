@@ -7,7 +7,7 @@ import Home from './pages/Home/Home';
 import Contact from './pages/Contact/Contact';
 import Products from './pages/Products/Products';
 import ProductDetails from './pages/ProductDetails/ProductDetails';
-import Login from './pages/Login/Login';
+import LoginSignUp from './pages/Login/LoginSignUp';
 
 function App() {
   return (
@@ -20,7 +20,7 @@ function App() {
           <Route path='/contact' element={<Contact />}></Route>
           <Route path='/products' element={<Products />}></Route>
           <Route path='/product/:id' element={<ProductDetails />}></Route>
-          <Route path='/login' element={<Login />}></Route>
+          <Route path='/login' element={< LoginSignUp/>}></Route>
         </Routes>
       </main>
       <Footer />

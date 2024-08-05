@@ -26,15 +26,19 @@ const Products = () => {
   const { products, errorMessage, status } = useSelector(
     (state) => state.products
   );
+  const { totalProductsCount } = useSelector((state) => state.products);
+  const productsPerPage = 10;
+  const totalButtons = Math.ceil(totalProductsCount / productsPerPage);
   const [price, setPrice] = useState([0, 100000]);
   const [ratings, setRatings] = useState(0);
   const [category, setCategory] = useState(null);
   const [activeCategory, setActiveCategory] = useState("");
+  const [currentPage, setCurrentPage] = useState(1);
 
   const handleRatingChange = (event, newValue) => {
     setRatings(newValue);
   };
-
+ 
   const handleCategoryFilter = (category) => {
     setCategory(category);
     setActiveCategory(category);
@@ -43,8 +47,10 @@ const Products = () => {
   useEffect(() => {
     const queryParams = new URLSearchParams(search);
     const searchQuery = queryParams.get("search") || ""; // Default to empty string if not present
-    dispatch(fetchAllProducts(searchQuery, 1, price, category, ratings));
-  }, [dispatch, search, price, category, ratings]);
+    dispatch(
+      fetchAllProducts(searchQuery, currentPage, price, category, ratings)
+    );
+  }, [dispatch, currentPage, search, price, category, ratings]);
 
   return (
     <>
@@ -109,7 +115,15 @@ const Products = () => {
           )}
         </div>
       </div>
-      <Pagination></Pagination>
+      {totalButtons > 1 && (
+        <Pagination
+          currentPage={currentPage}
+          setCurrentPage={setCurrentPage}
+          totalButtons={totalButtons}
+          productsPerPage={productsPerPage}
+          totalProductsCount={totalProductsCount}
+        />
+      )}
     </>
   );
 };

@@ -1,0 +1,165 @@
+.login_signUp_container {
+    min-width: 100%;
+    height: 100vh;
+    border: 1px solid black;
+
+    /* align-items: center; */
+    padding-top: 2rem;
+
+
+}
+
+.login_signUp_section {
+    border: 1px solid red;
+    background-color: white;
+    width: 30vw;
+    margin: 0 auto;
+    height: 70vh;
+    /* overflow: visible;********************* */
+    overflow: visible;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: stretch;
+}
+
+
+.login_signUp_section>div>.login_signUp_title {
+    position: relative;
+    display: flex;
+    width: 100%;
+    height: 100%;
+    z-index: 99;
+    /* border: 1px solid green; */
+}
+
+.login_signUp_section>div>.login_signUp_title>p {
+    --padding-p_form: 18px 0;
+
+    flex: 1;
+    text-align: center;
+    text-transform: uppercase;
+    font-size: 1rem;
+    font-weight: 500;
+    height: 100%;
+    padding: var(--padding-p_form)
+}
+
+.login_signUp_section>div>div>button {
+    position: absolute;
+    height: 2.5px;
+    background-color: tomato;
+    border: none;
+    bottom: 0;
+    width: 50%;
+    outline: none;
+    box-sizing: border-box;
+}
+
+.moveToLeft {
+    transform: translateX(0);
+    transition: all 0.4s;
+}
+
+.moveToRight {
+    transform: translateX(100%);
+    transition: all 0.4s;
+}
+
+.login_sign_up {
+    display: flex;
+    align-items: stretch;
+    justify-content: stretch;
+    flex: 1;
+
+
+}
+
+.login_section,
+.sign_up_section {
+    min-width: 100%;
+    min-height: 100%;
+    border: 6px solid green;
+    padding: 50px 0;
+    /* background-color: red; */
+}
+
+.login_form {
+    min-width: 100%;
+    min-height: 100%;
+    display: flex;
+    padding: 0 30px;
+    flex-direction: column;
+    
+}
+
+.login_email,
+.login_password {
+    position: relative;
+    width: 100%;
+    margin-bottom: 2rem;
+}
+
+.login_form>.forgot_password {
+    width: 100%;
+    text-align: end;
+    color: rgba(0, 0, 0, 0.651);
+    text-decoration: none;
+    transition: all 0.5s;
+    font: 500 1rem "Gill Sans";
+    margin-bottom: 2rem;
+}
+
+.login_form>a:hover {
+    color: black;
+}
+
+.login_email>input,
+.login_password>input {
+    width: 100%;
+    height: 100%;
+
+    /* background-color: blue;    */
+    padding: 10px 5px 10px 50px;
+}
+
+.login_btn,
+.sign_up_btn {
+    border: none;
+    background-color: tomato;
+    color: white;
+    font: 300 1rem "Roboto";
+    width: 100%;
+    padding: 0.8vmax;
+    cursor: pointer;
+    transition: all 0.5s;
+    border-radius: 4px;
+    outline: none;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.219);
+}
+
+
+.mail_login_logo {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    /* border: 1px solid green; */
+    min-height: 100%;
+    width: 100%;
+    font-size: 2rem !important;
+
+}
+
+.shiftToNeutral{
+    transform: translateX(0%);
+    transition: all 0.5s ease-in-out;
+}
+
+.shiftToLeft{
+    transform: translateX(-100%);
+    transition: all 0.5s ease-in-out;
+}
+.shiftToRight{
+    transform: translateX(100%);
+    transition: all 0.5s ease-in-out;
+}

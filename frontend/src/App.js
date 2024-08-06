@@ -8,8 +8,19 @@ import Contact from './pages/Contact/Contact';
 import Products from './pages/Products/Products';
 import ProductDetails from './pages/ProductDetails/ProductDetails';
 import LoginSignUp from './pages/Login/LoginSignUp';
+import { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
+import { loadUser } from './store/userSlice';
+import Account from './pages/Account/Account';
+
 
 function App() {
+  const dispatch = useDispatch()
+
+
+  useEffect(() => {
+    dispatch(loadUser());
+  }, [dispatch]);
   return (
     <div className='main_app'>
       <Header />
@@ -20,7 +31,9 @@ function App() {
           <Route path='/contact' element={<Contact />}></Route>
           <Route path='/products' element={<Products />}></Route>
           <Route path='/product/:id' element={<ProductDetails />}></Route>
-          <Route path='/login' element={< LoginSignUp/>}></Route>
+          <Route path='/login' element={< LoginSignUp />}></Route>
+          <Route path='/account' element={< Account />}></Route>
+
         </Routes>
       </main>
       <Footer />

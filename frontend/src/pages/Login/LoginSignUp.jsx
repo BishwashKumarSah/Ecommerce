@@ -1,17 +1,40 @@
-import { Fragment, useRef, useState } from "react";
+import { Fragment, useEffect, useRef, useState } from "react";
 import MailOutlineIcon from "@mui/icons-material/MailOutline";
 import LockOpenIcon from "@mui/icons-material/LockOpen";
+import PersonOutlineIcon from "@mui/icons-material/PersonOutline";
 import "./LoginSignUp.css";
 import { Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { STATUSES } from "../../store/statusEnums";
+import { registerUser, setUserLogin } from "../../store/userSlice";
+import { useNavigate } from "react-router-dom";
 
 const LoginSignUp = () => {
+  const dispatch = useDispatch();
+  const { isAuthenticated, status, errorMessage } = useSelector(
+    (state) => state.user
+  );
+
+  const navigate = useNavigate();
+
   const switchTabRef = useRef(null);
   const login_section = useRef(null);
   const sign_up_section = useRef(null);
+
   const [loginEmail, setLoginEmail] = useState("");
   const [loginPassword, setLoginPassword] = useState("");
-  const [signUpEmail, setSignUpEmail] = useState("");
-  const [signUpPassword, setSignUpPassword] = useState("");
+
+  const [user, setUser] = useState({
+    name: "",
+    email: "",
+    password: "",
+  });
+  const { name, email, password } = user;
+
+  const [avatar, setAvatar] = useState(null);
+  const [avatarPreview, setAvatarPreview] = useState("/Profile.png");
+
+  // console.log("first", { name, email, password });
 
   const switchTab = (e, tab) => {
     if (tab === "Login") {
@@ -35,11 +58,62 @@ const LoginSignUp = () => {
     setLoginEmail(e.target.value);
   };
 
-  const handleLoginPassword = (e) => {};
+  const handleLoginPassword = (e) => {
+    setLoginPassword(e.target.value);
+  };
 
-  const handleSignUpEmail = (e) => {};
+  const handleSubmitLoginForm = (e) => {
+    e.preventDefault();
 
-  const handleSignUpPassword = (e) => {};
+    dispatch(setUserLogin(loginEmail, loginPassword));
+  };
+
+  const handleSignUpDataChange = (e) => {
+    if (e.target.name === "avatar") {
+      const file = e.target.files[0];
+      const fileReader = new FileReader();
+      fileReader.onload = () => {
+        if (fileReader.readyState === 2) {
+          setAvatar(fileReader.result);
+          setAvatarPreview(fileReader.result);
+        }
+      };
+
+      fileReader.readAsDataURL(file);
+    } else {
+      setUser((prevState) => ({
+        ...prevState,
+        [e.target.name]: e.target.value,
+      }));
+    }
+  };
+
+  const signUpSubmit = (e) => {
+    e.preventDefault();
+    const formData = new FormData();
+    formData.set("name", name);
+    formData.set("email", email);
+    formData.set("password", password);
+    formData.set("avatar", avatar);
+
+    /* WE CANNOT DIRECTLY SEE THE FORM DATA IN BROWSER SO.console.log("formData", formData); doesnot work.
+    TO SEE THE FORMDATA WE NEED TO LOOP THE FORMDATA AND STORE IN OBJECT. BY USING FORMDATA FOREACH METHOD
+    const formObjData = {};
+    formData.forEach((value, key) => {
+      formObjData[key] = value;
+    });
+    console.log(formObjData);*/
+    dispatch(registerUser(formData));
+  };
+
+  useEffect(() => {
+    if (status === STATUSES.ERROR) {
+      console.log("error", errorMessage);
+    }
+    if (isAuthenticated) {
+      return navigate("/account");
+    }
+  }, [status, errorMessage, isAuthenticated, navigate]);
 
   return (
     <Fragment>
@@ -54,58 +128,90 @@ const LoginSignUp = () => {
           </div>
           <div className="login_sign_up">
             <div className="login_section" ref={login_section}>
-              <form action="" className="login_form">
+              <form className="login_form" onSubmit={handleSubmitLoginForm}>
                 <div className="login_email">
                   <input
                     type="email"
                     required
-                    placeholder="Enter Your Email"
+                    placeholder="Email"
                     value={loginEmail}
                     onChange={(e) => handleLoginEmail(e)}
                   />
-                  <MailOutlineIcon className="mail_login_logo" />
+                  <MailOutlineIcon className="login_signUp_logo" />
                 </div>
                 <div className="login_password">
                   <input
                     type="password"
                     required
-                    placeholder="Enter Your Password"
+                    placeholder="Password"
                     name="password"
                     value={loginPassword}
                     onChange={(e) => handleLoginPassword(e)}
                   />
-                  <LockOpenIcon className="mail_login_logo" />
+                  <LockOpenIcon className="login_signUp_logo" />
                 </div>
                 <Link className="forgot_password">Forgot Password?</Link>
-                <button className="login_btn">Login</button>
+                <button className="login_btn" type="submit">
+                  Login
+                </button>
               </form>
             </div>
             <div className="sign_up_section" ref={sign_up_section}>
-              <form action="">
+              <form
+                action=""
+                className="sign_up_form"
+                encType="multipart/form-data"
+                onSubmit={signUpSubmit}
+              >
+                <div className="sign_up_name">
+                  <input
+                    type="text"
+                    placeholder="Name"
+                    required
+                    value={name}
+                    name="name"
+                    onChange={(e) => handleSignUpDataChange(e)}
+                  />
+                  <PersonOutlineIcon className="login_signUp_logo" />
+                </div>
                 <div className="sign_up_email">
-                  <MailOutlineIcon />
                   <input
                     type="email"
                     required
-                    placeholder="Enter Your Email"
+                    placeholder="Email"
                     name="email"
-                    value={signUpEmail}
-                    onChange={(e) => handleSignUpEmail(e)}
+                    value={email}
+                    onChange={(e) => handleSignUpDataChange(e)}
                   />
+                  <MailOutlineIcon className="login_signUp_logo" />
                 </div>
                 <div className="sign_up_password">
-                  <MailOutlineIcon />
                   <input
                     type="password"
                     required
-                    placeholder="Enter Your Password"
+                    placeholder="Password"
                     name="password"
-                    value={signUpPassword}
-                    onChange={(e) => handleSignUpPassword(e)}
+                    value={password}
+                    onChange={(e) => handleSignUpDataChange(e)}
+                  />
+                  <LockOpenIcon className="login_signUp_logo" />
+                </div>
+                <div className="sign_up_file">
+                  <div className="sign_up_user_image">
+                    <img src={avatarPreview} alt="userAvatar" />
+                  </div>
+
+                  <input
+                    type="file"
+                    name="avatar"
+                    accept="image/*"
+                    onChange={(e) => handleSignUpDataChange(e)}
                   />
                 </div>
                 <Link className="forgot_password">Forgot Password?</Link>
-                <button className="sign_up_btn">Sign Up</button>
+                <button className="sign_up_btn" type="submit">
+                  Sign Up
+                </button>
               </form>
             </div>
           </div>

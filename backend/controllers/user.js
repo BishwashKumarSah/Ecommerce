@@ -4,18 +4,35 @@ const User = require('../models/user');
 const { generateToken } = require('../utils/generateToken');
 const { sendEmail } = require('../utils/sendEmail');
 const crypto = require('crypto');
+const cloudinary = require('cloudinary')
 
 // Register User
 const registerUser = asyncHandler(async (req, res, next) => {
     const { name, email, password } = req.body;
+
+    let avatar = {}
+    // When you send a request with multipart/form-data (which includes file uploads), the express-fileupload middleware will parse the file data and make it available in req.files.
+    if (req.files && req.files.avatar) {
+        try {
+            const myCloud = await cloudinary.v2.uploader.upload(req.body.avatar, {
+                folder: 'avatars',
+                width: 150,
+                crop: "scale",
+            });
+            avatar = {
+                public_id: myCloud.public_id,
+                url: myCloud.secure_url
+            };
+        } catch (error) {
+            return next(new ErrorHandler("Error Uploading User Avatar to Cloudinary"), 500)
+        }
+    }
+
     const user = await User.create({
         name,
         email,
         password,
-        avatar: {
-            public_id: 'demo',
-            url: 'demourl'
-        }
+        avatar
     });
 
     generateToken(user, res, 201)
@@ -43,7 +60,7 @@ const loginUser = asyncHandler(async (req, res, next) => {
         return next(new ErrorHandler("Email or Password is incorrect", 401))
     }
 
-
+    user.password = undefined
     generateToken(user, res, 200)
 })
 
@@ -144,7 +161,7 @@ const resetUserPassword = asyncHandler(async (req, res, next) => {
 const getUserDetails = asyncHandler(async (req, res, next) => {
 
     const user = await User.findById(req.user._id);
-
+    user.password = undefined
     res.status(200).json({
         success: true,
         user

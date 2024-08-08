@@ -30,7 +30,7 @@ nav {
     align-items: center;
     gap: 1.2rem;
     font-size: var(--font-size-links);
-height: 100%;
+    height: 100%;
 
 }
 
@@ -41,16 +41,45 @@ height: 100%;
     gap: 1rem;
 }
 
-.anchor_tag:hover {
-    /* color: red; */
+.user_header_icon {
+    position: relative;
+    z-index: 99;
+    
+}
+
+.user_header_icon:hover {
+    cursor: pointer;
+}
+
+.user_profile_image {
+    width: 40px;
+    height: 40px;
+}
+
+.user_icon_info {
+    padding: 10px 20px;
+    background-color: #FFFFFF;
+    position: absolute;
+    z-index: 99;    
+    right: 0;
+    top: 100;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+    /* right: 20; */
+}
+
+.user_icon_info>div:hover {
+    cursor: pointer;
 }
 
 .search_products {
     display: flex;
     align-items: center;
-    justify-content: center;    
+    justify-content: center;
     border-radius: 5px;
-    /* margin:  0 10px; */    
+    /* margin:  0 10px; */
     gap: 0.9rem;
     flex-grow: 1;
     width: 100%;
@@ -84,5 +113,5 @@ height: 100%;
     padding: 0.2rem;
     font-size: 16px;
     min-height: 100%;
-        /* border: 1px solid blue; */
+    /* border: 1px solid blue; */
 }

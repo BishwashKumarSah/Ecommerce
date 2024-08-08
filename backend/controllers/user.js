@@ -4,29 +4,14 @@ const User = require('../models/user');
 const { generateToken } = require('../utils/generateToken');
 const { sendEmail } = require('../utils/sendEmail');
 const crypto = require('crypto');
-const cloudinary = require('cloudinary')
+
+const { uploadFileToCloudinary } = require('../utils/uploadImageToCloudinary')
 
 // Register User
 const registerUser = asyncHandler(async (req, res, next) => {
     const { name, email, password } = req.body;
 
-    let avatar = {}
-    // When you send a request with multipart/form-data (which includes file uploads), the express-fileupload middleware will parse the file data and make it available in req.files.
-    if (req.files && req.files.avatar) {
-        try {
-            const myCloud = await cloudinary.v2.uploader.upload(req.body.avatar, {
-                folder: 'avatars',
-                width: 150,
-                crop: "scale",
-            });
-            avatar = {
-                public_id: myCloud.public_id,
-                url: myCloud.secure_url
-            };
-        } catch (error) {
-            return next(new ErrorHandler("Error Uploading User Avatar to Cloudinary"), 500)
-        }
-    }
+    const avatar = await uploadFileToCloudinary(req, res, next)
 
     const user = await User.create({
         name,
@@ -70,9 +55,14 @@ const loginUser = asyncHandler(async (req, res, next) => {
 const logoutUser = asyncHandler(async (req, res, next) => {
     // const {token} = req.cookies -> to get all the cookies
     // req.cookie('token',null,options) -> to set
-    res.cookie('token', null, {
-        expires: new Date(Date.now()),
-        httpOnly: true
+
+    await res.cookie('token', null, {
+        expires: new Date(0),
+        httpOnly: true,
+        sameSite: 'Lax',
+
+        // secure: process.env.NODE_ENV === 'production' // Set to true if using HTTPS
+        secure: false, // Set to true if using HTTPS
     })
 
     res.status(200).json({
@@ -201,8 +191,9 @@ const updateUserPassword = asyncHandler(async (req, res, next) => {
 const updateUserProfile = asyncHandler(async (req, res, next) => {
     const { name, email } = req.body;
 
+    const avatar = await uploadFileToCloudinary(req, res, next)
     const user = await User.findByIdAndUpdate(req.user._id, {
-        name, email
+        name, email, avatar
     }, {
         new: true,
         runValidators: true,

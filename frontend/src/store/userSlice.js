@@ -52,13 +52,13 @@ export const setUserLogin = (email, password) => {
             dispatch(clearErrorMessage());
             dispatch(setStatus(STATUSES.IDLE))
             dispatch(setUser({ user: data.user, isAuthenticated: true }))
+            dispatch(loadUser())
 
         } catch (error) {
             console.log("userLoginError", error);
             dispatch(setUser({ user: {}, isAuthenticated: false }))
             dispatch(setStatus(STATUSES.ERROR));
             dispatch(setErrorMessage(error.response?.data?.message || error.message));
-
         }
     }
 }
@@ -72,6 +72,7 @@ export const registerUser = (formData) => {
             dispatch(clearErrorMessage());
             dispatch(setStatus(STATUSES.IDLE));
             dispatch(setUser({ user: data.user, isAuthenticated: true }));
+            dispatch(loadUser())
         } catch (error) {
             dispatch(setUser({ user: {}, isAuthenticated: false }));
             dispatch(setStatus(STATUSES.ERROR));
@@ -79,6 +80,24 @@ export const registerUser = (formData) => {
         }
     };
 };
+export const updateUser = (formData) => {
+    return async function updateUserThunk(dispatch) {
+        dispatch(setStatus(STATUSES.LOADING));
+        try {
+            const config = { headers: { "Content-Type": "multipart/form-data" }, withCredentials: true }
+            const { data } = await axios.post('http://localhost:8000/api/v1/user/updateUserProfile', formData, config);
+            dispatch(clearErrorMessage());
+            dispatch(setStatus(STATUSES.IDLE));
+            dispatch(setUser({ user: data.user, isAuthenticated: true }));
+            dispatch(loadUser())
+        } catch (error) {
+            dispatch(setUser({ user: {}, isAuthenticated: false }));
+            dispatch(setStatus(STATUSES.ERROR));
+            dispatch(setErrorMessage(error.response?.data?.message || error.message));
+        }
+    };
+};
+
 
 export const loadUser = () => {
     return async function (dispatch) {
@@ -90,6 +109,22 @@ export const loadUser = () => {
             dispatch(setUser({ user: data.user, isAuthenticated: true }))
         } catch (error) {
             dispatch(setUser({ user: null, isAuthenticated: false }))
+            dispatch(setStatus(STATUSES.ERROR));
+            dispatch(setErrorMessage(error.response?.data?.message || error.message));
+        }
+    }
+}
+
+export const logOut = () => {
+    return async function (dispatch) {
+        dispatch(setStatus(STATUSES.LOADING))
+        try {
+            const { data } = await axios.post('http://localhost:8000/api/v1/user/logout', {},{ withCredentials: true })
+            console.log("logout successfully");
+            dispatch(clearErrorMessage())
+            dispatch(setStatus(STATUSES.IDLE));
+            dispatch(setUser({ user: null, isAuthenticated: false }))
+        } catch (error) {
             dispatch(setStatus(STATUSES.ERROR));
             dispatch(setErrorMessage(error.response?.data?.message || error.message));
         }

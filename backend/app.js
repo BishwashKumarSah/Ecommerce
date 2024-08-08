@@ -16,7 +16,7 @@ app.use(cors(corsOptions))
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser())
-app.use(bodyParser.urlencoded({ extended: false }))
+
 
 //Routes Imports
 const productRoute = require('./routes/product');

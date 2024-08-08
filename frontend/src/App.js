@@ -12,12 +12,13 @@ import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { loadUser } from './store/userSlice';
 import Account from './pages/Account/Account';
+import ProtectedRoutes from './utils/ProtectedRoutes';
+import SignUp from './pages/Login/SignUp';
+import Update from './pages/Account/Update';
 
 
 function App() {
   const dispatch = useDispatch()
-
-
   useEffect(() => {
     dispatch(loadUser());
   }, [dispatch]);
@@ -32,7 +33,11 @@ function App() {
           <Route path='/products' element={<Products />}></Route>
           <Route path='/product/:id' element={<ProductDetails />}></Route>
           <Route path='/login' element={< LoginSignUp />}></Route>
-          <Route path='/account' element={< Account />}></Route>
+
+          <Route element={<ProtectedRoutes />}>
+            <Route path='/account' element={< Account />} />
+            <Route path='/me/update' element={< Update />} />
+          </Route>
 
         </Routes>
       </main>

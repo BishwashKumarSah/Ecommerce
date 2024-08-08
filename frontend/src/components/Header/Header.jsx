@@ -1,17 +1,30 @@
-import React, { useState } from "react";
-import { useNavigate, NavLink } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { useNavigate, NavLink, Link } from "react-router-dom";
 import { FaRegUser } from "react-icons/fa";
 import { FaShoppingCart } from "react-icons/fa";
 import { CiSearch } from "react-icons/ci";
 import "./Header.css";
 import axios from "axios";
+import { useDispatch, useSelector } from "react-redux";
+import { logOut } from "../../store/userSlice";
 
 const Header = () => {
+  const dispatch = useDispatch();
+  const { user, isAuthenticated } = useSelector((state) => state.user);
+  // console.log("header_user", user.avatar?.url);
   const navigate = useNavigate();
   const [searchValue, setSearchValue] = useState("");
+  const [userProfileInfo, setUserProfileInfo] = useState(false);
+
   const handleSearchValue = (e) => {
     setSearchValue(e.target.value);
   };
+
+  const logout = () => {
+    dispatch(logOut());
+    setUserProfileInfo(false);
+  };
+
   const handleProductSearch = async () => {
     if (searchValue === "") {
       return;
@@ -27,6 +40,7 @@ const Header = () => {
       }
     }
   };
+
   return (
     <>
       <nav>
@@ -65,9 +79,53 @@ const Header = () => {
               </NavLink>
             </li>
             <li>
-              <NavLink className="anchor_tag" to="/me">
-                <FaRegUser size={25} />
-              </NavLink>
+              <div className="user_header_icon" >
+                <div
+                  className="user_profile_image"
+                  onMouseEnter={() => setUserProfileInfo(true)}
+                  onMouseLeave={() => setUserProfileInfo(false)}
+                >
+                  {user ? (
+                    <img src={user?.avatar?.url} alt="avatar_icon" />
+                  ) : (
+                    <img src="/Profile.png" alt="avatar_icon" />
+                  )}
+                </div>
+                {userProfileInfo && (
+                  <div
+                    className="user_icon_info"
+                    onMouseEnter={() => setUserProfileInfo(true)}
+                    onMouseLeave={() => setUserProfileInfo(false)}
+                  >
+                    {isAuthenticated ? (
+                      <>
+                        <Link
+                          to="/dashboard"
+                          className="admin_dashboard isAdmin"
+                          hidden={user?.role === "user"}
+                        >
+                          Dashboard
+                        </Link>
+                        <Link to="/orders" className="user_orders">
+                          Orders
+                        </Link>
+                        <Link to="account" className="user_account">
+                          Account
+                        </Link>
+                        <div onClick={() => logout()} className="user_logout">
+                          Logout
+                        </div>
+                      </>
+                    ) : (
+                      <>
+                        <Link to="/login" className="user_orders">
+                          Login
+                        </Link>
+                      </>
+                    )}
+                  </div>
+                )}
+              </div>
             </li>
           </div>
         </ul>

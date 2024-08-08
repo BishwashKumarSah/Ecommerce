@@ -1,13 +1,13 @@
 import { Fragment, useEffect, useRef, useState } from "react";
 import MailOutlineIcon from "@mui/icons-material/MailOutline";
 import LockOpenIcon from "@mui/icons-material/LockOpen";
-import PersonOutlineIcon from "@mui/icons-material/PersonOutline";
 import "./LoginSignUp.css";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { STATUSES } from "../../store/statusEnums";
-import { registerUser, setUserLogin } from "../../store/userSlice";
+import { setUserLogin } from "../../store/userSlice";
 import { useNavigate } from "react-router-dom";
+import SignUp from "./SignUp";
 
 const LoginSignUp = () => {
   const dispatch = useDispatch();
@@ -23,18 +23,6 @@ const LoginSignUp = () => {
 
   const [loginEmail, setLoginEmail] = useState("");
   const [loginPassword, setLoginPassword] = useState("");
-
-  const [user, setUser] = useState({
-    name: "",
-    email: "",
-    password: "",
-  });
-  const { name, email, password } = user;
-
-  const [avatar, setAvatar] = useState(null);
-  const [avatarPreview, setAvatarPreview] = useState("/Profile.png");
-
-  // console.log("first", { name, email, password });
 
   const switchTab = (e, tab) => {
     if (tab === "Login") {
@@ -66,44 +54,6 @@ const LoginSignUp = () => {
     e.preventDefault();
 
     dispatch(setUserLogin(loginEmail, loginPassword));
-  };
-
-  const handleSignUpDataChange = (e) => {
-    if (e.target.name === "avatar") {
-      const file = e.target.files[0];
-      const fileReader = new FileReader();
-      fileReader.onload = () => {
-        if (fileReader.readyState === 2) {
-          setAvatar(fileReader.result);
-          setAvatarPreview(fileReader.result);
-        }
-      };
-
-      fileReader.readAsDataURL(file);
-    } else {
-      setUser((prevState) => ({
-        ...prevState,
-        [e.target.name]: e.target.value,
-      }));
-    }
-  };
-
-  const signUpSubmit = (e) => {
-    e.preventDefault();
-    const formData = new FormData();
-    formData.set("name", name);
-    formData.set("email", email);
-    formData.set("password", password);
-    formData.set("avatar", avatar);
-
-    /* WE CANNOT DIRECTLY SEE THE FORM DATA IN BROWSER SO.console.log("formData", formData); doesnot work.
-    TO SEE THE FORMDATA WE NEED TO LOOP THE FORMDATA AND STORE IN OBJECT. BY USING FORMDATA FOREACH METHOD
-    const formObjData = {};
-    formData.forEach((value, key) => {
-      formObjData[key] = value;
-    });
-    console.log(formObjData);*/
-    dispatch(registerUser(formData));
   };
 
   useEffect(() => {
@@ -157,62 +107,11 @@ const LoginSignUp = () => {
               </form>
             </div>
             <div className="sign_up_section" ref={sign_up_section}>
-              <form
-                action=""
-                className="sign_up_form"
-                encType="multipart/form-data"
-                onSubmit={signUpSubmit}
-              >
-                <div className="sign_up_name">
-                  <input
-                    type="text"
-                    placeholder="Name"
-                    required
-                    value={name}
-                    name="name"
-                    onChange={(e) => handleSignUpDataChange(e)}
-                  />
-                  <PersonOutlineIcon className="login_signUp_logo" />
-                </div>
-                <div className="sign_up_email">
-                  <input
-                    type="email"
-                    required
-                    placeholder="Email"
-                    name="email"
-                    value={email}
-                    onChange={(e) => handleSignUpDataChange(e)}
-                  />
-                  <MailOutlineIcon className="login_signUp_logo" />
-                </div>
-                <div className="sign_up_password">
-                  <input
-                    type="password"
-                    required
-                    placeholder="Password"
-                    name="password"
-                    value={password}
-                    onChange={(e) => handleSignUpDataChange(e)}
-                  />
-                  <LockOpenIcon className="login_signUp_logo" />
-                </div>
-                <div className="sign_up_file">
-                  <div className="sign_up_user_image">
-                    <img src={avatarPreview} alt="userAvatar" />
-                  </div>
-
-                  <input
-                    type="file"
-                    name="avatar"
-                    accept="image/*"
-                    onChange={(e) => handleSignUpDataChange(e)}
-                  />
-                </div>
-                <Link className="forgot_password">Forgot Password?</Link>
-                <button className="sign_up_btn" type="submit">
-                  Sign Up
-                </button>
-              </form>
+              <SignUp
+                errorMessage={errorMessage}
+                isAuthenticated={isAuthenticated}
+                status={status}
+              />
             </div>
           </div>
         </div>

@@ -1,0 +1,145 @@
+.profileContainer {
+    display: flex;
+    height: 100vh;
+    width: 100vw;
+    position: fixed;
+    top: 0;
+    left: 0;
+    max-width: 100%;
+    background-color: white;
+    /* Add this to make sure the children take the full height */
+    align-items: stretch;
+}
+
+.profileContainer>div {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    box-sizing: border-box;
+}
+
+.user_account_profile_image {
+    width: 20vmax;
+    height: 20vmax;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 2px solid #ddd;
+    transition: transform 0.5s ease;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.user_account_profile_image>img {
+    width: 100%;
+    height: auto;
+    display: block;
+    transition: transform 0.5s ease;
+}
+
+.profileContainer>div:first-child>h1 {
+    color: rgba(0, 0, 0, 0.555);
+    font: 500 2.2vmax "Roboto";
+    margin-bottom: 2rem;
+}
+
+.profileContainer>div:first-child>a {
+    border: none;
+    background-color: tomato;
+    font: 400 1rem "Poppins";
+    color: white;
+    text-decoration: none;
+    padding: 0.5rem;
+    min-width: max-content;
+    padding: 10px 50px;
+    margin: 4rem;
+    text-align: center;
+    transition: all 0.5s;
+}
+
+.profileContainer>div:first-child>a:hover {
+    background-color: rgb(204, 78, 56);
+}
+
+.profileContainer>div:last-child {
+    justify-content: center;
+    align-items: flex-start;
+    padding: 5rem;
+    box-sizing: border-box;
+    gap: 2rem;
+}
+
+.profileContainer>div:last-child>div>h4 {
+    color: black;
+    font: 400 1rem "Poppins";
+}
+
+.profileContainer>div:last-child>div>p {
+    color: rgba(0, 0, 0, 0.418);
+    font: 400 1rem cursive;
+    margin: 0.2rem;
+}
+
+.profileContainer>div:last-child>div:last-child {
+    display: flex;
+    flex-direction: column;
+    width: 60%;
+}
+
+.profileContainer>div:last-child>div:last-child>a {
+    border: none;
+    background-color: rgb(68, 68, 68);
+    font: 400 1rem "Poppins";
+    color: white;
+    text-decoration: none;
+    padding: 0.5rem;
+    text-align: center;
+    transition: all 0.5s;
+    margin: 1rem 0;
+    width: 400px; 
+    max-width: 100%;
+    word-wrap: break-word;
+    padding: 10px 50px;
+}
+
+.profileContainer>div:last-child>div:last-child>a:hover {
+    background-color: rgb(31, 31, 31);
+}
+
+@media screen and (max-width: 600px) {
+    .profileContainer {
+        flex-direction: column;
+    }
+
+    .profileContainer>div:first-child>h1 {
+        font: 500 1rem "Poppins";
+        transform: translateY(-2rem);
+    }
+
+    .profileContainer>div:first-child>a {
+        font: 400 1rem "Poppins";
+        padding: 1rem;
+    }
+
+    .profileContainer>div:last-child {
+        text-align: center;
+        align-items: center;
+    }
+
+    .profileContainer>div:last-child>div>h4 {
+        font: 400 1rem "Poppins";
+    }
+
+    .profileContainer>div:last-child>div>p {
+        font: 400 1rem cursive;
+        margin: 0.5rem 0;
+    }
+
+    .profileContainer>div:last-child>div:last-child>a {
+        font: 400 1rem "Poppins";
+        padding: 1rem;
+        margin: 2rem 0;
+    }
+}

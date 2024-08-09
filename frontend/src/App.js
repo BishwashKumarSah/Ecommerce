@@ -15,6 +15,10 @@ import Account from './pages/Account/Account';
 import ProtectedRoutes from './utils/ProtectedRoutes';
 import SignUp from './pages/Login/SignUp';
 import Update from './pages/Account/Update';
+import UpdatePassword from './pages/Account/UpdatePassword';
+import ForgotPassword from './pages/Account/Forgot';
+import ResetPassword from './pages/Account/ResetPassword';
+import Cart from './pages/Cart/Cart';
 
 
 function App() {
@@ -27,17 +31,21 @@ function App() {
       <Header />
       <main className='main'>
         <Routes>
-          <Route index path='/' element={<Home />}></Route>
-          <Route path='/about' element={<AboutUs />}></Route>
-          <Route path='/contact' element={<Contact />}></Route>
-          <Route path='/products' element={<Products />}></Route>
-          <Route path='/product/:id' element={<ProductDetails />}></Route>
-          <Route path='/login' element={< LoginSignUp />}></Route>
+          <Route index path='/' element={<Home />} />
+          <Route path='/about' element={<AboutUs />} />
+          <Route path='/contact' element={<Contact />} />
+          <Route path='/products' element={<Products />} />
+          <Route path='/product/:id' element={<ProductDetails />} />
+          <Route path='/login' element={< LoginSignUp />} />
+          <Route path='/cart' element={< Cart />} />
 
           <Route element={<ProtectedRoutes />}>
             <Route path='/account' element={< Account />} />
             <Route path='/me/update' element={< Update />} />
+            <Route path='/password/update' element={<UpdatePassword />} />
           </Route>
+          <Route path='/password/forgot' element={<ForgotPassword />} />
+          <Route path="/user/password/reset/:token" element={<ResetPassword />} />
 
         </Routes>
       </main>

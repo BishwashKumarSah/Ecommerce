@@ -10,7 +10,8 @@ const ProductDescription = React.memo(
     handleAddProducts,
     handleInputChange,
     handleBlur,
-    onOpenReviewDialog, // Function to open the review dialog
+    handleAddCartItems,
+    onOpenReviewDialog,
   }) => {
     var rating = product.data.ratings;
     const options = {
@@ -42,7 +43,7 @@ const ProductDescription = React.memo(
           <button
             className="minus"
             onClick={handleRemoveProducts}
-            disabled={quantity <= 0}
+            disabled={quantity <= 1}
           >
             -
           </button>
@@ -65,7 +66,9 @@ const ProductDescription = React.memo(
           </button>
         </div>
         <div className="product_cart_actions">
-          <Button className="add_to_cart">Add To Cart</Button>
+          <Button className="add_to_cart" onClick={handleAddCartItems}>
+            Add To Cart
+          </Button>
           <Button className="buy_now">Buy Now</Button>
         </div>
         <div className="product_status">

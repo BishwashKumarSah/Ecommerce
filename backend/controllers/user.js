@@ -4,6 +4,7 @@ const User = require('../models/user');
 const { generateToken } = require('../utils/generateToken');
 const { sendEmail } = require('../utils/sendEmail');
 const crypto = require('crypto');
+const cloudinary = require('cloudinary')
 
 const { uploadFileToCloudinary } = require('../utils/uploadImageToCloudinary')
 
@@ -91,7 +92,7 @@ const resetUserPasswordToken = asyncHandler(async (req, res, next) => {
     await user.save({ validateBeforeSave: false })
 
 
-    const resetPasswordUrl = `${req.protocol}://${req.get('host')}/api/v1/user/password/reset/${resetToken}`
+    const resetPasswordUrl = `${process.env.FRONTEND_URL}/user/password/reset/${resetToken}`
     const message = `Please reset your password using this link: \n\n ${resetPasswordUrl} \n\n The link expires in 20 minutes. \n If you have not requested for password reset, please ignore the message.`
 
     try {
@@ -191,17 +192,28 @@ const updateUserPassword = asyncHandler(async (req, res, next) => {
 const updateUserProfile = asyncHandler(async (req, res, next) => {
     const { name, email } = req.body;
 
-    const avatar = await uploadFileToCloudinary(req, res, next)
+    const newUserData = { name: name, email: email }
+
+    if (req.body.avatar != 'undefined') {
+        const imageId = req.user.avatar.public_id        
+        await cloudinary.v2.uploader.destroy(imageId);
+        
+        const avatar = await uploadFileToCloudinary(req, res, next)
+        
+        newUserData.avatar = avatar
+    }
+    
+    // const avatar = await uploadFileToCloudinary(req, res, next)
     const user = await User.findByIdAndUpdate(req.user._id, {
-        name, email, avatar
+        ...newUserData
     }, {
         new: true,
         runValidators: true,
         useFindAndModify: false
     })
-
-    // ***********************************************Images Avatarr Needs to be updated****************************************/
+ 
     await user.save({ validateBeforeSave: true })
+    console.log("user",user);
     return res.status(200).json({
         success: true,
         message: 'Profile updated successfully',

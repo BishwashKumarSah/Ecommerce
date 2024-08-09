@@ -9,12 +9,17 @@ const userSlice = createSlice({
         isAuthenticated: false,
         errorMessage: null,
         status: STATUSES.IDLE,
+        isUpdated: false,
+
         user: {}
     },
     reducers: {
         setUser(state, action) {
             state.user = action.payload.user
             state.isAuthenticated = action.payload.isAuthenticated
+        },
+        setIsUpdate(state, action) {
+            state.isUpdated = action.payload
         },
 
         setStatus(state, action) {
@@ -29,7 +34,7 @@ const userSlice = createSlice({
     }
 })
 
-export const { setUser, setStatus, setErrorMessage, clearErrorMessage } = userSlice.actions;
+export const { setUser, setStatus, setErrorMessage, clearErrorMessage, setIsUpdate } = userSlice.actions;
 
 export default userSlice.reducer;
 
@@ -85,18 +90,76 @@ export const updateUser = (formData) => {
         dispatch(setStatus(STATUSES.LOADING));
         try {
             const config = { headers: { "Content-Type": "multipart/form-data" }, withCredentials: true }
-            const { data } = await axios.post('http://localhost:8000/api/v1/user/updateUserProfile', formData, config);
+            const { data } = await axios.put('http://localhost:8000/api/v1/user/updateUserProfile', formData, config);
             dispatch(clearErrorMessage());
             dispatch(setStatus(STATUSES.IDLE));
             dispatch(setUser({ user: data.user, isAuthenticated: true }));
+            dispatch(setIsUpdate(true))
             dispatch(loadUser())
         } catch (error) {
-            dispatch(setUser({ user: {}, isAuthenticated: false }));
+            console.log("errorUpate", error);
             dispatch(setStatus(STATUSES.ERROR));
             dispatch(setErrorMessage(error.response?.data?.message || error.message));
         }
     };
 };
+
+export const updateUserPassword = (formData) => {
+    return async function updateUserPasswordThunk(dispatch) {
+        dispatch(setStatus(STATUSES.LOADING))
+        try {
+            const config = { headers: { 'Content-Type': "application/json" }, withCredentials: true }
+            const { data } = await axios.put('http://localhost:8000/api/v1/user/updatePassword', formData, config);
+            dispatch(clearErrorMessage());
+            dispatch(setStatus(STATUSES.IDLE));
+            dispatch(setUser({ user: data.user, isAuthenticated: true }));
+            dispatch(setIsUpdate(true))
+            dispatch(loadUser())
+
+
+        } catch (error) {
+            console.log("errorUpdatePassword", error);
+            dispatch(setStatus(STATUSES.ERROR));
+            dispatch(setErrorMessage(error.response?.data?.message || error.message));
+        }
+    }
+}
+
+export const forgotPassword = (formData) => {
+    return async function forgotPasswordThunk(dispatch) {
+        dispatch(setStatus(STATUSES.LOADING))
+        try {
+            const config = { headers: { 'Content-Type': "application/json" }, withCredentials: true }
+            const { data } = await axios.post('http://localhost:8000/api/v1/user/password/reset', formData, config);
+            dispatch(clearErrorMessage());
+            dispatch(setIsUpdate(true))
+            dispatch(setStatus(STATUSES.IDLE));
+
+        } catch (error) {
+            console.log("errorUpdatePassword", error);
+            dispatch(setStatus(STATUSES.ERROR));
+            dispatch(setErrorMessage(error.response?.data?.message || error.message));
+        }
+    }
+}
+export const resetPassword = (token, formData ) => {
+    return async function resetPasswordThunk(dispatch) {
+        dispatch(setStatus(STATUSES.LOADING))
+        try {
+            const config = { headers: { 'Content-Type': "application/json" }, withCredentials: true }
+            const { data } = await axios.put(`http://localhost:8000/api/v1/user/password/reset/${token}`, formData, config);
+            console.log("data",data);
+            dispatch(clearErrorMessage());
+            dispatch(setIsUpdate(true))
+            dispatch(setStatus(STATUSES.IDLE));
+
+        } catch (error) {
+            console.log("errorUpdatePassword", error);
+            dispatch(setStatus(STATUSES.ERROR));
+            dispatch(setErrorMessage(error.response?.data?.message || error.message));
+        }
+    }
+}
 
 
 export const loadUser = () => {
@@ -119,7 +182,7 @@ export const logOut = () => {
     return async function (dispatch) {
         dispatch(setStatus(STATUSES.LOADING))
         try {
-            const { data } = await axios.post('http://localhost:8000/api/v1/user/logout', {},{ withCredentials: true })
+            const { data } = await axios.post('http://localhost:8000/api/v1/user/logout', {}, { withCredentials: true })
             console.log("logout successfully");
             dispatch(clearErrorMessage())
             dispatch(setStatus(STATUSES.IDLE));

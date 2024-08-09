@@ -22,7 +22,7 @@ import {
 import { Rating } from "@mui/lab";
 import ReviewCard from "./ReviewCard";
 import ProductDescription from "../../components/productDescriptionMemo/productDescription";
-import { ClassNames } from "@emotion/react";
+import { addToCartItems } from "../../store/cartSlice";
 
 const ProductDetails = () => {
   const dispatch = useDispatch();
@@ -32,7 +32,7 @@ const ProductDetails = () => {
   const { id } = useParams();
 
   const [imageIndex, setImageIndex] = useState(0);
-  const [quantity, setQuantity] = useState(0);
+  const [quantity, setQuantity] = useState(1);
   const [openReviewDialog, setOpenReviewDialog] = useState(false);
   const [rating, setRating] = useState(0);
   const [comment, setComment] = useState("");
@@ -60,7 +60,7 @@ const ProductDetails = () => {
   }, [product?.data?.images]);
 
   const handleRemoveProducts = () => {
-    if (quantity > 0) {
+    if (quantity > 1) {
       setQuantity((prev) => prev - 1);
     }
   };
@@ -73,8 +73,8 @@ const ProductDetails = () => {
 
   const handleInputChange = (e) => {
     var val = e.target.value;
-    if (val === "") {
-      setQuantity("");
+    if (val === "" || parseInt(val, 10) < 1) {
+      setQuantity(1);
     } else {
       var parseVal = parseInt(e.target.value, 10);
       if (parseVal >= 0 && parseVal <= product.data.stock) {
@@ -84,9 +84,13 @@ const ProductDetails = () => {
   };
 
   const handleBlur = () => {
-    if (quantity === "") {
+    if (quantity === "" || quantity === 0) {
       setQuantity(1);
     }
+  };
+
+  const handleAddCartItems = () => {
+    dispatch(addToCartItems(product?.data?._id, quantity));
   };
 
   useEffect(() => {
@@ -174,6 +178,7 @@ const ProductDetails = () => {
           handleAddProducts={handleAddProducts}
           handleInputChange={handleInputChange}
           handleBlur={handleBlur}
+          handleAddCartItems={handleAddCartItems}
           onOpenReviewDialog={submitReviewToggle} // Pass handler function
         />
       </div>

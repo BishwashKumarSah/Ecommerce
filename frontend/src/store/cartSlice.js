@@ -1,0 +1,74 @@
+import { createSlice } from "@reduxjs/toolkit";
+import axios from "axios";
+
+const cartSlice = createSlice({
+    name: 'cart',
+    initialState: {
+        cartItems: localStorage.getItem('cartItems') ? JSON.parse(localStorage.getItem('cartItems')) : []
+    },
+    reducers: {
+        setCartItems(state, action) {
+            state.cartItems = action.payload;
+        },
+        removeCartItem(state, action) {
+            state.cartItems = state.cartItems.filter(item => item.product_id !== action.payload);
+        }
+    }
+});
+
+export const { setCartItems, removeCartItem } = cartSlice.actions;
+export default cartSlice.reducer;
+
+export const addToCartItems = (product_id, quantity) => {
+    return async function addToCartItemsThunk(dispatch, getState) {
+        const { data } = await axios.get(`http://localhost:8000/api/v1/product/${product_id}`);
+        const newItem = {
+            product_id: data.data._id,
+            name: data.data.name,
+            price: data.data.price,
+            image: data.data.images[0].url,
+            stock: data.data.stock,
+            quantity: quantity
+        };
+
+        const { cartItems } = getState().cart;
+
+        const isItemExists = cartItems.find((item) => item.product_id === data.data._id);
+        let updatedCartItems;
+        if (isItemExists) {
+            updatedCartItems = cartItems.map((item) =>
+                item.product_id === data.data._id
+                    ? { ...item, quantity: item.quantity + quantity }
+                    : item
+            );
+        } else {
+            updatedCartItems = [...cartItems, newItem];
+        }
+
+        dispatch(setCartItems(updatedCartItems));
+        localStorage.setItem("cartItems", JSON.stringify(updatedCartItems));
+    };
+};
+
+export const removeFromCartItems = (product_id, quantity) => {
+    return function removeFromCartItemsThunk(dispatch, getState) {
+        const { cartItems } = getState().cart;
+        const itemToRemove = cartItems.find((item) => item.product_id === product_id);
+        console.log("itemToRemove", itemToRemove);
+
+        if (itemToRemove) {
+            console.log("itemToRemove", itemToRemove);
+            let updatedCartItems;
+            if (itemToRemove.quantity - quantity <= 0) {
+                updatedCartItems = cartItems.filter((item) => item.product_id !== product_id);                
+                dispatch(setCartItems(updatedCartItems)); // Update state
+            } else {
+                updatedCartItems = cartItems.map((item) =>
+                    item.product_id === product_id ? { ...item, quantity: item.quantity - quantity } : item
+                );
+                dispatch(setCartItems(updatedCartItems)); // Update state
+            }
+            localStorage.setItem("cartItems", JSON.stringify(updatedCartItems));
+        }
+    };
+};

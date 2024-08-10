@@ -19,6 +19,7 @@ import UpdatePassword from './pages/Account/UpdatePassword';
 import ForgotPassword from './pages/Account/Forgot';
 import ResetPassword from './pages/Account/ResetPassword';
 import Cart from './pages/Cart/Cart';
+import Checkout from './pages/Cart/Checkout';
 
 
 function App() {
@@ -43,9 +44,12 @@ function App() {
             <Route path='/account' element={< Account />} />
             <Route path='/me/update' element={< Update />} />
             <Route path='/password/update' element={<UpdatePassword />} />
+
           </Route>
+          <Route path='/checkout' element={<Checkout />} />
           <Route path='/password/forgot' element={<ForgotPassword />} />
           <Route path="/user/password/reset/:token" element={<ResetPassword />} />
+
 
         </Routes>
       </main>

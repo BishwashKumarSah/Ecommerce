@@ -2,7 +2,7 @@ import { Fragment, useEffect, useRef, useState } from "react";
 import MailOutlineIcon from "@mui/icons-material/MailOutline";
 import LockOpenIcon from "@mui/icons-material/LockOpen";
 import "./LoginSignUp.css";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { STATUSES } from "../../store/statusEnums";
 import { setUserLogin } from "../../store/userSlice";
@@ -16,6 +16,12 @@ const LoginSignUp = () => {
   );
 
   const navigate = useNavigate();
+
+  // To check if /login?redirect=checkout if so redirect to /checkout or else redirect to /account(this was default behaviour but we also want to check if there is queryparams with redirect=checkout)
+  const { search } = useLocation();
+  const queryParams = new URLSearchParams(search);
+  const redirect = queryParams.get("redirect") || "account";
+  const path = redirect.startsWith("/") ? redirect : `/${redirect}`;
 
   const switchTabRef = useRef(null);
   const login_section = useRef(null);
@@ -61,9 +67,9 @@ const LoginSignUp = () => {
       console.log("error", errorMessage);
     }
     if (isAuthenticated) {
-      return navigate("/account");
+      return navigate(path);
     }
-  }, [status, errorMessage, isAuthenticated, navigate]);
+  }, [status, errorMessage, isAuthenticated, navigate, redirect, path]);
 
   return (
     <Fragment>

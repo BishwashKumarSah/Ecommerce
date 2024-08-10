@@ -4,7 +4,8 @@ import axios from "axios";
 const cartSlice = createSlice({
     name: 'cart',
     initialState: {
-        cartItems: localStorage.getItem('cartItems') ? JSON.parse(localStorage.getItem('cartItems')) : []
+        cartItems: localStorage.getItem('cartItems') ? JSON.parse(localStorage.getItem('cartItems')) : [],
+        shippingInfo: localStorage.getItem('shippingInfo') ? JSON.parse(localStorage.getItem('shippingInfo')) : {}
     },
     reducers: {
         setCartItems(state, action) {
@@ -12,11 +13,14 @@ const cartSlice = createSlice({
         },
         removeCartItem(state, action) {
             state.cartItems = state.cartItems.filter(item => item.product_id !== action.payload);
+        },
+        setShippingInfo(state, action) {
+            state.shippingInfo = action.payload
         }
     }
 });
 
-export const { setCartItems, removeCartItem } = cartSlice.actions;
+export const { setCartItems, removeCartItem, setShippingInfo } = cartSlice.actions;
 export default cartSlice.reducer;
 
 export const addToCartItems = (product_id, quantity) => {
@@ -60,7 +64,7 @@ export const removeFromCartItems = (product_id, quantity) => {
             console.log("itemToRemove", itemToRemove);
             let updatedCartItems;
             if (itemToRemove.quantity - quantity <= 0) {
-                updatedCartItems = cartItems.filter((item) => item.product_id !== product_id);                
+                updatedCartItems = cartItems.filter((item) => item.product_id !== product_id);
                 dispatch(setCartItems(updatedCartItems)); // Update state
             } else {
                 updatedCartItems = cartItems.map((item) =>
@@ -72,3 +76,13 @@ export const removeFromCartItems = (product_id, quantity) => {
         }
     };
 };
+
+export const saveShippingInfo = (formData) => {
+    return function saveShippingInfoThunk(dispatch, getState) {
+        dispatch(setShippingInfo(formData))
+        localStorage.setItem("shippingInfo", JSON.stringify(formData));
+
+    };
+};
+
+

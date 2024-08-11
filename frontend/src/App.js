@@ -20,6 +20,7 @@ import ForgotPassword from './pages/Account/Forgot';
 import ResetPassword from './pages/Account/ResetPassword';
 import Cart from './pages/Cart/Cart';
 import Checkout from './pages/Cart/Checkout';
+import { Toaster,toast } from 'react-hot-toast';
 
 
 function App() {
@@ -29,6 +30,8 @@ function App() {
   }, [dispatch]);
   return (
     <div className='main_app'>
+      
+      
       <Header />
       <main className='main'>
         <Routes>

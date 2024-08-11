@@ -1,10 +1,9 @@
 .login_signUp_container {
     min-width: 100%;
-    height: 100vh;
+    min-height: 100%;
     border: 1px solid black;
-
-    /* align-items: center; */
-    padding-top: 2rem;
+      /* align-items: center; */
+    
 
 
 }
@@ -13,7 +12,7 @@
     border: 1px solid red;
     background-color: white;
     width: 30vw;
-    margin: 0 auto;
+    margin: 1rem auto;
     min-height: 70vh;
     /* overflow: visible;********************* */
     overflow: hidden;
@@ -37,7 +36,7 @@
     --padding-p_form: 18px 0;
 
     flex: 1;
-    text-align: center;   
+    text-align: center;
     font-size: 1rem;
     font-weight: 500;
     height: 100%;
@@ -101,7 +100,7 @@
 .checkout_shipping {
     position: relative;
     width: 100%;
-    margin-bottom: 2rem;  
+    margin-bottom: 2rem;
 }
 
 .forgot_password {
@@ -124,10 +123,15 @@
 .sign_up_name>input,
 .sign_up_password>input,
 .login_password>input,
-.checkout_shipping>input {
+.checkout_shipping>input,
+.checkout_shipping>select {
     width: 100%;
     height: 100%;
     padding: 10px 5px 10px 50px;
+}
+
+.checkout_shipping>select {
+    cursor: pointer;
 }
 
 .login_btn,

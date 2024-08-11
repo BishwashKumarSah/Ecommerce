@@ -39,6 +39,8 @@ body {
     /* overflow-x: hidden; */
 }
 
+
+
 img {
     width: 100%;
     height: 100%;
@@ -78,12 +80,15 @@ ul {
 .main_app {
     min-height: 100vh;
     /* Corrected to use vh */
-    display: grid;
-    grid-template-rows: auto 1fr auto;
+    display: flex;
+    flex-direction: column;
 }
 
 .main {
     width: 100%;
     overflow: hidden;
-    /* border: 5px solid blue; */
+     flex-grow: 1;
+     flex-shrink: 0;
+     flex-basis: content;
+    border: 5px solid blue;
 }

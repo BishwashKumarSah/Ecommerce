@@ -1,8 +1,8 @@
 import React, { useEffect, useRef, useState } from "react";
 import "./Stepper.css";
+import { colors } from "@mui/material";
 
 const Stepper = ({ steps }) => {
-  
   const [currentStep, setCurrentStep] = useState(1);
   const [isComplete, setIsComplete] = useState(false);
   const stepRef = useRef([]);
@@ -13,6 +13,7 @@ const Stepper = ({ steps }) => {
   });
 
   const ActiveComponent = steps[currentStep - 1]?.component;
+  const IconComponent = steps[currentStep - 1]?.iconName;
 
   const handleNextForm = () => {
     setCurrentStep((prev) => {
@@ -35,7 +36,9 @@ const Stepper = ({ steps }) => {
   return (
     <>
       <div className="stepper">
-        {steps.map((step, index) => (
+        {steps.map((step, index) => {
+          const IconComponent = step.iconName
+          return (
           <div
             className={`steps ${
               currentStep > index + 1 || isComplete ? "complete" : ""
@@ -44,11 +47,22 @@ const Stepper = ({ steps }) => {
             key={step.name}
           >
             <div className="step_number">
-              {currentStep > index + 1 ? <span>&#10003;</span> : index + 1}
+              {currentStep > index + 1 ? (
+                <IconComponent style={{ color: "green" }} fill="green" />
+              ) : (
+                <IconComponent />
+              )}
             </div>
-            <div className="step_name">{step.name}</div>
+            <div
+              className="step_name"
+              style={{
+                color: `${currentStep > index + 1 ? "green" : "black"}`,
+              }}
+            >
+              {step.name}
+            </div>
           </div>
-        ))}
+        )})}
         <div
           className="progress_bar"
           style={{
@@ -64,8 +78,7 @@ const Stepper = ({ steps }) => {
           ></div>
         </div>
       </div>
-      {ActiveComponent}
-      <button onClick={handleNextForm}>Next</button>
+      {ActiveComponent && <ActiveComponent handleNextForm={handleNextForm} />}
     </>
   );
 };

@@ -85,7 +85,7 @@ const Header = () => {
                   onMouseEnter={() => setUserProfileInfo(true)}
                   onMouseLeave={() => setUserProfileInfo(false)}
                 >
-                  {user ? (
+                  {isAuthenticated ? (
                     <img src={user?.avatar?.url} alt="avatar_icon" />
                   ) : (
                     <img src="/Profile.png" alt="avatar_icon" />

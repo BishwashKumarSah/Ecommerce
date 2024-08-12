@@ -1,4 +1,4 @@
-import { Route, Routes } from 'react-router-dom';
+import { Navigate, Route, Routes } from 'react-router-dom';
 import './App.css';
 import Footer from './components/Footer/Footer';
 import Header from './components/Header/Header';
@@ -8,8 +8,8 @@ import Contact from './pages/Contact/Contact';
 import Products from './pages/Products/Products';
 import ProductDetails from './pages/ProductDetails/ProductDetails';
 import LoginSignUp from './pages/Login/LoginSignUp';
-import { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
+import { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { loadUser } from './store/userSlice';
 import Account from './pages/Account/Account';
 import ProtectedRoutes from './utils/ProtectedRoutes';
@@ -20,18 +20,41 @@ import ForgotPassword from './pages/Account/Forgot';
 import ResetPassword from './pages/Account/ResetPassword';
 import Cart from './pages/Cart/Cart';
 import Checkout from './pages/Cart/Checkout';
-import { Toaster,toast } from 'react-hot-toast';
+import { Toaster, toast } from 'react-hot-toast';
+import axios from 'axios';
+import Success from './pages/Cart/CheckOutComponent/Success';
+
 
 
 function App() {
   const dispatch = useDispatch()
+
+  const { isAuthenticated } = useSelector(state => state.user)
+
+  const [stripePublishableKey, setStripeAPIKey] = useState('')
+
+  const getStripeAPIKey = async () => {
+    const { data } = await axios.get('http://localhost:8000/api/v1/payment/getStripePublishableKey', { withCredentials: true })
+
+    if (data) {
+
+      setStripeAPIKey(data.stripePublishableKey)
+
+    }
+  }
+
   useEffect(() => {
     dispatch(loadUser());
-  }, [dispatch]);
+
+    if (isAuthenticated) {
+      getStripeAPIKey()
+    }
+
+  }, [isAuthenticated]);
   return (
     <div className='main_app'>
-      
-      
+      <Toaster />
+
       <Header />
       <main className='main'>
         <Routes>
@@ -44,12 +67,15 @@ function App() {
           <Route path='/cart' element={< Cart />} />
 
           <Route element={<ProtectedRoutes />}>
+
             <Route path='/account' element={< Account />} />
             <Route path='/me/update' element={< Update />} />
             <Route path='/password/update' element={<UpdatePassword />} />
-
+            <Route path='/checkout' element={stripePublishableKey && <Checkout stripePublishableKey={stripePublishableKey} />} />
+            <Route path='/success' element={<Success />} />
           </Route>
-          <Route path='/checkout' element={<Checkout />} />
+          {/* protected checkout later do it */}
+
           <Route path='/password/forgot' element={<ForgotPassword />} />
           <Route path="/user/password/reset/:token" element={<ResetPassword />} />
 

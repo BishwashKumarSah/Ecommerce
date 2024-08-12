@@ -6,14 +6,17 @@ import Stepper from "./CheckOutComponent/Stepper";
 import LocalShippingIcon from "@mui/icons-material/LocalShipping";
 import LibraryAddCheckIcon from "@mui/icons-material/LibraryAddCheck";
 import AccountBalanceIcon from "@mui/icons-material/AccountBalance";
+import { Elements } from "@stripe/react-stripe-js";
+import { loadStripe } from "@stripe/stripe-js";
+import Loader from "../../utils/Loader/Loader";
 
-const Checkout = () => {
+const Checkout = ({ stripePublishableKey }) => {
+  const stripePromise = loadStripe(stripePublishableKey);
+
   const CHECKOUT_STEPS = [
     {
       name: "Shipping Details",
       iconName: () => <LocalShippingIcon />,
-      // component: <ShippingDetails />, <ShippingDetails /> is a JSX element that represents an instance of the ShippingDetails component. so we cannot directly pass prop to it using {ActiveComponent && <ActiveComponent handleNextForm={handleNextForm} />}
-      // to do so we can either use ::::{ActiveComponent && React.cloneElement(ActiveComponent, { handleNextForm })}  OR
       component: (props) => <ShippingDetails {...props} />,
     },
     {
@@ -24,13 +27,20 @@ const Checkout = () => {
     {
       name: "Payment",
       iconName: () => <AccountBalanceIcon />,
-      component: (props) => <Payment {...props} />,
+      component: (props) =>
+        stripePublishableKey ? (
+          <Elements stripe={stripePromise}>
+            <Payment {...props} />
+          </Elements>
+        ) : (
+          <Loader />
+        ),
     },
   ];
+
   return (
     <>
       <h3>CheckOut</h3>
-
       <Stepper steps={CHECKOUT_STEPS} />
     </>
   );

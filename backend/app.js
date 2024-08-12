@@ -5,6 +5,9 @@ const cookieParser = require('cookie-parser')
 const cors = require('cors')
 const fileUpload = require('express-fileupload')
 
+const dotenv = require('dotenv')
+dotenv.config({ path: 'backend/config/config.env' })
+
 const app = express()
 const corsOptions = {
     origin: 'http://localhost:3000', // replace with your frontend's URL
@@ -22,12 +25,15 @@ app.use(cookieParser())
 const productRoute = require('./routes/product');
 const userRouter = require('./routes/user')
 const orderRoute = require('./routes/order')
+const paymentRoute = require('./routes/payment')
 
 app.use('/api/v1', productRoute)
 
 app.use('/api/v1', userRouter)
 
 app.use('/api/v1', orderRoute)
+
+app.use('/api/v1',paymentRoute)
 
 app.use(handleError)
 

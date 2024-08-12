@@ -3,7 +3,8 @@
 :root {
     --footer-color: #F1F4F1;
     --body-color: #FFFFFF;
-    --call-to-action-color: #025048;
+    --call-to-action-color: #28a745;
+    --call-to-action-hover-color: #218838; 
     --black: #1c1c1c;
     --gray: #7E7E7E;
     --gray-light: #E4E4E4;

@@ -4,7 +4,7 @@ color.checkOut_title {
 
 
 .shipping_details_btn {
-    background-color: #4CAF50; 
+    background-color: var(--call-to-action-color);
     color: white;
     border: none;
     padding: 10px 20px;
@@ -14,7 +14,11 @@ color.checkOut_title {
     font-size: 16px;
     margin: 4px 2px;
     cursor: pointer;
-    border-radius: 4px; 
+    border-radius: 4px;
+}
+
+.shipping_details_btn:hover {
+    background-color: var(--call-to-action-hover-color);   
 }
 
 
@@ -22,11 +26,11 @@ color.checkOut_title {
 /* Disabled button styles */
 .shipping_details_btn:disabled {
     cursor: not-allowed;
-    background-color: #A5D6A7; 
-    color: #BDBDBD; 
+    background-color: #A5D6A7;
+    color: #BDBDBD;
 }
 
 .toast-error {
     background-color: red !important;
     color: white !important;
-  }
+}

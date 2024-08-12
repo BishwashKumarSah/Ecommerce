@@ -50,17 +50,14 @@ export const setUserLogin = (email, password) => {
                 headers: { "Content-Type": "application/json" },
                 withCredentials: true // Ensure cookies are sent with requests
             };
-            const { data } = await axios.post('http://localhost:8000/api/v1/user/login', { email, password }, config)
-            console.log("userData", data);
-
-
+            const { data } = await axios.post('http://localhost:8000/api/v1/user/login', { email, password }, config)      
             dispatch(clearErrorMessage());
             dispatch(setStatus(STATUSES.IDLE))
             dispatch(setUser({ user: data.user, isAuthenticated: true }))
             dispatch(loadUser())
 
         } catch (error) {
-            console.log("userLoginError", error);
+          
             dispatch(setUser({ user: {}, isAuthenticated: false }))
             dispatch(setStatus(STATUSES.ERROR));
             dispatch(setErrorMessage(error.response?.data?.message || error.message));

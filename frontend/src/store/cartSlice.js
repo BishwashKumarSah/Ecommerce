@@ -13,6 +13,7 @@ const cartSlice = createSlice({
         },
         removeCartItem(state, action) {
             state.cartItems = state.cartItems.filter(item => item.product_id !== action.payload);
+            localStorage.setItem('cartItems', JSON.stringify(state.cartItems));
         },
         setShippingInfo(state, action) {
             state.shippingInfo = action.payload
@@ -58,10 +59,10 @@ export const removeFromCartItems = (product_id, quantity) => {
     return function removeFromCartItemsThunk(dispatch, getState) {
         const { cartItems } = getState().cart;
         const itemToRemove = cartItems.find((item) => item.product_id === product_id);
-        console.log("itemToRemove", itemToRemove);
+        
 
         if (itemToRemove) {
-            console.log("itemToRemove", itemToRemove);
+         
             let updatedCartItems;
             if (itemToRemove.quantity - quantity <= 0) {
                 updatedCartItems = cartItems.filter((item) => item.product_id !== product_id);

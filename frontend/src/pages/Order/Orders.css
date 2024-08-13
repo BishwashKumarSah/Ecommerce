@@ -1,0 +1,109 @@
+/* Import Poppins font from Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500&display=swap');
+
+/* Main container for the DataTable component */
+.dataTablePage {
+  width: 100vw;
+  max-width: 100%;
+  padding: 0 7vmax;
+  box-sizing: border-box;
+  background-color: rgb(235, 235, 235);
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  overflow: hidden; /* Ensure content doesn't overflow */
+  font-family: 'Poppins', sans-serif; /* Apply Poppins font */
+}
+
+/* Heading style */
+#myOrdersHeading {
+  text-align: center;
+  font: 400 1.2rem "Poppins";
+  padding: 0.5rem;
+  box-sizing: border-box;
+  color: rgb(255, 255, 255);
+  transition: all 0.5s;
+  background-color: rgb(44, 44, 44);
+}
+
+/* Style for DataGrid component */
+.MuiDataGrid-root {
+  background-color: white;
+  border: none;
+  font-family: 'Poppins', sans-serif; /* Apply Poppins font */
+  overflow: hidden; /* Ensure the DataGrid content is properly contained */
+}
+
+/* Column header styles */
+.MuiDataGrid-columnHeader {
+  background-color: tomato;
+  padding: 0.75rem !important; /* Adjust padding to ensure space for text */
+  white-space: nowrap; /* Prevent text from wrapping */
+  overflow: hidden; /* Hide overflowing text */
+  text-overflow: ellipsis; /* Display ellipsis when text overflows */
+}
+
+/* Header text style */
+.MuiDataGrid-columnHeaderTitle {
+  color: rgb(255, 255, 255);
+  font: 500 1rem "Poppins" !important; /* Adjust font size to fit */
+  overflow: hidden; /* Hide overflowing text */
+  text-overflow: ellipsis; /* Display ellipsis when text overflows */
+  white-space: nowrap; /* Prevent text from wrapping */
+}
+
+/* Remove column separator lines */
+.MuiDataGrid-iconSeparator {
+  display: none !important;
+}
+
+/* Row cell style */
+.MuiDataGrid-cell {
+  font: 300 1rem "Poppins";
+  color: rgba(0, 0, 0, 0.678);
+}
+
+/* Link styles */
+.MuiDataGrid-cell a {
+  color: rgba(0, 0, 0, 0.527);
+  transition: all 0.5s;
+}
+
+/* Link hover effect */
+.MuiDataGrid-cell a:hover {
+  color: tomato;
+}
+
+/* Custom status colors */
+.redColor {
+  color: red;
+}
+
+.greenColor {
+  color: green;
+}
+
+/* Responsive styles */
+@media screen and (max-width: 600px) {
+  .dataTablePage {
+    padding: 0;
+    height: 93vh;
+  }
+
+  #myOrdersHeading {
+    font: 400 2.2rem "Poppins";
+    padding: 4vw;
+  }
+
+  .MuiDataGrid-root {
+    font-size: 1.5rem; /* Adjust font size for smaller screens */
+  }
+
+  .MuiDataGrid-columnHeader {
+    padding: 1rem !important;
+  }
+
+  .MuiDataGrid-columnHeaderTitle {
+    font-size: 1.5rem !important;
+  }
+}

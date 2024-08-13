@@ -10,7 +10,6 @@ const userSlice = createSlice({
         errorMessage: null,
         status: STATUSES.IDLE,
         isUpdated: false,
-
         user: {}
     },
     reducers: {
@@ -50,14 +49,14 @@ export const setUserLogin = (email, password) => {
                 headers: { "Content-Type": "application/json" },
                 withCredentials: true // Ensure cookies are sent with requests
             };
-            const { data } = await axios.post('http://localhost:8000/api/v1/user/login', { email, password }, config)      
+            const { data } = await axios.post('http://localhost:8000/api/v1/user/login', { email, password }, config)
             dispatch(clearErrorMessage());
             dispatch(setStatus(STATUSES.IDLE))
             dispatch(setUser({ user: data.user, isAuthenticated: true }))
             dispatch(loadUser())
 
         } catch (error) {
-          
+
             dispatch(setUser({ user: {}, isAuthenticated: false }))
             dispatch(setStatus(STATUSES.ERROR));
             dispatch(setErrorMessage(error.response?.data?.message || error.message));
@@ -139,13 +138,13 @@ export const forgotPassword = (formData) => {
         }
     }
 }
-export const resetPassword = (token, formData ) => {
+export const resetPassword = (token, formData) => {
     return async function resetPasswordThunk(dispatch) {
         dispatch(setStatus(STATUSES.LOADING))
         try {
             const config = { headers: { 'Content-Type': "application/json" }, withCredentials: true }
             const { data } = await axios.put(`http://localhost:8000/api/v1/user/password/reset/${token}`, formData, config);
-            console.log("data",data);
+            console.log("data", data);
             dispatch(clearErrorMessage());
             dispatch(setIsUpdate(true))
             dispatch(setStatus(STATUSES.IDLE));
@@ -160,13 +159,15 @@ export const resetPassword = (token, formData ) => {
 
 
 export const loadUser = () => {
-    return async function (dispatch) {
+    return async function loadUserThunk(dispatch, getState) {
         dispatch(setStatus(STATUSES.LOADING))
         try {
             const { data } = await axios.get('http://localhost:8000/api/v1/me', { withCredentials: true })
+            dispatch(setUser({ user: data.user, isAuthenticated: true }))
             dispatch(clearErrorMessage())
             dispatch(setStatus(STATUSES.IDLE));
-            dispatch(setUser({ user: data.user, isAuthenticated: true }))
+            
+
         } catch (error) {
             dispatch(setUser({ user: null, isAuthenticated: false }))
             dispatch(setStatus(STATUSES.ERROR));

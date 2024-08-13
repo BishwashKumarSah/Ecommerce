@@ -6,12 +6,16 @@ const orderSlice = createSlice({
     name: 'Order',
     initialState: {
         order: {},
+        myOrders: [],
         status: STATUSES.IDLE,
         errorMessage: null
     },
     reducers: {
         setOrder(state, action) {
             state.order = action.payload
+        },
+        setMyOrder(state, action) {
+            state.myOrders = action.payload
         },
         setStatus(state, action) {
             state.status = action.payload
@@ -25,7 +29,7 @@ const orderSlice = createSlice({
     }
 });
 
-export const { setOrder, setStatus, setErrorMessage, clearErrorMessage } = orderSlice.actions;
+export const { setOrder, setMyOrder, setStatus, setErrorMessage, clearErrorMessage } = orderSlice.actions;
 export default orderSlice.reducer;
 
 // Create A New Order
@@ -50,3 +54,19 @@ export const createNewOrder = (order) => {
         }
     }
 }
+// Get The User Order From DB
+export const getMyOrders = () => {
+    return async function getMyOrdersThunk(dispatch, getState) {
+        dispatch(setStatus(STATUSES.LOADING))
+        try {
+            const { data } = await axios.get('http://localhost:8000/api/v1/orders/me', {withCredentials: true})
+            dispatch(setMyOrder(data.orders))
+            dispatch(setStatus(STATUSES.IDLE))
+        } catch (error) {            
+            dispatch(setStatus(STATUSES.ERROR));
+            dispatch(setErrorMessage(error.response?.data?.message || error.message));
+        }
+    }
+}
+
+

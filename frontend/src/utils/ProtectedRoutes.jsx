@@ -1,15 +1,28 @@
-import React, { Fragment } from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { Outlet, Navigate } from "react-router-dom";
+import Loader from "./Loader/Loader";
+import { STATUSES } from "../store/statusEnums";
 
+const ProtectedRoutes = () => {  
+  const { isAuthenticated, status } = useSelector((state) => state.user);
+  const [isLoading, setIsLoading] = useState(true);
 
-const ProtectedRoutes = () => {
-  const { isAuthenticated } = useSelector((state) => state.user);
-  return (
-    <Fragment>
-      {isAuthenticated && isAuthenticated ? <Outlet /> : <Navigate to="/login" />}
-    </Fragment>
-  );
+  useEffect(() => {
+    if (status === STATUSES.IDLE) {
+      setIsLoading(false);
+    }
+  }, [status]);
+
+  if (isLoading || status === STATUSES.LOADING) {
+    return <Loader />;
+  }
+
+  if (isAuthenticated) {
+    return <Outlet />;
+  } else {
+    return <Navigate to="/login" />;
+  }
 };
 
 export default ProtectedRoutes;

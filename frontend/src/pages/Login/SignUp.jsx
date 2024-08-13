@@ -89,7 +89,7 @@ const SignUp = ({
         name: isLoggedInUser.name,
         email: isLoggedInUser.email,
       });
-      setAvatarPreview(isLoggedInUser.avatar.url);
+      setAvatarPreview(isLoggedInUser.avatar?.url);
       // Do not set `avatar` state to URL directly; keep it as a `File` object.
     }
   }, [isLoggedInUser]);

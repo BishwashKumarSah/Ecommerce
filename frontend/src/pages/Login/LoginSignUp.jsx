@@ -2,12 +2,14 @@ import { Fragment, useEffect, useRef, useState } from "react";
 import MailOutlineIcon from "@mui/icons-material/MailOutline";
 import LockOpenIcon from "@mui/icons-material/LockOpen";
 import "./LoginSignUp.css";
-import { Link, useLocation } from "react-router-dom";
+import { Link, Navigate, useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { STATUSES } from "../../store/statusEnums";
 import { setUserLogin } from "../../store/userSlice";
 import { useNavigate } from "react-router-dom";
 import SignUp from "./SignUp";
+import toast from "react-hot-toast";
+import Loader from "../../utils/Loader/Loader";
 
 const LoginSignUp = () => {
   const dispatch = useDispatch();
@@ -17,11 +19,11 @@ const LoginSignUp = () => {
 
   const navigate = useNavigate();
 
-  // To check if /login?redirect=checkout if so redirect to /checkout or else redirect to /account(this was default behaviour but we also want to check if there is queryparams with redirect=checkout)
-  const { search } = useLocation();
+  // To check if /login?redirect=checkout, if so redirect to /checkout or else redirect to /account
+  const { search,pathname } = useLocation();
+  console.log("search",search,pathname);
   const queryParams = new URLSearchParams(search);
   const redirect = queryParams.get("redirect") || "account";
-  const path = redirect.startsWith("/") ? redirect : `/${redirect}`;
 
   const switchTabRef = useRef(null);
   const login_section = useRef(null);
@@ -58,70 +60,73 @@ const LoginSignUp = () => {
 
   const handleSubmitLoginForm = (e) => {
     e.preventDefault();
-
     dispatch(setUserLogin(loginEmail, loginPassword));
   };
 
   useEffect(() => {
+    
+    if (status === STATUSES.IDLE && isAuthenticated === true) {
+      navigate(`/${redirect}`);
+    }
     if (status === STATUSES.ERROR) {
-      console.log("error", errorMessage);
+      toast.error(errorMessage);
     }
-    if (isAuthenticated) {
-      return navigate(path);
-    }
-  }, [status, errorMessage, isAuthenticated, navigate, redirect, path]);
-
+  }, [status, navigate, isAuthenticated, redirect, errorMessage]);
   return (
     <Fragment>
-      <div className="login_signUp_container">
-        <div className="login_signUp_section">
-          <div className="title">
-            <div className="login_signUp_title">
-              <p onClick={(e) => switchTab(e, "Login")}>LOGIN</p>
-              <p onClick={(e) => switchTab(e, "Sign Up")}>SIGN UP</p>
-              <button ref={switchTabRef}></button>
+      {status === STATUSES.LOADING ? (
+        <Loader />
+      ) : (
+        <div className="login_signUp_container">
+          <div className="login_signUp_section">
+            <div className="title">
+              <div className="login_signUp_title">
+                <p onClick={(e) => switchTab(e, "Login")}>LOGIN</p>
+                <p onClick={(e) => switchTab(e, "Sign Up")}>SIGN UP</p>
+                <button ref={switchTabRef}></button>
+              </div>
             </div>
-          </div>
-          <div className="login_sign_up">
-            <div className="login_section" ref={login_section}>
-              <form className="login_form" onSubmit={handleSubmitLoginForm}>
-                <div className="login_email">
-                  <input
-                    type="email"
-                    required
-                    placeholder="Email"
-                    value={loginEmail}
-                    onChange={(e) => handleLoginEmail(e)}
-                  />
-                  <MailOutlineIcon className="login_signUp_logo" />
-                </div>
-                <div className="login_password">
-                  <input
-                    type="password"
-                    required
-                    placeholder="Password"
-                    name="password"
-                    value={loginPassword}
-                    onChange={(e) => handleLoginPassword(e)}
-                  />
-                  <LockOpenIcon className="login_signUp_logo" />
-                </div>
-                <Link className="forgot_password">Forgot Password?</Link>
-                <button className="login_btn" type="submit">
-                  Login
-                </button>
-              </form>
-            </div>
-            <div className="sign_up_section" ref={sign_up_section}>
-              <SignUp
-                errorMessage={errorMessage}
-                isAuthenticated={isAuthenticated}
-                status={status}
-              />
+            <div className="login_sign_up">
+              <div className="login_section" ref={login_section}>
+                <form className="login_form" onSubmit={handleSubmitLoginForm}>
+                  <div className="login_email">
+                    <input
+                      type="email"
+                      required
+                      placeholder="Email"
+                      value={loginEmail}
+                      onChange={(e) => handleLoginEmail(e)}
+                    />
+                    <MailOutlineIcon className="login_signUp_logo" />
+                  </div>
+                  <div className="login_password">
+                    <input
+                      type="password"
+                      required
+                      placeholder="Password"
+                      name="password"
+                      value={loginPassword}
+                      onChange={(e) => handleLoginPassword(e)}
+                    />
+                    <LockOpenIcon className="login_signUp_logo" />
+                  </div>
+                  <Link className="forgot_password">Forgot Password?</Link>
+                  <button className="login_btn" type="submit">
+                    Login
+                  </button>
+                </form>
+              </div>
+              <div className="sign_up_section" ref={sign_up_section}>
+                <SignUp
+                  errorMessage={errorMessage}
+                  isAuthenticated={isAuthenticated}
+                  status={status}
+                />
+              </div>
             </div>
           </div>
         </div>
-      </div>
+      )}
     </Fragment>
   );
 };

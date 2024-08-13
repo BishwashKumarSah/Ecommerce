@@ -23,34 +23,37 @@ import Checkout from './pages/Cart/Checkout';
 import { Toaster, toast } from 'react-hot-toast';
 import axios from 'axios';
 import Success from './pages/Cart/CheckOutComponent/Success';
-
-
+import Orders from './pages/Order/Orders';
+import OrderDetail from './pages/Order/OrderDetail';
 
 function App() {
-  const dispatch = useDispatch()
-
-  const { isAuthenticated } = useSelector(state => state.user)
-
-  const [stripePublishableKey, setStripeAPIKey] = useState('')
+  const dispatch = useDispatch();
+  const { isAuthenticated } = useSelector(state => state.user);
+  const [stripePublishableKey, setStripeAPIKey] = useState('');
 
   const getStripeAPIKey = async () => {
-    const { data } = await axios.get('http://localhost:8000/api/v1/payment/getStripePublishableKey', { withCredentials: true })
-
-    if (data) {
-
-      setStripeAPIKey(data.stripePublishableKey)
-
+    try {
+      const { data } = await axios.get('http://localhost:8000/api/v1/payment/getStripePublishableKey', { withCredentials: true });
+      if (data) {
+        setStripeAPIKey(data.stripePublishableKey);
+      }
+    } catch (error) {
+      toast.error('Failed to load Stripe API key.');
     }
-  }
-
+  };
   useEffect(() => {
     dispatch(loadUser());
+  }, [dispatch]);
 
+  useEffect(() => {
     if (isAuthenticated) {
-      getStripeAPIKey()
+      getStripeAPIKey();
     }
-
   }, [isAuthenticated]);
+
+  // Ensure correct paths for redirection based on `isAuthenticated`
+
+
   return (
     <div className='main_app'>
       <Toaster />
@@ -63,23 +66,23 @@ function App() {
           <Route path='/contact' element={<Contact />} />
           <Route path='/products' element={<Products />} />
           <Route path='/product/:id' element={<ProductDetails />} />
-          <Route path='/login' element={< LoginSignUp />} />
-          <Route path='/cart' element={< Cart />} />
+          <Route path='/login' element={<LoginSignUp />} />
+          <Route path='/cart' element={<Cart />} />
 
           <Route element={<ProtectedRoutes />}>
-
-            <Route path='/account' element={< Account />} />
-            <Route path='/me/update' element={< Update />} />
-            <Route path='/password/update' element={<UpdatePassword />} />
             <Route path='/checkout' element={stripePublishableKey && <Checkout stripePublishableKey={stripePublishableKey} />} />
-            <Route path='/success' element={<Success />} />
+            <Route path='/account' element={<Account />} />
+            <Route path='/me/update' element={<Update />} />
+            <Route path='/order/:id' element={<OrderDetail />} />
+            <Route path='/password/update' element={<UpdatePassword />} />
+            <Route path='/success' element={isAuthenticated ? <Success /> : <Navigate to="/login" />} />
+            <Route path='/orders' element={<Orders />} />
           </Route>
-          {/* protected checkout later do it */}
+
+
 
           <Route path='/password/forgot' element={<ForgotPassword />} />
           <Route path="/user/password/reset/:token" element={<ResetPassword />} />
-
-
         </Routes>
       </main>
       <Footer />

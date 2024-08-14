@@ -10,6 +10,7 @@ import {
   setStatus,
 } from "../../store/productSlice";
 import { STATUSES } from "../../store/statusEnums";
+import Loader from "../../utils/Loader/Loader";
 
 const Home = () => {
   const dispatch = useDispatch();
@@ -30,15 +31,16 @@ const Home = () => {
       <div className="banner_section">
         <BannerImage />
       </div>
-      <div className="hero_section">
-        <div className="hero_title">
-          <p>Featured Products</p>
-        </div>
-        {status === STATUSES.LOADING ? (
-          <h1>Loading</h1>
-        ) : (
+      {status === STATUSES.LOADING ? (
+        <Loader />
+      ) : (
+        <div className="hero_section">
+          <div className="hero_title">
+            <p>Featured Products</p>
+          </div>
+
           <div className="products_wrapper_main">
-            {featuredProducts.data ? (
+            {featuredProducts.data && (
               <ul className="products_wrapper">
                 {featuredProducts.data.map((featuredProduct, index) => (
                   <li key={index}>
@@ -46,12 +48,10 @@ const Home = () => {
                   </li>
                 ))}
               </ul>
-            ) : (
-              <h1>No Products</h1>
             )}
           </div>
-        )}
-      </div>
+        </div>
+      )}
     </>
   );
 };

@@ -4,8 +4,8 @@ import { Outlet, Navigate } from "react-router-dom";
 import Loader from "./Loader/Loader";
 import { STATUSES } from "../store/statusEnums";
 
-const ProtectedRoutes = () => {  
-  const { isAuthenticated, status } = useSelector((state) => state.user);
+const ProtectedRoutes = ({ isAdmin }) => {
+  const { isAuthenticated, status, user } = useSelector((state) => state.user);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
@@ -17,11 +17,14 @@ const ProtectedRoutes = () => {
   if (isLoading || status === STATUSES.LOADING) {
     return <Loader />;
   }
-
+  if (
+    isAuthenticated === false ||
+    (isAdmin === true && user.role !== "admin")
+  ) {
+    return <Navigate to="/login" />;
+  }
   if (isAuthenticated) {
     return <Outlet />;
-  } else {
-    return <Navigate to="/login" />;
   }
 };
 

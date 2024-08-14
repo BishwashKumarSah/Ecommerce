@@ -22,10 +22,10 @@ const columns = [
       return params.value === "Processing" ? "redColor" : "greenColor";
     },
   },
-  { field: "itemQuantity", headerName: "Quantity",minWidth: 150, flex: 0.2 },
+  { field: "itemQuantity", headerName: "Quantity", minWidth: 150, flex: 0.2 },
   {
     field: "amountPaid",
-    headerName: "Amount Paid",
+    headerName: "Amount Paid($)",
     type: "number",
     minWidth: 150,
     flex: 0.5,

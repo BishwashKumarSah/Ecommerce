@@ -20,8 +20,7 @@ const LoginSignUp = () => {
   const navigate = useNavigate();
 
   // To check if /login?redirect=checkout, if so redirect to /checkout or else redirect to /account
-  const { search,pathname } = useLocation();
-  console.log("search",search,pathname);
+  const { search,pathname } = useLocation(); 
   const queryParams = new URLSearchParams(search);
   const redirect = queryParams.get("redirect") || "account";
 

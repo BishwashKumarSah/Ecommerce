@@ -1,0 +1,61 @@
+.dashboard_container {
+    display: grid;
+    grid-template-columns: 1fr 6fr;   
+    align-items: start;
+}
+
+
+.dashbord_icon {
+    display: flex;
+    gap: 0.5rem;
+}
+
+details summary {
+    cursor: pointer;
+
+}
+
+details {
+    height: 20px;
+    overflow: hidden;
+    /* important if we need to add opacity_blur animation*/
+    transition: height 500ms ease-in-out;
+
+}
+
+@keyframes opacity_blur {
+    from {
+        opacity: 0;
+    }
+}
+
+details[open]>* :not(summary) {
+    animation: opacity_blur 500ms ease-in-out;
+}
+
+details[open] {
+    height: 110px;
+    mask-image: none;
+}
+
+
+
+.dashboard_side_nav {
+    position: sticky;
+    padding: 6rem 2rem 2rem;
+    top: 0;
+    /* border: 1px solid red; */
+    display: flex;
+    flex-direction: column;
+    
+    gap: 2rem;
+}
+
+.link_products_actions>div {
+    padding-top: 1rem;
+    margin-bottom: 1rem;
+}
+
+
+
+.dashboard_main_content {}

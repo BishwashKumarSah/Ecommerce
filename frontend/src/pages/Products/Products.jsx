@@ -9,6 +9,8 @@ import Product from "../../components/Product/Product";
 import MinimumDistanceSlider from "./MinimumDistanceSlider";
 import { Slider, Typography } from "@mui/material";
 import Pagination from "../../components/Pagination/Pagination";
+import Loader from "../../utils/Loader/Loader";
+import toast from "react-hot-toast";
 
 const Products = () => {
   const categories = [
@@ -38,7 +40,7 @@ const Products = () => {
   const handleRatingChange = (event, newValue) => {
     setRatings(newValue);
   };
- 
+
   const handleCategoryFilter = (category) => {
     setCategory(category);
     setActiveCategory(category);
@@ -51,6 +53,12 @@ const Products = () => {
       fetchAllProducts(searchQuery, currentPage, price, category, ratings)
     );
   }, [dispatch, currentPage, search, price, category, ratings]);
+
+  useEffect(() => {
+    if (status === STATUSES.ERROR) {
+      toast.error(errorMessage);
+    }
+  }, [status, errorMessage]);
 
   return (
     <>
@@ -92,9 +100,7 @@ const Products = () => {
         </div>
         <div className="product_section">
           {status === STATUSES.LOADING ? (
-            <h1>Loading...</h1>
-          ) : status === STATUSES.ERROR ? (
-            <h1>{errorMessage}</h1>
+            <Loader />
           ) : (
             <div className="products_wrapper_main">
               <div className="hero_title">

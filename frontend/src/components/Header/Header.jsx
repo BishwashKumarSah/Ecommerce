@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate, NavLink, Link } from "react-router-dom";
+import { useNavigate, NavLink, Link, Navigate } from "react-router-dom";
 import { FaRegUser } from "react-icons/fa";
 import { FaShoppingCart } from "react-icons/fa";
 import { CiSearch } from "react-icons/ci";
@@ -23,6 +23,10 @@ const Header = () => {
   const logout = () => {
     dispatch(logOut());
     setUserProfileInfo(false);
+    // Clear local storage & session storage
+    localStorage.clear();
+    sessionStorage.clear();
+    return <Navigate to="/login" />;
   };
 
   const handleProductSearch = async () => {
@@ -79,13 +83,13 @@ const Header = () => {
               </NavLink>
             </li>
             <li>
-              <div className="user_header_icon" >
+              <div className="user_header_icon">
                 <div
                   className="user_profile_image"
                   onMouseEnter={() => setUserProfileInfo(true)}
                   onMouseLeave={() => setUserProfileInfo(false)}
                 >
-                  {isAuthenticated === true? (
+                  {isAuthenticated === true ? (
                     <img src={user?.avatar?.url} alt="avatar_icon" />
                   ) : (
                     <img src="/Profile.png" alt="avatar_icon" />
@@ -99,13 +103,15 @@ const Header = () => {
                   >
                     {isAuthenticated ? (
                       <>
-                        <Link
-                          to="/dashboard"
-                          className="admin_dashboard isAdmin"
-                          hidden={user?.role === "user"}
-                        >
-                          Dashboard
-                        </Link>
+                        {user.role === "admin" && (
+                          <Link
+                            to="/admin/dashboard"
+                            className="admin_dashboard isAdmin"
+                            hidden={user?.role === "user"}
+                          >
+                            Dashboard
+                          </Link>
+                        )}
                         <Link to="/orders" className="user_orders">
                           Orders
                         </Link>

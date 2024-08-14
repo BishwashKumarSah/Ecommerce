@@ -25,6 +25,8 @@ import axios from 'axios';
 import Success from './pages/Cart/CheckOutComponent/Success';
 import Orders from './pages/Order/Orders';
 import OrderDetail from './pages/Order/OrderDetail';
+import Dashboard from './pages/Admin/Dashboard/Dashboard';
+import PageNotFound from './components/PageNotFound/PageNotFound';
 
 function App() {
   const dispatch = useDispatch();
@@ -55,38 +57,43 @@ function App() {
 
 
   return (
-    <div className='main_app'>
+    <main className='main_app'>
       <Toaster />
 
       <Header />
-      <main className='main'>
-        <Routes>
-          <Route index path='/' element={<Home />} />
-          <Route path='/about' element={<AboutUs />} />
-          <Route path='/contact' element={<Contact />} />
-          <Route path='/products' element={<Products />} />
-          <Route path='/product/:id' element={<ProductDetails />} />
-          <Route path='/login' element={<LoginSignUp />} />
-          <Route path='/cart' element={<Cart />} />
-
-          <Route element={<ProtectedRoutes />}>
-            <Route path='/checkout' element={stripePublishableKey && <Checkout stripePublishableKey={stripePublishableKey} />} />
-            <Route path='/account' element={<Account />} />
-            <Route path='/me/update' element={<Update />} />
-            <Route path='/order/:id' element={<OrderDetail />} />
-            <Route path='/password/update' element={<UpdatePassword />} />
-            <Route path='/success' element={isAuthenticated ? <Success /> : <Navigate to="/login" />} />
-            <Route path='/orders' element={<Orders />} />
-          </Route>
 
 
+      <Routes>
+        <Route index path='/' element={<Home />} />
+        <Route path='/about' element={<AboutUs />} />
+        <Route path='/contact' element={<Contact />} />
+        <Route path='/products' element={<Products />} />
+        <Route path='/product/:id' element={<ProductDetails />} />
+        <Route path='/login' element={<LoginSignUp />} />
+        <Route path='/cart' element={<Cart />} />
 
-          <Route path='/password/forgot' element={<ForgotPassword />} />
-          <Route path="/user/password/reset/:token" element={<ResetPassword />} />
-        </Routes>
-      </main>
+        <Route element={<ProtectedRoutes isAdmin={false} />}>
+          <Route path='/checkout' element={stripePublishableKey && <Checkout stripePublishableKey={stripePublishableKey} />} />
+          <Route path='/account' element={<Account />} />
+          <Route path='/me/update' element={<Update />} />
+          <Route path='/order/:id' element={<OrderDetail />} />
+          <Route path='/password/update' element={<UpdatePassword />} />
+          <Route path='/success' element={isAuthenticated ? <Success /> : <Navigate to="/login" />} />
+          <Route path='/orders' element={<Orders />} />
+        </Route>
+
+        <Route element={<ProtectedRoutes isAdmin={true} />}>
+          <Route path='/admin/dashboard' element={<Dashboard />} />
+        </Route>
+
+        <Route path='/password/forgot' element={<ForgotPassword />} />
+        <Route path="/user/password/reset/:token" element={<ResetPassword />} />
+        {/* <Route path='**' element={<PageNotFound />} */}
+        <Route path="*" element={<PageNotFound />} />
+      </Routes>
+
       <Footer />
-    </div>
+    </main>
   );
 }
 

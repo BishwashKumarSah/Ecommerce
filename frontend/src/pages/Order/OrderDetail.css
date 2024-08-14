@@ -1,0 +1,156 @@
+/* OrderDetail.css */
+
+/* Main order details page container */
+.orderDetailsPage {
+    padding: 2rem;
+    background-color: #f9f9f9;
+}
+
+.orderDetailsPage>* {
+    font-family: inherit !important;
+}
+
+/* Order details container styling */
+.orderDetailsContainer {
+    background-color: #fff;
+    padding: 2rem;
+    border-radius: 0.625rem;
+    box-shadow: 0 0.125rem 0.625rem rgba(0, 0, 0, 0.1);
+    margin-bottom: 2rem;
+}
+
+.orderDetailsContainer>h1 {
+    font-size: 1.5rem;
+    font-weight: 700;
+}
+
+.orderDetailsContainer>p,
+.orderDetailsCartItems>p {
+    margin-top: 1rem;
+    font-size: 1.3rem;
+    font-weight: 600;
+}
+
+.orderDetailsContainerBox {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    font-size: 1rem;
+    padding: 1rem 0 1rem 5rem;
+}
+
+.orderDetailsContainerBox>div {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.orderDetailsContainerBox>div>p {
+    font-weight: 500;
+}
+
+/* Order items container styling */
+.orderDetailsCartItems {
+    background-color: #fff;
+    padding: 2rem;
+    border-radius: 0.625rem;
+    box-shadow: 0 0.125rem 0.625rem rgba(0, 0, 0, 0.1);
+}
+
+
+/* Cart items container with spacing between items */
+.orderDetailsCartItemsContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+/* Each order item styling */
+.orderItemLink {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    color: #333;
+}
+
+.orderItemLink img {
+    width: 4.375rem;
+    height: 4.375rem;
+    border-radius: 0.3125rem;
+    object-fit: cover;
+}
+
+.orderItemContent {
+    display: flex;
+    margin-left: 1.25rem;
+    color: #333;
+    align-items: center;
+    justify-content: space-between;
+    /* Text color */
+    width: 100%;
+}
+
+.orderItemContent p {
+    margin: 0;
+    font-weight: 500;
+    font-size: 1rem;
+    color: #007bff;
+    /* Product name color */
+}
+
+.orderItemContent span {
+    color: #333;
+    font-weight: 500;
+    font-size: 1rem;
+}
+
+.orderItemContent b {
+    font-weight: 700;
+    font-size: 1rem;
+}
+
+/* Media Queries */
+@media screen and (max-width: 600px) {
+    .orderDetailsPage>* {
+        font-family: inherit !important;
+    }
+
+    .orderDetailsPage {
+        padding: 1rem;
+    }
+
+    .orderDetailsContainer {
+        padding: 1.5rem;
+    }
+
+    .orderDetailsContainer>h1 {
+        font-size: 1.25rem;
+    }
+
+    .orderDetailsContainer>p {
+        font-size: 1rem;
+    }
+
+    .orderDetailsContainerBox {
+        padding: 1rem 0 1rem 2rem;
+        font-size: 0.875rem;
+    }
+
+    .orderDetailsContainerBox>div {
+        gap: 0.25rem;
+    }
+
+    .orderDetailsCartItems {
+        padding: 1.5rem;
+    }
+
+    .orderItemLink img {
+        width: 3.5rem;
+        height: 3.5rem;
+    }
+
+    .orderItemContent p,
+    .orderItemContent span,
+    .orderItemContent b {
+        font-size: 0.875rem;
+    }
+}

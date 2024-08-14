@@ -28,7 +28,7 @@ const createNewOrder = asyncHandler(async (req, res, next) => {
 
 // Get Single Order  -  -
 const getSingleOrder = asyncHandler(async (req, res, next) => {
-    const order = await Order.findById(req.params.id).populate("user", "name email")
+    const order = await Order.findById(req.params.id).populate("user", "name email")   
     if (!order) {
         return next(new ErrorHandler(`Cannot find the order with ID : ${req.params.id}`, 404))
     }
@@ -106,15 +106,15 @@ const updateStock = async (id, quantity) => {
 
 
 // Delete Order - (ADMIN)
-const deleteOrder = asyncHandler(async (req, res, next) => {    
+const deleteOrder = asyncHandler(async (req, res, next) => {
     const order = await Order.findById(req.params.id);
-    
+
     if (!order) {
         return next(new ErrorHandler(`Cannot find order with id: ${req.params.id}`, 404));
     }
 
     const deletedOrder = await Order.findByIdAndDelete(req.params.id);
-    
+
     res.status(200).json({
         success: true,
         message: `Order Deleted Successfully with Id: ${req.params.id}`,

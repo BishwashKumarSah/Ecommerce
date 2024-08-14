@@ -6,8 +6,8 @@ const productSlice = createSlice({
     name: 'Products',
     initialState: {
         featuredProducts: [],
-        products: [],    
-        totalProductsCount:0,   
+        products: [],
+        totalProductsCount: 0,
         product: null,
         status: STATUSES.IDLE,
         errorMessage: null,
@@ -17,9 +17,9 @@ const productSlice = createSlice({
             state.featuredProducts = action.payload;
         },
         setProducts(state, action) {
-            state.products= action.payload.products
+            state.products = action.payload.products
             state.totalProductsCount = action.payload.totalProductsCount
-            
+
         },
         setStatus(state, action) {
             state.status = action.payload;
@@ -67,11 +67,11 @@ export const fetchAllProducts = (search, currentPage = 1, price = [0, 10000], ca
             if (category) {
                 URI = `api/v1/products?search=${search}&page=${currentPage}&price[gte]=${price[0]}&price[lte]=${price[1]}&ratings[gte]=${ratings}&category=${category}`;
             }
-            
-            const { data } = await axios.get(`http://localhost:8000/${URI}`)
-            
 
-            dispatch(setProducts({products:data.data,totalProductsCount:data.totalProductsCount}))
+            const { data } = await axios.get(`http://localhost:8000/${URI}`)
+
+
+            dispatch(setProducts({ products: data.data, totalProductsCount: data.totalProductsCount }))
             dispatch(setStatus(STATUSES.IDLE))
         } catch (error) {
             dispatch(setStatus(STATUSES.ERROR));
@@ -100,7 +100,8 @@ export const newReview = (myForm, productId) => {
         dispatch(setStatus(STATUSES.LOADING));
         try {
             const { data } = await axios.put('http://localhost:8000/api/v1/review', myForm, {
-                withCredentials: true
+                withCredentials: true,
+                headers: { "Content-Type": 'application/json' }
             });
             dispatch(updateProductReviews({
                 productId,

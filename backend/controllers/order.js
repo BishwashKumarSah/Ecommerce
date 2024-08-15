@@ -28,7 +28,7 @@ const createNewOrder = asyncHandler(async (req, res, next) => {
 
 // Get Single Order  -  -
 const getSingleOrder = asyncHandler(async (req, res, next) => {
-    const order = await Order.findById(req.params.id).populate("user", "name email")   
+    const order = await Order.findById(req.params.id).populate("user", "name email")
     if (!order) {
         return next(new ErrorHandler(`Cannot find the order with ID : ${req.params.id}`, 404))
     }
@@ -122,5 +122,56 @@ const deleteOrder = asyncHandler(async (req, res, next) => {
     });
 });
 
+// Get Cumulative Profits 
+const getCumulativeProfits = asyncHandler(async (req, res, next) => {
 
-module.exports = { createNewOrder, getSingleOrder, myOrders, getAllOrders, updateOrderStatus, deleteOrder }
+    const { year } = req.params;
+
+    const startDate = new Date(year, 0, 1)
+    const endDate = new Date(year + 1, 0, 1)
+    const totalOrders = await Order.find({})
+    const Orders = await Order.find({ paidAt: { $gte: startDate, $lt: endDate } })
+
+    const profitArray = new Array(12).fill(0)
+    const yearArray = new Set()
+
+    totalOrders.map((totalOrder, index) => {
+        const year = new Date(totalOrder.paidAt).getFullYear()
+        yearArray.add(year)
+    })
+
+    Orders.map((order, index) => {
+
+        const month = new Date(order.paidAt).getMonth();
+        const profit = order.totalPrice * 0.20 //Here 10% is the platform charge that we are taking.
+        profitArray[month] += profit
+    });
+
+    const cumulativeProfit = profitArray.reduce((acc, current, index) => {
+        if (index === 0) {
+            acc[index] = current
+        } else {
+            acc[index] = acc[index - 1] + current
+        }
+        return acc
+    }, [])
+
+    const newSortedYearArray = [...yearArray].sort((a, b) => a - b)
+
+
+    const result = cumulativeProfit.map((profit, index) => {
+        return {
+            month: index + 1,
+            totalProfit: profit
+        }
+    })
+
+    res.status(200).json({
+        year: newSortedYearArray,
+        success: true,
+        totalProfit: result
+    })
+})
+
+
+module.exports = { createNewOrder, getSingleOrder, myOrders, getAllOrders, getCumulativeProfits, updateOrderStatus, deleteOrder }

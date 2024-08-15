@@ -1,0 +1,26 @@
+.card_container{   
+    display: flex;    
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+    /* border: 1px solid red; */
+    min-width: 12rem;
+    min-height: 6rem;
+    padding: 0 1rem;
+    cursor: pointer;
+}
+.card_info{
+    width: 90%;
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    justify-content: center;
+}
+.card_info p{
+    font-size: 0.9rem;
+    font-weight: 400;
+    color: grey;
+}
+.card_icon{
+    display: grid;
+    justify-content: center;
+    align-items: center;
+}

@@ -1,0 +1,36 @@
+.admin_dashboard {
+    min-width: 100%;
+    min-height: 100%;
+
+}
+
+.dashboard_cards {
+    width: 100%;   
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2rem;
+    margin-bottom: 5rem;
+}
+
+@media (max-width: 1390px) {
+    .dashboard_cards {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 480px) {
+    .dashboard_cards {
+        grid-template-columns: 1fr;
+    }
+}
+
+.charts_container{
+    width: 100%;
+
+}
+
+.total_profits_heading{
+    display: flex;
+    justify-content: space-between;
+    padding: 1rem;
+}

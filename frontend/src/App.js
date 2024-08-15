@@ -27,6 +27,12 @@ import Orders from './pages/Order/Orders';
 import OrderDetail from './pages/Order/OrderDetail';
 import Dashboard from './pages/Admin/Dashboard/Dashboard';
 import PageNotFound from './components/PageNotFound/PageNotFound';
+import AddProduct from './pages/Admin/Dashboard/AddProduct';
+import AllProducts from './pages/Admin/Dashboard/AllProducts';
+import AdminDashboard from './pages/Admin/Dashboard/AdminDashboard';
+import AllOrders from './pages/Admin/Dashboard/AllOrders';
+import AllUsers from './pages/Admin/Dashboard/AllUsers';
+import AllReviews from './pages/Admin/Dashboard/AllReviews';
 
 function App() {
   const dispatch = useDispatch();
@@ -83,7 +89,16 @@ function App() {
         </Route>
 
         <Route element={<ProtectedRoutes isAdmin={true} />}>
-          <Route path='/admin/dashboard' element={<Dashboard />} />
+          <Route path="/admin/dashboard" element={<Dashboard />}>
+            <Route path='' element={<AdminDashboard />} />
+            <Route path="addProduct" element={<AddProduct />} />
+            <Route path="allProducts" element={<AllProducts />} />
+            <Route path="orders" element={<AllOrders />} />
+            <Route path="users" element={<AllUsers />} />
+            <Route path="reviews" element={<AllReviews />} />
+
+            {/* Add other admin routes here */}
+          </Route>
         </Route>
 
         <Route path='/password/forgot' element={<ForgotPassword />} />

@@ -1,0 +1,9 @@
+.custom-tooltip {
+    white-space: pre-line;
+    /* This will preserve the newline characters */
+    /* Additional styling for tooltips */
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    padding: 5px;
+    border-radius: 3px;
+}

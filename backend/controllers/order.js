@@ -56,6 +56,18 @@ const myOrders = asyncHandler(async (req, res, next) => {
 // Get All Orders - (ADMIN)
 const getAllOrders = asyncHandler(async (req, res, next) => {
     const orders = await Order.find({}).populate("user", "name email")
+
+    const totalOrders = orders.length;
+
+    const SalesMap = new Map()
+    orders.map((order, index) => {
+        if (order.shippingInfo.country in SalesMap) {
+            SalesMap[order.shippingInfo.country][0] += 1
+            SalesMap[order.shippingInfo.country][1] += order.totalPrice
+        } else {
+            SalesMap[order.shippingInfo.country] = [1, order.totalPrice]
+        }
+    })
     let total_Amount = 0
     orders?.forEach(order => {
         total_Amount += order.totalPrice;
@@ -63,8 +75,10 @@ const getAllOrders = asyncHandler(async (req, res, next) => {
     res.status(200).json({
         success: true,
         message: 'Fetched All Users Orders',
+        totalOrders,
         orders,
-        total_Amount
+        total_Amount,
+        salesMap: SalesMap
     })
 })
 
@@ -125,12 +139,15 @@ const deleteOrder = asyncHandler(async (req, res, next) => {
 // Get Cumulative Profits 
 const getCumulativeProfits = asyncHandler(async (req, res, next) => {
 
-    const { year } = req.params;
+    const year = parseInt(req.params.year);
+    const nextYear = year + 1
+    const startDate = new Date(Date.UTC(year, 0, 1));
+    const endDate = new Date(Date.UTC(nextYear, 0, 1));
 
-    const startDate = new Date(year, 0, 1)
-    const endDate = new Date(year + 1, 0, 1)
+
     const totalOrders = await Order.find({})
     const Orders = await Order.find({ paidAt: { $gte: startDate, $lt: endDate } })
+
 
     const profitArray = new Array(12).fill(0)
     const yearArray = new Set()
@@ -143,7 +160,7 @@ const getCumulativeProfits = asyncHandler(async (req, res, next) => {
     Orders.map((order, index) => {
 
         const month = new Date(order.paidAt).getMonth();
-        const profit = order.totalPrice * 0.20 //Here 10% is the platform charge that we are taking.
+        const profit = order.totalPrice  //Here 10% is the platform charge that we are taking.
         profitArray[month] += profit
     });
 

@@ -1,0 +1,42 @@
+.all_products_container {
+    width: 100%;
+    overflow-x: hidden;
+    /* Prevent horizontal scroll from container overflow */
+}
+
+.all_products {
+    width: 100%;
+}
+
+.productListTable {
+    width: 100%;
+    overflow-x: auto;
+    /* Allow horizontal scrolling inside DataGrid if needed */
+}
+
+.action_button {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.action_button .pencil {
+    padding-top: 10px;
+}
+
+#productListHeading {
+    margin-bottom: 1rem;
+}
+
+@media (max-width: 768px) {
+    .productListTable {
+        font-size: 0.875rem;
+        /* Adjust font size for smaller screens */
+    }
+
+    #productListHeading {
+        font-size: 1.25rem;
+        /* Adjust heading size for smaller screens */
+    }
+}

@@ -1,14 +1,16 @@
-.login_signUp_container {
+.login_signUp_container,
+.create_product_container {
     min-width: 100%;
     min-height: 100%;
     border: 1px solid black;
-      /* align-items: center; */
-    
+    /* align-items: center; */
+
 
 
 }
 
-.login_signUp_section {
+.login_signUp_section,
+.create_product_form {
     border: 1px solid red;
     background-color: white;
     width: 30vw;
@@ -83,7 +85,8 @@
 }
 
 .login_form,
-.sign_up_form {
+.sign_up_form,
+.create_product_container {
     min-width: 100%;
     min-height: 100%;
     display: flex;
@@ -122,6 +125,8 @@
 .sign_up_email>input,
 .sign_up_name>input,
 .sign_up_password>input,
+.sign_up_password>textarea,
+.sign_up_password>select,
 .login_password>input,
 .checkout_shipping>input,
 .checkout_shipping>select {

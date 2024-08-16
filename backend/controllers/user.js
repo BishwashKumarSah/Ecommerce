@@ -195,14 +195,14 @@ const updateUserProfile = asyncHandler(async (req, res, next) => {
     const newUserData = { name: name, email: email }
 
     if (req.body.avatar != 'undefined') {
-        const imageId = req.user.avatar.public_id        
+        const imageId = req.user.avatar.public_id
         await cloudinary.v2.uploader.destroy(imageId);
-        
+
         const avatar = await uploadFileToCloudinary(req, res, next)
-        
+
         newUserData.avatar = avatar
     }
-    
+
     // const avatar = await uploadFileToCloudinary(req, res, next)
     const user = await User.findByIdAndUpdate(req.user._id, {
         ...newUserData
@@ -211,9 +211,9 @@ const updateUserProfile = asyncHandler(async (req, res, next) => {
         runValidators: true,
         useFindAndModify: false
     })
- 
+
     await user.save({ validateBeforeSave: true })
-    console.log("user",user);
+    console.log("user", user);
     return res.status(200).json({
         success: true,
         message: 'Profile updated successfully',
@@ -224,9 +224,11 @@ const updateUserProfile = asyncHandler(async (req, res, next) => {
 // Get All Users -(ADMIN)
 const getAllUsers = asyncHandler(async (req, res, next) => {
     const users = await User.find({})
+    const totalUser = users.length
     res.status(200).json({
         success: true,
         message: 'Fetched all the users',
+        totalUser,
         users
     })
 })

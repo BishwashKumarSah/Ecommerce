@@ -33,6 +33,7 @@ import AdminDashboard from './pages/Admin/Dashboard/AdminDashboard';
 import AllOrders from './pages/Admin/Dashboard/AllOrders';
 import AllUsers from './pages/Admin/Dashboard/AllUsers';
 import AllReviews from './pages/Admin/Dashboard/AllReviews';
+import EditProduct from './pages/Admin/Dashboard/EditProduct';
 
 function App() {
   const dispatch = useDispatch();
@@ -91,6 +92,7 @@ function App() {
         <Route element={<ProtectedRoutes isAdmin={true} />}>
           <Route path="/admin/dashboard" element={<Dashboard />}>
             <Route path='' element={<AdminDashboard />} />
+            <Route path="editProduct/:id" element={<EditProduct />} />
             <Route path="addProduct" element={<AddProduct />} />
             <Route path="allProducts" element={<AllProducts />} />
             <Route path="orders" element={<AllOrders />} />

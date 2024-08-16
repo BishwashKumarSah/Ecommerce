@@ -106,7 +106,7 @@ const Header = () => {
                         {user.role === "admin" && (
                           <Link
                             to="/admin/dashboard"
-                            className="admin_dashboard isAdmin"
+                            className="isAdmin"
                             hidden={user?.role === "user"}
                           >
                             Dashboard

@@ -11,17 +11,10 @@ import { Slider, Typography } from "@mui/material";
 import Pagination from "../../components/Pagination/Pagination";
 import Loader from "../../utils/Loader/Loader";
 import toast from "react-hot-toast";
+import categories from "../../utils/Categories";
 
 const Products = () => {
-  const categories = [
-    "Laptops",
-    "Smartphones",
-    "Camera",
-    "Footwear",
-    "Gadgets",
-    "Bottom",
-    "Attire",
-  ];
+  
 
   const { search } = useLocation();
   const dispatch = useDispatch();

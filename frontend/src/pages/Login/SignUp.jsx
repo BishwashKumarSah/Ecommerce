@@ -65,10 +65,10 @@ const SignUp = ({
     formData.set("avatar", avatar);
 
     if (isAuthenticated) {
-      console.log("update formData sent");
+    
       dispatch(updateUser(formData));
     } else {
-      console.log("register formData sent");
+    
       dispatch(registerUser(formData));
     }
   };

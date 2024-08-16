@@ -6,6 +6,13 @@ const adminSlice = createSlice({
     name: 'Admin',
     initialState: {
         profits: {},
+        newProduct: {},
+        allProducts: {},
+        productsArray: [],
+        countryWiseSalesData: {},
+        totalProfits: 0,
+        totalOrders: 0,
+        totalUser: 0,
         status: STATUSES.IDLE,
         errorMessage: null
     },
@@ -13,6 +20,24 @@ const adminSlice = createSlice({
         setTotalProfits(state, action) {
             state.profits = action.payload;
         },
+        setNewProduct(state, action) {
+            state.newProduct = action.payload
+        },
+        setAllProducts(state, action) {
+            state.allProducts = action.payload.data;
+            state.productsArray = action.payload.products
+        },
+        setCountryWiseSalesData(state, action) {
+            state.countryWiseSalesData = action.payload
+        },
+        setTotalProfit(state, action) {
+            state.totalProfits = action.payload.totalProfits
+            state.totalOrders = action.payload.totalOrders
+        },
+        setTotalUser(state, action) {
+            state.totalUser = action.payload
+        },
+
         setStatus(state, action) {
             state.status = action.payload;
         },
@@ -22,16 +47,31 @@ const adminSlice = createSlice({
     }
 });
 
-export const { setTotalProfits, setStatus, setErrorMessage } = adminSlice.actions;
+export const { setTotalProfits, setAllProducts, setNewProduct, setTotalProfit, setTotalUser, setCountryWiseSalesData, setStatus, setErrorMessage } = adminSlice.actions;
 export default adminSlice.reducer;
 
+
+//Get all the products
+export const getAllProducts = () => {
+    return async function getAllProducts(dispatch, getState) {
+        dispatch(setStatus(STATUSES.LOADING))
+        try {
+            const { data } = await axios.get('http://localhost:8000/api/v1/admin/products', { withCredentials: true });
+            dispatch(setAllProducts({ data, products: data.products }))
+
+        } catch (error) {
+            dispatch(setStatus(STATUSES.ERROR));
+            dispatch(setErrorMessage(error.response?.data?.message || error.message));
+        }
+    }
+}
+
+// Get total cumulative profits (ADMIN)
 export const getTotalProfits = (year) => {
     return async function getTotalProfitsThunk(dispatch, getState) {
         dispatch(setStatus(STATUSES.LOADING))
         try {
             const { data } = await axios.get(`http://localhost:8000/api/v1/admin/totalProfits/${year}`, { withCredentials: true });
-        console.log("data",data);
-            
 
             dispatch(setTotalProfits({ year: data.year, totalProfits: data.totalProfit }))
             dispatch(setStatus(STATUSES.IDLE))
@@ -42,4 +82,55 @@ export const getTotalProfits = (year) => {
     };
 };
 
+// Get Country Wise Sales Data (ADMIN)
+export const getCountryWiseSalesData = () => {
+    return async function getCountryWiseSalesDataThunk(dispatch) {
+        dispatch(setStatus(STATUSES.LOADING))
+        try {
+            const { data } = await axios.get(`http://localhost:8000/api/v1/admin/orders`, { withCredentials: true });
 
+            dispatch(setCountryWiseSalesData(data.salesMap))
+            dispatch(setTotalProfit({ totalProfits: data.total_Amount, totalOrders: data.totalOrders }))
+            dispatch(setStatus(STATUSES.IDLE))
+        } catch (error) {
+            dispatch(setStatus(STATUSES.ERROR));
+            dispatch(setErrorMessage(error.response?.data?.message || error.message));
+        }
+    };
+};
+
+export const getTotalUserCount = () => {
+    return async function getTotalUserCountThunk(dispatch) {
+        dispatch(setStatus(STATUSES.LOADING))
+        try {
+            const { data } = await axios.get(`http://localhost:8000/api/v1/admin/users`, { withCredentials: true });
+
+
+            dispatch(setTotalUser(data.totalUser))
+            dispatch(setStatus(STATUSES.IDLE))
+        } catch (error) {
+            dispatch(setStatus(STATUSES.ERROR));
+            dispatch(setErrorMessage(error.response?.data?.message || error.message));
+        }
+    };
+};
+
+
+// Create a new product 
+
+export const createNewProduct = (product) => {
+    return async function createNewProductThunk(dispatch, getState) {
+        dispatch(setStatus(STATUSES.LOADING))
+        try {
+            const config = { headers: { "Content-Type": "multipart/form-data" }, withCredentials: true }
+            const { data } = await axios.post('http://localhost:8000/api/v1/admin/product/new', product, config)
+            dispatch(setNewProduct(data.data))
+            dispatch(setStatus(STATUSES.IDLE))
+
+        } catch (error) {
+            dispatch(setNewProduct({}))
+            dispatch(setStatus(STATUSES.ERROR));
+            dispatch(setErrorMessage(error.response?.data?.message || error.message));
+        }
+    }
+}

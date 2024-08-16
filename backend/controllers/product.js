@@ -2,12 +2,36 @@ const Product = require('../models/product');
 const ErrorHandler = require('../utils/errorHandle')
 const asyncHandler = require('../utils/trycatch')
 const ProductClass = require('../utils/productClass')
+const cloudinary = require('cloudinary')
 
 // Create Product - Admin
 
 const createProduct = asyncHandler(async (req, res, next) => {
 
     req.body.createdBy = req.user._id;
+
+    // console.log(typeof req.body.images);if it is single image then it will just print string type but if there are multiple file it will print object
+
+    let images = []
+    if (typeof req.body.images === 'string') {
+        images.push(req.body.images)
+    } else {
+        images = req.body.images
+    }
+
+    const imagesLinks = []
+
+    for (let i = 0; i < images.length; i++) {
+        const result = await cloudinary.v2.uploader.upload(images[i], {
+            folder: "avatars"
+        })
+        imagesLinks.push({
+            public_id: result.public_id,
+            url: result.secure_url
+        })
+    }
+
+    req.body.images = imagesLinks
 
     const product = await Product.create(req.body);
     return res.status(201).json({
@@ -25,13 +49,37 @@ const getAllProducts = asyncHandler(async (req, res, next) => {
 
     const new_query = queryS.pagination(resultPerPage);
     const products = await new_query.query;
-    
+
 
     return res.status(200).json({
         success: true,
         message: 'working get all product',
         data: products,
         totalProductsCount: totalProductsCount
+    });
+});
+
+// Get All Products (ADMIN)
+const getAllProductsAdmin = asyncHandler(async (req, res, next) => {
+    const products = await Product.find({})
+
+    var outOfStock = 0
+    products.map((product, index) => {
+        if (product.stock <= 0) {
+            outOfStock += 1
+        }
+    })
+
+    const totalCount = products.length;
+
+    var inStock = totalCount - outOfStock
+
+    return res.status(200).json({
+        success: true,
+        products: products,
+        outOfStock,
+        inStock,
+        totalCount: totalCount
     });
 });
 
@@ -184,4 +232,4 @@ const deleteProductReview = asyncHandler(async (req, res, next) => {
 
 
 
-module.exports = { getAllProducts, createProduct, updateProduct, deleteProduct, getSingleProduct, createProductReview, getAllProductReviews, deleteProductReview }
+module.exports = { getAllProducts, getAllProductsAdmin, createProduct, updateProduct, deleteProduct, getSingleProduct, createProductReview, getAllProductReviews, deleteProductReview }

@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect } from "react";
+import React, { Fragment, useEffect, useState } from "react";
 import "./AllProducts.css";
 import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
@@ -9,7 +9,7 @@ import EditIcon from "@mui/icons-material/Edit";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import toast from "react-hot-toast";
 import { STATUSES } from "../../../store/statusEnums";
-import { getAllProducts } from "../../../store/adminSlice";
+import { deleteProduct, getAllProducts } from "../../../store/adminSlice";
 import { Button } from "@mui/material";
 
 const ProductList = ({ history }) => {
@@ -19,9 +19,23 @@ const ProductList = ({ history }) => {
     (state) => state.admin
   );
 
+  const [deleteSuccess, setDeleteSuccess] = useState(false);
+
+  const handleProductDelete = (id) => {
+    dispatch(deleteProduct(id));
+    setDeleteSuccess(true);
+  };
+
+  useEffect(() => {
+    if (status === STATUSES.IDLE && deleteSuccess === true) {
+      toast.success("Product Deleted Successfully");
+      setDeleteSuccess(false);
+    }
+  }, [deleteSuccess, status]);
+
   useEffect(() => {
     dispatch(getAllProducts());
-  }, [dispatch]);
+  }, [dispatch, deleteSuccess]);
 
   useEffect(() => {
     if (status === STATUSES.ERROR) {
@@ -35,7 +49,7 @@ const ProductList = ({ history }) => {
   };
 
   const columns = [
-    { field: "id", headerName: "Product ID", minWidth: 200, flex: 1 },
+    { field: "id", headerName: "Product ID", minWidth: 500, flex: 1 },
     {
       field: "name",
       headerName: "Name",
@@ -74,11 +88,14 @@ const ProductList = ({ history }) => {
         return (
           <Fragment>
             <div className="action_button">
-              <Link to={`/admin/dashboard/editProduct/${params.id}`} className="pencil">
+              <Link
+                to={`/admin/dashboard/editProduct/${params.id}`}
+                className="pencil"
+              >
                 <EditIcon />
               </Link>
 
-              <Button>
+              <Button onClick={() => handleProductDelete(params.id)}>
                 <DeleteForeverIcon />
               </Button>
             </div>
@@ -100,7 +117,6 @@ const ProductList = ({ history }) => {
         ratings: item.ratings,
       });
     });
-
 
   return (
     <Fragment>

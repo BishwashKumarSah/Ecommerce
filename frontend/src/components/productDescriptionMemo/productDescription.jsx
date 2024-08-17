@@ -61,7 +61,7 @@ const ProductDescription = React.memo(
                 </div>
                 <div>({product.data.numOfReviews} reviews)</div>
               </div>
-              <h3 className="product_price">Rs. {product.data.price}</h3>
+              <h3 className="product_price"> ${product.data.price}</h3>
 
               <div className="number">
                 <label htmlFor="quantity">Quantity:</label>

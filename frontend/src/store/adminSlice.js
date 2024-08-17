@@ -134,3 +134,20 @@ export const createNewProduct = (product) => {
         }
     }
 }
+
+export const deleteProduct = (id) => {
+    return async function deleteProductThunk(dispatch, getState) {
+        dispatch(setStatus(STATUSES.LOADING))
+        try {
+            const config = {withCredentials: true}
+            await axios.delete(`http://localhost:8000/api/v1/admin/product/${id}`, config)
+           
+            dispatch(setStatus(STATUSES.IDLE))
+
+        } catch (error) {
+           
+            dispatch(setStatus(STATUSES.ERROR));
+            dispatch(setErrorMessage(error.response?.data?.message || error.message));
+        }
+    }
+}

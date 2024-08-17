@@ -127,6 +127,9 @@ const deleteProduct = asyncHandler(async (req, res, next) => {
     if (!product) {
         return next(new ErrorHandler(`Cannot get the product with id ${req.params.id}`, 400));
     }
+    for (let index = 0; index < product.images.length; index++) {
+        await cloudinary.v2.uploader.destroy(product.images[i].public_id);
+    }
     // this will return the deleted product not the remaning data after deleting
     product = await Product.findByIdAndDelete(req.params.id)
     return res.status(200).json({

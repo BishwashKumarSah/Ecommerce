@@ -18,6 +18,7 @@ import Loader from "../../../utils/Loader/Loader";
 import InStockOutOfStockChart from "../Charts/InStockOutOfStock";
 import toast from "react-hot-toast";
 import WorldMapHeatmap from "../Charts/WorldMapSales";
+import { Link } from "react-router-dom";
 
 const AdminDashboard = () => {
   const [year, setYear] = useState(2024);
@@ -88,15 +89,16 @@ const AdminDashboard = () => {
         <div className="dashboard_cards">
           <Cards
             cardTitle="Total Profits"
-            data={`$${totalProfits }`}
+            data={`$${totalProfits}`}
             icon={<MonetizationOnIcon />}
           />
-          <Cards
-            cardTitle="Total Products"
-            data={allProducts.totalCount}
-            icon={<InventoryIcon />}
-          />
-
+          <Link to='/admin/dashboard/allProducts'>
+            <Cards
+              cardTitle="Total Products"
+              data={allProducts.totalCount}
+              icon={<InventoryIcon />}
+            />
+          </Link>
           <Cards
             cardTitle="Total Orders"
             data={totalOrders}

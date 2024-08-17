@@ -48,7 +48,6 @@ const ProductDetails = () => {
   const [openReviewDialog, setOpenReviewDialog] = useState(false);
   const [rating, setRating] = useState(0);
   const [comment, setComment] = useState("");
-  const [canReview, setCanReview] = useState(false);
 
   const restrictReviewToOnlyValidUsers = () => {
     if (userStatus === STATUSES.IDLE && isAuthenticated === false) {
@@ -126,11 +125,6 @@ const ProductDetails = () => {
   };
 
   useEffect(() => {
-    dispatch(fetchProductDetails(id));
-    dispatch(getMyOrders());
-  }, [dispatch, id]);
-
-  useEffect(() => {
     if (product?.data?.images?.length) {
       const interval = setInterval(() => {
         showNextImages();
@@ -138,6 +132,11 @@ const ProductDetails = () => {
       return () => clearInterval(interval);
     }
   }, [showNextImages, product?.data?.images]);
+
+  useEffect(() => {
+    dispatch(fetchProductDetails(id));
+    dispatch(getMyOrders());
+  }, [dispatch, id]);
 
   useEffect(() => {
     if (errorMessage) {
@@ -156,51 +155,50 @@ const ProductDetails = () => {
       {product && (
         <>
           <div className="product_details_component">
-            <div className="product_details_images">
-              {product.data.images.length > 0 ? (
-                <>
-                  {product.data.images.map((image, ind) => (
-                    <img
-                      key={ind}
-                      src={image.url}
-                      alt={`Product ${ind + 1}`}
-                      className="product_details_image"
-                      style={{ transform: `translateX(${-100 * imageIndex}%)` }}
-                    />
+            <div className="product_sticky">
+              <div className="product_details_images">
+                {product.data.images.length > 0 &&
+                  product.data.images.map((image, ind) => (
+                    <div key={ind} className="product_images">
+                      <img
+                        src={image.url}
+                        alt={`Product ${ind + 1}`}
+                        style={{
+                          transform: `translateX(${-100 * imageIndex}%)`,
+                        }}
+                      />
+                    </div>
                   ))}
-                  <button
-                    onClick={showPrevImages}
-                    className="btn_prev btn_show"
-                    aria-label="Previous Image"
-                  >
-                    <IoIosArrowBack className="btn_prev_icon" size={56} />
-                  </button>
-                  <button
-                    onClick={showNextImages}
-                    className="btn_next btn_show"
-                    aria-label="Next Image"
-                  >
-                    <IoIosArrowForward className="btn_next_icon" size={56} />
-                  </button>
-                  <div className="circle-slider">
-                    {product.data.images.map((_, index) => (
-                      <button
-                        key={index}
-                        className="circle-icon-btn"
-                        onClick={() => setImageIndex(index)}
-                        aria-label={`Go to image ${index + 1}`}
-                      >
-                        <BsCircleFill
-                          className="icon-circle"
-                          color={index === imageIndex ? "white" : "grey"}
-                        />
-                      </button>
-                    ))}
-                  </div>
-                </>
-              ) : (
-                <p>No images available</p>
-              )}
+                <button
+                  onClick={showPrevImages}
+                  className="btn_prev btn_show"
+                  aria-label="Previous Image"
+                >
+                  <IoIosArrowBack className="btn_prev_icon" size={56} />
+                </button>
+                <button
+                  onClick={showNextImages}
+                  className="btn_next btn_show"
+                  aria-label="Next Image"
+                >
+                  <IoIosArrowForward className="btn_next_icon" size={56} />
+                </button>
+                <div className="circle-slider">
+                  {product.data.images.map((_, index) => (
+                    <button
+                      key={index}
+                      className="circle-icon-btn"
+                      onClick={() => setImageIndex(index)}
+                      aria-label={`Go to image ${index + 1}`}
+                    >
+                      <BsCircleFill
+                        className="icon-circle"
+                        color={index === imageIndex ? "white" : "grey"}
+                      />
+                    </button>
+                  ))}
+                </div>
+              </div>
             </div>
 
             <ProductDescription

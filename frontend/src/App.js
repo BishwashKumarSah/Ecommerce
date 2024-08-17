@@ -64,12 +64,9 @@ function App() {
 
 
   return (
-    <main className='main_app'>
+    <div className='main_app'>
       <Toaster />
-
       <Header />
-
-
       <Routes>
         <Route index path='/' element={<Home />} />
         <Route path='/about' element={<AboutUs />} />
@@ -110,7 +107,7 @@ function App() {
       </Routes>
 
       <Footer />
-    </main>
+    </div>
   );
 }
 

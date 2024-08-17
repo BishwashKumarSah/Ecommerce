@@ -1,7 +1,6 @@
 import React from "react";
 import ReactStars from "react-stars";
 import { Link } from "react-router-dom";
-import Img from "../../images/3c0e1e3aca8b3c9d.webp";
 import "./Product.css";
 
 const Product = ({ products }) => {

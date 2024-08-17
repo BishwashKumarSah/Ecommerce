@@ -10,11 +10,14 @@ import { STATUSES } from "../../../store/statusEnums";
 import toast from "react-hot-toast";
 import categories from "../../../utils/Categories";
 import { createNewProduct } from "../../../store/adminSlice";
+import { useNavigate } from "react-router-dom";
 
 const AddProduct = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const { status, errorMessage } = useSelector((state) => state.admin);
+  const [success, setSuccess] = useState(false);
 
   const [images, setImages] = useState([]);
   const [imagePreview, setImagePreview] = useState([]);
@@ -73,6 +76,9 @@ const AddProduct = () => {
     //   console.log(val);
     // });
     dispatch(createNewProduct(formData));
+    if (status === STATUSES.IDLE) {
+      setSuccess(true);
+    }
   };
 
   const validateProductData = (data) => {
@@ -86,19 +92,20 @@ const AddProduct = () => {
   useEffect(() => {
     if (status === STATUSES.ERROR) {
       toast.error(errorMessage);
-    } else if (status === STATUSES.SUCCESS) {
+    } else if (status === STATUSES.IDLE && success) {
       toast.success("Product created successfully");
       setProductData({
         pName: "",
-        pPrice: undefined,
+        pPrice: "",
         pDescription: "",
         pCategory: "",
-        pStock: undefined,
+        pStock: "",
       });
       setImages([]);
       setImagePreview([]);
+      navigate("/admin/dashboard");
     }
-  }, [errorMessage, status]);
+  }, [errorMessage, status, success,navigate]);
 
   return (
     <div className="create_product_container">
@@ -154,6 +161,7 @@ const AddProduct = () => {
           <select
             name="pCategory"
             id="pCategory"
+            required
             onChange={handleCreateProductDataChange}
             disabled={status === STATUSES.LOADING}
           >
@@ -186,6 +194,7 @@ const AddProduct = () => {
             name="avatar"
             accept="image/*"
             multiple
+            required
             onChange={handleProductImageDataChange}
             disabled={status === STATUSES.LOADING}
           />

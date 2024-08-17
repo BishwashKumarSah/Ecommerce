@@ -29,12 +29,11 @@
 body {
     color: var(--black);
     font-size: var(--base-font-size);
-    background-color: var(--body-color);
-    margin: 0;
+    background-color: var(--body-color);  
     max-width: 95%;
     margin: 0 auto;
     min-height: 100dvh;
-    scroll-behavior: smooth;
+    scroll-behavior: smooth; 
     position: relative !important;
 }
 
@@ -76,19 +75,16 @@ ul {
     list-style: none;
 }
 
-.main_app {
-    min-height: 100vh;
-    /* Corrected to use vh */
-    display: grid;
-    grid-template-columns: 1fr;
-    grid-template-rows: auto 1fr auto;
-    width: 100%;
-    position: relative;
+.main_app{
+    display: flex;
+    flex-direction: column;
+    position: relative !important;
+    top: 0;
 }
 
-/* .main {
+ .main {
     width: 100%;   
     flex-grow: 1;
     flex-shrink: 0;
     flex-basis: content;
-} */
+ }

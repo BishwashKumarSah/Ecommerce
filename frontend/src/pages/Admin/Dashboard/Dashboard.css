@@ -1,12 +1,12 @@
 .dashboard_container {
     display: grid;
-    grid-template-columns: auto 1fr;
-    overflow-x: hidden;
+    grid-template-columns: auto 1fr;   
+    align-items: start;
     /* Prevent horizontal scroll on smaller screens */
 }
 
 .dashboard_side_nav {
-    align-self: self-start;
+    align-self: self-start;  
     position: sticky;
     padding: 6rem 2rem 2rem;
     top: 0;

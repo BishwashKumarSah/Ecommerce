@@ -86,17 +86,22 @@ const getAllOrders = asyncHandler(async (req, res, next) => {
 const updateOrderStatus = asyncHandler(async (req, res, next) => {
     const order = await Order.findById(req.params.id)
 
+
     if (!order) {
         return next(new ErrorHandler(`Cannot find the order with ID:${req.params.id}`), 404)
     }
 
     if (order.orderStatus === 'Delivered') {
         return next(new ErrorHandler('Order has already been delivered'), 400)
-    }
+    }  
+
     order.orderStatus = req.body.status;
-    if (req.body.status === 'Delivered') {
+  
+    if (req.body.status === 'Shipped') {
+        
+
         const updateStockPromise = order.orderItems.map((order) => {
-            return updateStock(order.product, order.quantity)
+            return updateStock(order.product_id, order.quantity)
         })
         await Promise.all(updateStockPromise)
         order.deliveredAt = Date.now()

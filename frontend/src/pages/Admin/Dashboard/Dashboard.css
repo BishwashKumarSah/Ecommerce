@@ -27,7 +27,7 @@
     padding: 2rem;
     box-sizing: border-box;
     /* Include padding in the element's width */
-    overflow-x: hidden;
+    overflow-y: hidden;
     /* Prevent horizontal scroll due to content overflow */
 }
 

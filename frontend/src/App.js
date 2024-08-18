@@ -34,6 +34,7 @@ import AllOrders from './pages/Admin/Dashboard/AllOrders';
 import AllUsers from './pages/Admin/Dashboard/AllUsers';
 import AllReviews from './pages/Admin/Dashboard/AllReviews';
 import EditProduct from './pages/Admin/Dashboard/EditProduct';
+import EditOrder from './pages/Admin/Dashboard/EditOrder';
 
 function App() {
   const dispatch = useDispatch();
@@ -90,6 +91,7 @@ function App() {
           <Route path="/admin/dashboard" element={<Dashboard />}>
             <Route path='' element={<AdminDashboard />} />
             <Route path="editProduct/:id" element={<EditProduct />} />
+            <Route path="editOrder/:id" element={<EditOrder />} />
             <Route path="addProduct" element={<AddProduct />} />
             <Route path="allProducts" element={<AllProducts />} />
             <Route path="orders" element={<AllOrders />} />

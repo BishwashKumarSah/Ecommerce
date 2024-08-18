@@ -58,7 +58,6 @@ const AdminDashboard = () => {
   const worldMapData = [];
 
   for (const key in salesMap) {
-    console.log(key);
     worldMapData.push({
       country: key,
       totalSales: salesMap[key][0],
@@ -92,18 +91,20 @@ const AdminDashboard = () => {
             data={`$${totalProfits}`}
             icon={<MonetizationOnIcon />}
           />
-          <Link to='/admin/dashboard/allProducts'>
+          <Link to="/admin/dashboard/allProducts">
             <Cards
               cardTitle="Total Products"
               data={allProducts.totalCount}
               icon={<InventoryIcon />}
             />
           </Link>
-          <Cards
-            cardTitle="Total Orders"
-            data={totalOrders}
-            icon={<LocalMallIcon />}
-          />
+          <Link to="/admin/dashboard/orders">
+            <Cards
+              cardTitle="Total Orders"
+              data={totalOrders}
+              icon={<LocalMallIcon />}
+            />
+          </Link>
           <Cards
             cardTitle="Total Users"
             data={totalUser}

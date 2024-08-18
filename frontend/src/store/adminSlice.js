@@ -1,11 +1,13 @@
 import { createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 import { STATUSES } from "./statusEnums";
+import { getOrderDetails } from "./orderSlice";
 
 const adminSlice = createSlice({
     name: 'Admin',
     initialState: {
         profits: {},
+        allOrders: {},
         newProduct: {},
         allProducts: {},
         productsArray: [],
@@ -37,7 +39,9 @@ const adminSlice = createSlice({
         setTotalUser(state, action) {
             state.totalUser = action.payload
         },
-
+        setAllOrders(state, action) {
+            state.allOrders = action.payload
+        },
         setStatus(state, action) {
             state.status = action.payload;
         },
@@ -47,18 +51,18 @@ const adminSlice = createSlice({
     }
 });
 
-export const { setTotalProfits, setAllProducts, setNewProduct, setTotalProfit, setTotalUser, setCountryWiseSalesData, setStatus, setErrorMessage } = adminSlice.actions;
+export const { setTotalProfits, setAllProducts, setNewProduct, setAllOrders, setTotalProfit, setTotalUser, setCountryWiseSalesData, setStatus, setErrorMessage } = adminSlice.actions;
 export default adminSlice.reducer;
 
 
 //Get all the products
 export const getAllProducts = () => {
-    return async function getAllProducts(dispatch, getState) {
+    return async function getAllProductsThunk(dispatch, getState) {
         dispatch(setStatus(STATUSES.LOADING))
         try {
             const { data } = await axios.get('http://localhost:8000/api/v1/admin/products', { withCredentials: true });
             dispatch(setAllProducts({ data, products: data.products }))
-
+            dispatch(setStatus(STATUSES.IDLE))
         } catch (error) {
             dispatch(setStatus(STATUSES.ERROR));
             dispatch(setErrorMessage(error.response?.data?.message || error.message));
@@ -136,16 +140,83 @@ export const createNewProduct = (product) => {
 }
 
 export const deleteProduct = (id) => {
-    return async function deleteProductThunk(dispatch, getState) {
+    return async function deleteProductThunk(dispatch) {
         dispatch(setStatus(STATUSES.LOADING))
         try {
-            const config = {withCredentials: true}
+            const config = { withCredentials: true }
             await axios.delete(`http://localhost:8000/api/v1/admin/product/${id}`, config)
-           
+
             dispatch(setStatus(STATUSES.IDLE))
 
         } catch (error) {
-           
+            dispatch(setStatus(STATUSES.ERROR));
+            dispatch(setErrorMessage(error.response?.data?.message || error.message));
+        }
+    }
+}
+
+export const editProduct = (id, product) => {
+    return async function editProductThunk(dispatch) {
+        dispatch(setStatus(STATUSES.LOADING))
+        try {
+            // const config = { headers: { 'Content-Type': "multipart/form-data" }, withCredentials: true }
+            const config = { headers: { "Content-Type": "multipart/form-data" }, withCredentials: true }
+            await axios.put(`http://localhost:8000/api/v1/admin/product/${id}`, product, config)
+
+            dispatch(setStatus(STATUSES.IDLE))
+
+        } catch (error) {
+            dispatch(setStatus(STATUSES.ERROR));
+            dispatch(setErrorMessage(error.response?.data?.message || error.message));
+        }
+    }
+}
+
+// GET ALL ORDERS (ADMIN)
+
+export const getAllOrders = () => {
+    return async function getAllOrdersThunk(dispatch) {
+        dispatch(setStatus(STATUSES.LOADING))
+        try {
+
+            const { data } = await axios.get('http://localhost:8000/api/v1/admin/orders', { withCredentials: true });
+            dispatch(setAllOrders(data.orders))
+            dispatch(setStatus(STATUSES.IDLE))
+        } catch (error) {
+            dispatch(setStatus(STATUSES.ERROR));
+            dispatch(setErrorMessage(error.response?.data?.message || error.message));
+        }
+    }
+}
+// Update Order Status (ADMIN)
+
+export const updateOrderStatus = (id, formData) => {
+    return async function updateOrderStatusThunk(dispatch) {
+        dispatch(setStatus(STATUSES.LOADING))
+        try {
+
+            const config = { withCredentials: true }
+            const { data } = await axios.put(`http://localhost:8000/api/v1/admin/order/${id}`, formData, config);
+            dispatch(getOrderDetails(id));
+            dispatch(setStatus(STATUSES.IDLE))
+        } catch (error) {
+            dispatch(setStatus(STATUSES.ERROR));
+            dispatch(setErrorMessage(error.response?.data?.message || error.message));
+        }
+    }
+}
+// Update Order Status (ADMIN)
+
+export const deleteOrder = (id, formData) => {
+    return async function deleteOrderThunk(dispatch) {
+        dispatch(setStatus(STATUSES.LOADING))
+        try {
+
+            const config = { withCredentials: true }
+            const { data } = await axios.delete(`http://localhost:8000/api/v1/admin/order/${id}`, config);
+            // dispatch(getAllOrders());
+            dispatch(setStatus(STATUSES.IDLE))
+        } catch (error) {
             dispatch(setStatus(STATUSES.ERROR));
             dispatch(setErrorMessage(error.response?.data?.message || error.message));
         }

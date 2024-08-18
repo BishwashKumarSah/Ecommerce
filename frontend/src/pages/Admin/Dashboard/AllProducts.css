@@ -17,7 +17,7 @@
 .action_button {
     display: flex;
     flex-direction: row;
-    justify-content: center;
+    justify-content: end;
     align-items: center;
 }
 

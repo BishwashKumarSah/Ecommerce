@@ -86,7 +86,7 @@ export default function DataTable() {
   }, [myOrders]);
 
   return (
-    <div style={{ height: 400, width: "100%" }}>
+    <div style={{  width: "100%" }}>
       <MetaData title={`${user.name} - Orders`} />
       {status === STATUSES.LOADING ? (
         <Loader />

@@ -39,66 +39,81 @@ const OrderDetails = () => {
               <Typography component="h1">
                 Order #{myOrderDetails && myOrderDetails._id}
               </Typography>
-              <Typography>Shipping Info</Typography>
+              <Typography component="h2">Shipping Info</Typography>
               <div className="orderDetailsContainerBox">
-                <div>
-                  <p>Name:</p>
-                  <span>{myOrderDetails.user && myOrderDetails.user.name}</span>
+                <div className="order_details_flex">
+                  <div>
+                    <p>Name:</p>
+                  </div>
+                  <div>
+                    <div>{myOrderDetails.user && myOrderDetails.user.name}</div>
+                  </div>
                 </div>
                 <div>
-                  <p>Phone:</p>
-                  <span>
+                  <div>
+                    {" "}
+                    <p>Phone:</p>
+                  </div>
+                  <div>
                     {myOrderDetails.shippingInfo &&
                       myOrderDetails.shippingInfo.phoneNo}
-                  </span>
+                  </div>
                 </div>
                 <div>
-                  <p>Address:</p>
-                  <span>
+                  <div>
+                    <p>Address:</p>
+                  </div>
+                  <div>
                     {myOrderDetails.shippingInfo &&
                       `${myOrderDetails.shippingInfo.address}, ${myOrderDetails.shippingInfo.city}, ${myOrderDetails.shippingInfo.state}, ${myOrderDetails.shippingInfo.pinCode}, ${myOrderDetails.shippingInfo.country}`}
-                  </span>
+                  </div>
                 </div>
               </div>
               <Typography>Payment</Typography>
               <div className="orderDetailsContainerBox">
                 <div>
-                  <p
-                    className={
-                      myOrderDetails.paymentInfo &&
+                  <div>
+                    <p
+                      className={
+                        myOrderDetails.paymentInfo &&
+                        myOrderDetails.paymentInfo.status === "succeeded"
+                          ? "greenColor"
+                          : "redColor"
+                      }
+                    >
+                      {myOrderDetails.paymentInfo &&
                       myOrderDetails.paymentInfo.status === "succeeded"
-                        ? "greenColor"
-                        : "redColor"
-                    }
-                  >
-                    {myOrderDetails.paymentInfo &&
-                    myOrderDetails.paymentInfo.status === "succeeded"
-                      ? "PAID"
-                      : "NOT PAID"}
-                  </p>
+                        ? "PAID"
+                        : "NOT PAID"}
+                    </p>
+                  </div>
                 </div>
 
                 <div>
-                  <p>Amount:</p>
-                  <span>
+                  <div>
+                    <p>Amount:</p>
+                  </div>
+                  <div>
                     ${myOrderDetails.totalPrice && myOrderDetails.totalPrice}
-                  </span>
+                  </div>
                 </div>
               </div>
 
               <Typography>Order Status</Typography>
               <div className="orderDetailsContainerBox">
                 <div>
-                  <p
-                    className={
-                      myOrderDetails.orderStatus &&
-                      myOrderDetails.orderStatus === "Delivered"
-                        ? "greenColor"
-                        : "redColor"
-                    }
-                  >
-                    {myOrderDetails.orderStatus && myOrderDetails.orderStatus}
-                  </p>
+                  <div>
+                    <p
+                      className={
+                        myOrderDetails.orderStatus &&
+                        myOrderDetails.orderStatus === "Delivered"
+                          ? "greenColor"
+                          : "redColor"
+                      }
+                    >
+                      {myOrderDetails.orderStatus && myOrderDetails.orderStatus}
+                    </p>
+                  </div>
                 </div>
               </div>
             </div>
@@ -116,10 +131,10 @@ const OrderDetails = () => {
                       <img src={item.image} alt="Product" />
                       <div className="orderItemContent">
                         <p>{item.name}</p>
-                        <span>
+                        <div>
                           {item.quantity} X ${item.price} ={" "}
                           <b>${item.price * item.quantity}</b>
-                        </span>
+                        </div>
                       </div>
                     </Link>
                   ))}

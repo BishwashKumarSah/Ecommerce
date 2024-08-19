@@ -232,12 +232,14 @@ const getAllProductReviews = asyncHandler(async (req, res, next) => {
     res.status(200).json({
         success: true,
         message: 'All Reviews Fetched',
+        ratings:product.ratings,
         reviews: product.reviews
     })
 })
 
 // Delete Specific Product Review.
 const deleteProductReview = asyncHandler(async (req, res, next) => {
+    
     const product = await Product.findById(req.query.productId);
 
     if (!product) {

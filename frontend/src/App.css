@@ -29,15 +29,15 @@
 body {
     color: var(--black);
     font-size: var(--base-font-size);
-    background-color: var(--body-color);  
+    background-color: var(--body-color);
+    width: 100%;
     max-width: 95%;
     margin: 0 auto;
     min-height: 100dvh;
-    scroll-behavior: smooth; 
+    scroll-behavior: smooth;
     position: relative !important;
+  
 }
-
-
 
 img {
     width: 100%;
@@ -75,16 +75,31 @@ ul {
     list-style: none;
 }
 
-.main_app{
+/* App.css */
+.main_app {
     display: flex;
     flex-direction: column;
-    position: relative !important;
-    top: 0;
+    min-height: 100dvh;
+    /* Ensure the main container takes at least the full viewport height */
 }
 
+.main_content {
+    flex: 1;
+    /* Make the content area grow to fill the remaining space */
+}
+
+footer {  
+   
+    padding: 1rem;
+    text-align: center;
+}
+
+
+
+/* 
  .main {
     width: 100%;   
     flex-grow: 1;
     flex-shrink: 0;
     flex-basis: content;
- }
+ } */

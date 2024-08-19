@@ -6,6 +6,7 @@ const categories = [
   "Gadgets",
   "Bottom",
   "Attire",
+  "All"
 ];
 
 export default categories;

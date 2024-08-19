@@ -1,6 +1,5 @@
 .stepper {
-    width: 100%;
-    border: 1px solid red; 
+    width: 100%;   
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -24,32 +23,53 @@
     align-items: center;
     justify-content: center;
     z-index: 3;
-    font-size: 1rem; 
-    color: #333; 
+    font-size: 1rem;
+    color: #333;
 }
 
 .steps.active .step_number {
-    background-color: #2196f3; 
+    background-color: #2196f3;
     color: white;
 }
 
 .steps.complete .step_number {
-    background-color: #4caf50; 
+    background-color: #4caf50;
     color: white;
 }
 
 .progress_bar {
     position: absolute;
     left: 0;
-    top: 25%; 
+    top: 25%;
     height: 4px;
-    background-color: #ddd; 
-    width: calc(100% - 60px); 
-    margin-left: 30px; 
+    background-color: #ddd;
+    width: calc(100% - 60px);
+    margin-left: 30px;
 }
 
 .progress {
     height: 100%;
-    background-color: #4caf50; 
+    background-color: #4caf50;
     transition: width 0.2s ease;
+}
+
+.step_name {
+    font-size: 1rem;
+}
+
+@media (max-width: 768px) {
+    .step_name {
+        font-size: 0.875rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .step_name {
+        font-size: 0.75rem;
+    }
+
+    .progress_bar {
+        width: calc(100% - 40px);
+        margin-left: 20px;
+    }
 }

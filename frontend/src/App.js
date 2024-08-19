@@ -35,6 +35,7 @@ import AllUsers from './pages/Admin/Dashboard/AllUsers';
 import AllReviews from './pages/Admin/Dashboard/AllReviews';
 import EditProduct from './pages/Admin/Dashboard/EditProduct';
 import EditOrder from './pages/Admin/Dashboard/EditOrder';
+import EditUser from './pages/Admin/Dashboard/EditUser';
 
 function App() {
   const dispatch = useDispatch();
@@ -68,45 +69,47 @@ function App() {
     <div className='main_app'>
       <Toaster />
       <Header />
-      <Routes>
-        <Route index path='/' element={<Home />} />
-        <Route path='/about' element={<AboutUs />} />
-        <Route path='/contact' element={<Contact />} />
-        <Route path='/products' element={<Products />} />
-        <Route path='/product/:id' element={<ProductDetails />} />
-        <Route path='/login' element={<LoginSignUp />} />
-        <Route path='/cart' element={<Cart />} />
+      <div className='main_content'>
+        <Routes>
+          <Route index path='/' element={<Home />} />
+          <Route path='/about' element={<AboutUs />} />
+          <Route path='/contact' element={<Contact />} />
+          <Route path='/products' element={<Products />} />
+          <Route path='/product/:id' element={<ProductDetails />} />
+          <Route path='/login' element={<LoginSignUp />} />
+          <Route path='/cart' element={<Cart />} />
 
-        <Route element={<ProtectedRoutes isAdmin={false} />}>
-          <Route path='/checkout' element={stripePublishableKey && <Checkout stripePublishableKey={stripePublishableKey} />} />
-          <Route path='/account' element={<Account />} />
-          <Route path='/me/update' element={<Update />} />
-          <Route path='/order/:id' element={<OrderDetail />} />
-          <Route path='/password/update' element={<UpdatePassword />} />
-          <Route path='/success' element={isAuthenticated ? <Success /> : <Navigate to="/login" />} />
-          <Route path='/orders' element={<Orders />} />
-        </Route>
-
-        <Route element={<ProtectedRoutes isAdmin={true} />}>
-          <Route path="/admin/dashboard" element={<Dashboard />}>
-            <Route path='' element={<AdminDashboard />} />
-            <Route path="editProduct/:id" element={<EditProduct />} />
-            <Route path="editOrder/:id" element={<EditOrder />} />
-            <Route path="addProduct" element={<AddProduct />} />
-            <Route path="allProducts" element={<AllProducts />} />
-            <Route path="orders" element={<AllOrders />} />
-            <Route path="users" element={<AllUsers />} />
-            <Route path="reviews" element={<AllReviews />} />
-
-            {/* Add other admin routes here */}
+          <Route element={<ProtectedRoutes isAdmin={false} />}>
+            <Route path='/checkout' element={stripePublishableKey && <Checkout stripePublishableKey={stripePublishableKey} />} />
+            <Route path='/account' element={<Account />} />
+            <Route path='/me/update' element={<Update />} />
+            <Route path='/order/:id' element={<OrderDetail />} />
+            <Route path='/password/update' element={<UpdatePassword />} />
+            <Route path='/success' element={isAuthenticated ? <Success /> : <Navigate to="/login" />} />
+            <Route path='/orders' element={<Orders />} />
           </Route>
-        </Route>
 
-        <Route path='/password/forgot' element={<ForgotPassword />} />
-        <Route path="/user/password/reset/:token" element={<ResetPassword />} />
-        {/* <Route path='**' element={<PageNotFound />} */}
-        <Route path="*" element={<PageNotFound />} />
-      </Routes>
+          <Route element={<ProtectedRoutes isAdmin={true} />}>
+            <Route path="/admin/dashboard" element={<Dashboard />}>
+              <Route path='' element={<AdminDashboard />} />
+              <Route path="editProduct/:id" element={<EditProduct />} />
+              <Route path="editOrder/:id" element={<EditOrder />} />
+              <Route path="editUser/:id" element={<EditUser />} />
+              <Route path="addProduct" element={<AddProduct />} />
+              <Route path="allProducts" element={<AllProducts />} />
+              <Route path="orders" element={<AllOrders />} />
+              <Route path="users" element={<AllUsers />} />
+              <Route path="reviews" element={<AllReviews />} />
+
+              {/* Add other admin routes here */}
+            </Route>
+          </Route>
+
+          <Route path='/password/forgot' element={<ForgotPassword />} />
+          <Route path="/user/password/reset/:token" element={<ResetPassword />} />
+          {/* <Route path='**' element={<PageNotFound />} */}
+          <Route path="*" element={<PageNotFound />} />
+        </Routes></div>
 
       <Footer />
     </div>

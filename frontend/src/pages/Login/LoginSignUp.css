@@ -1,27 +1,41 @@
 .login_signUp_container,
 .create_product_container {
     min-width: 100%;
-    min-height: 100%;
-    border: 1px solid black;
-    /* align-items: center; */
-
-
-
+    min-height: 100%; 
 }
 
 .login_signUp_section,
-.create_product_form {
-    border: 1px solid red;
+.create_product_form {   
     background-color: white;
-    width: 30vw;
+    width: 90%;
+    max-width: 500px;
     margin: 1rem auto;
     min-height: 70vh;
-    /* overflow: visible;********************* */
     overflow: hidden;
     display: flex;
     flex-direction: column;
     align-items: stretch;
     justify-content: stretch;
+}
+
+@media (max-width: 768px) {
+    .login_signUp_section,
+    .create_product_form {
+        width: 95%;
+        max-width: 100%;
+        margin: 0.5rem auto;
+    }
+}
+
+@media (max-width: 480px) {
+
+    .login_signUp_section,
+    .create_product_form {
+        width: 100%;
+        max-width: 100%;
+        margin: 0.5rem 0;
+        min-height: 60vh;
+    }
 }
 
 
@@ -71,8 +85,6 @@
     align-items: stretch;
     justify-content: stretch;
     flex: 1;
-
-
 }
 
 .login_section,

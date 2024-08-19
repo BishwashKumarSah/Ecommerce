@@ -2,7 +2,6 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
-
 }
 
 .main_footer {
@@ -27,11 +26,53 @@
     justify-content: center;
     margin-top: 1rem;
     gap: 1rem;
-
 }
-
 
 .rights_footer {
     font-size: var(--base-font-size);
     font-weight: 900;
+}
+
+@media (max-width: 768px) {
+    .main_footer {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 1rem;
+    }
+
+    .contact_us {
+        grid-column: 1 / -1;
+        margin-top: 1rem;
+    }
+
+    .footer_description,
+    .footer_links {
+        margin-right: 0;
+    }
+
+    .secondary_footer {
+        flex-direction: column;
+        text-align: center;
+    }
+}
+
+@media (max-width: 480px) {
+    .main_footer {
+        align-items: center;
+    }
+
+    .footer_description h3,
+    .footer_links h3,
+    .contact_us h3 {
+        font-size: 1.2rem;
+    }
+
+    .secondary_footer {
+        font-size: 0.9rem;
+        gap: 0.5rem;
+    }
+
+    .rights_footer {
+        font-size: 0.8rem;
+    }
 }

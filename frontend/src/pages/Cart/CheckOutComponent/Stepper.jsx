@@ -13,7 +13,7 @@ const Stepper = ({ steps }) => {
   });
 
   const ActiveComponent = steps[currentStep - 1]?.component;
-  const IconComponent = steps[currentStep - 1]?.iconName;
+
 
   const handleNextForm = () => {
     setCurrentStep((prev) => {

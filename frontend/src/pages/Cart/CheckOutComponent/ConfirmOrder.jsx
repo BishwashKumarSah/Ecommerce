@@ -1,7 +1,6 @@
 import React, { Fragment } from "react";
 import MetaData from "../../../utils/MetaData";
 import { useSelector } from "react-redux";
-import { h3 } from "@mui/material";
 import { Link } from "react-router-dom";
 import "./ConfirmOrder.css";
 
@@ -67,14 +66,15 @@ const ConfirmOrder = ({ handleNextForm }) => {
                     className="shipping_item_card"
                     key={item.product_id}
                   >
-                    <div>
+                    <div className="item_name_image">
                       <img src={item.image} alt="your cart" />
                       <p>{item.name}</p>
                     </div>
-                    <span>
-                      {`${item.quantity} X $${item.price} = `}
-                      <strong>${item.quantity * item.price}</strong>
-                    </span>
+                    <div>
+                      {`${item.quantity} X $${item.price} = $${
+                        item.quantity * item.price
+                      }`}
+                    </div>
                   </Link>
                 ))}
             </div>

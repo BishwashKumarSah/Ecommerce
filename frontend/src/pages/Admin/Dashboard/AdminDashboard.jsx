@@ -105,11 +105,13 @@ const AdminDashboard = () => {
               icon={<LocalMallIcon />}
             />
           </Link>
-          <Cards
-            cardTitle="Total Users"
-            data={totalUser}
-            icon={<GroupIcon />}
-          />
+          <Link to="/admin/dashboard/users">
+            <Cards
+              cardTitle="Total Users"
+              data={totalUser}
+              icon={<GroupIcon />}
+            />
+          </Link>
         </div>
         <div className="charts_container">
           {status === STATUSES.LOADING ? (

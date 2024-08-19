@@ -11,12 +11,18 @@ const adminSlice = createSlice({
         newProduct: {},
         allProducts: {},
         productsArray: [],
+        allUsers: [],
+        userProfile: {},
         countryWiseSalesData: {},
+        allReviews: [],
+        ratings: 0,
         totalProfits: 0,
         totalOrders: 0,
         totalUser: 0,
         status: STATUSES.IDLE,
-        errorMessage: null
+        errorMessage: null,
+        message: null,
+        success: false
     },
     reducers: {
         setTotalProfits(state, action) {
@@ -29,6 +35,12 @@ const adminSlice = createSlice({
             state.allProducts = action.payload.data;
             state.productsArray = action.payload.products
         },
+        setAllReviews(state, action) {
+            state.allReviews = action.payload.reviews;
+            state.ratings = action.payload.ratings;
+            state.success = action.payload.success;
+            state.message = action.payload.message
+        },
         setCountryWiseSalesData(state, action) {
             state.countryWiseSalesData = action.payload
         },
@@ -38,6 +50,15 @@ const adminSlice = createSlice({
         },
         setTotalUser(state, action) {
             state.totalUser = action.payload
+        },
+        setAllUsers(state, action) {
+            state.allUsers = action.payload.users
+            state.message = action.payload.message
+        },
+        setUserProfile(state, action) {
+            state.userProfile = action.payload.user
+            state.message = action.payload.message
+            state.success = action.payload.success
         },
         setAllOrders(state, action) {
             state.allOrders = action.payload
@@ -51,7 +72,7 @@ const adminSlice = createSlice({
     }
 });
 
-export const { setTotalProfits, setAllProducts, setNewProduct, setAllOrders, setTotalProfit, setTotalUser, setCountryWiseSalesData, setStatus, setErrorMessage } = adminSlice.actions;
+export const { setTotalProfits, setAllProducts, setUserProfile, setAllReviews, setAllUsers, setNewProduct, setAllOrders, setTotalProfit, setTotalUser, setCountryWiseSalesData, setStatus, setErrorMessage } = adminSlice.actions;
 export default adminSlice.reducer;
 
 
@@ -108,8 +129,6 @@ export const getTotalUserCount = () => {
         dispatch(setStatus(STATUSES.LOADING))
         try {
             const { data } = await axios.get(`http://localhost:8000/api/v1/admin/users`, { withCredentials: true });
-
-
             dispatch(setTotalUser(data.totalUser))
             dispatch(setStatus(STATUSES.IDLE))
         } catch (error) {
@@ -178,7 +197,6 @@ export const getAllOrders = () => {
     return async function getAllOrdersThunk(dispatch) {
         dispatch(setStatus(STATUSES.LOADING))
         try {
-
             const { data } = await axios.get('http://localhost:8000/api/v1/admin/orders', { withCredentials: true });
             dispatch(setAllOrders(data.orders))
             dispatch(setStatus(STATUSES.IDLE))
@@ -188,6 +206,7 @@ export const getAllOrders = () => {
         }
     }
 }
+
 // Update Order Status (ADMIN)
 
 export const updateOrderStatus = (id, formData) => {
@@ -215,6 +234,105 @@ export const deleteOrder = (id, formData) => {
             const config = { withCredentials: true }
             const { data } = await axios.delete(`http://localhost:8000/api/v1/admin/order/${id}`, config);
             // dispatch(getAllOrders());
+            dispatch(setStatus(STATUSES.IDLE))
+        } catch (error) {
+            dispatch(setStatus(STATUSES.ERROR));
+            dispatch(setErrorMessage(error.response?.data?.message || error.message));
+        }
+    }
+}
+
+// Get All Users (ADMIN)
+
+export const getAllUsers = () => {
+    return async function getAllUsersThunk(dispatch) {
+        dispatch(setStatus(STATUSES.LOADING))
+        try {
+
+            const config = { withCredentials: true }
+            const { data } = await axios.get(`http://localhost:8000/api/v1/admin/users`, config);
+            dispatch(setAllUsers({ users: data.users, message: data.message }));
+            dispatch(setStatus(STATUSES.IDLE))
+        } catch (error) {
+            dispatch(setStatus(STATUSES.ERROR));
+            dispatch(setErrorMessage(error.response?.data?.message || error.message));
+        }
+    }
+}
+// Get Specific User Details (ADMIN)
+
+export const getUserProfileDetails = (id) => {
+    return async function getUserProfileDetailsThunk(dispatch) {
+        dispatch(setStatus(STATUSES.LOADING))
+        try {
+            const config = { withCredentials: true }
+            const { data } = await axios.get(`http://localhost:8000/api/v1/admin/user/${id}`, config);
+            dispatch(setUserProfile({ user: data.user, message: data.message, success: data.success }));
+            dispatch(setStatus(STATUSES.IDLE))
+        } catch (error) {
+            dispatch(setStatus(STATUSES.ERROR));
+            dispatch(setErrorMessage(error.response?.data?.message || error.message));
+        }
+    }
+}
+// Update User Details (ADMIN)
+
+export const updateUserDetails = (id, formData) => {
+    return async function updateUserDetailsThunk(dispatch) {
+        dispatch(setStatus(STATUSES.LOADING))
+        try {
+            const config = { headers: { 'Content-Type': 'application/json' }, withCredentials: true }
+            const { data } = await axios.put(`http://localhost:8000/api/v1/admin/user/${id}`, formData, config);
+            dispatch(setUserProfile({ user: data.user, message: data.message, success: data.success }));
+            dispatch(setStatus(STATUSES.IDLE))
+        } catch (error) {
+            dispatch(setStatus(STATUSES.ERROR));
+            dispatch(setErrorMessage(error.response?.data?.message || error.message));
+        }
+    }
+}
+// Delete User (ADMIN)
+
+export const deleteUserProfile = (id) => {
+    return async function deleteUserProfileThunk(dispatch) {
+        dispatch(setStatus(STATUSES.LOADING))
+        try {
+            const config = { withCredentials: true }
+            await axios.delete(`http://localhost:8000/api/v1/admin/user/${id}`, config);
+            dispatch(getAllUsers());
+            dispatch(setStatus(STATUSES.IDLE))
+        } catch (error) {
+            dispatch(setStatus(STATUSES.ERROR));
+            dispatch(setErrorMessage(error.response?.data?.message || error.message));
+        }
+    }
+}
+
+
+// Get All Reviews (ADMIN)
+export const getAllReviews = (id) => {
+    return async function getAllReviewsThunk(dispatch) {
+        dispatch(setStatus(STATUSES.LOADING))
+        try {
+            const config = { withCredentials: true }
+            const { data } = await axios.get(`http://localhost:8000/api/v1/reviews?id=${id}`, config);
+            dispatch(setAllReviews({ reviews: data.reviews, ratings: data.ratings, success: data.success, message: data.message }));
+            dispatch(setStatus(STATUSES.IDLE))
+        } catch (error) {
+            dispatch(setStatus(STATUSES.ERROR));
+            dispatch(setErrorMessage(error.response?.data?.message || error.message));
+        }
+    }
+}
+
+// Delete Reviews (ADMIN)
+export const deleteReviews = (reviewId, productId) => {
+    return async function deleteReviewsThunk(dispatch) {
+        dispatch(setStatus(STATUSES.LOADING))
+        try {
+            const config = { withCredentials: true }
+            const { data } = await axios.delete(`http://localhost:8000/api/v1/reviews?productId=${productId}&id=${reviewId}`, config);
+            dispatch(setAllReviews({ reviews: data.reviews, ratings: data.ratings, success: data.success, message: data.message }));
             dispatch(setStatus(STATUSES.IDLE))
         } catch (error) {
             dispatch(setStatus(STATUSES.ERROR));

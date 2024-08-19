@@ -23,3 +23,10 @@
   .create_product_form{
     padding: 1rem;
   }
+
+  .add_product_textarea textarea{
+    min-height: 70px;
+    max-height:500px;
+    min-width: 100%;
+    max-width: 100%;
+  }

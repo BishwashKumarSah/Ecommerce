@@ -250,7 +250,7 @@ const getSingleUserDetails = asyncHandler(async (req, res, next) => {
     })
 })
 
-// Update Specific User Role - (ADMIN)
+// Update Specific User Or Profile - (ADMIN)
 const updateUserRole = asyncHandler(async (req, res, next) => {
     const userId = req.params.id;
 
@@ -288,13 +288,19 @@ const deleteSpecificUser = asyncHandler(async (req, res, next) => {
         return next(new ErrorHandler("Please provide a valid userId"), 400);
     }
 
-    const user = await User.findByIdAndDelete(userId, {
-        new: true
-    })
+    let user = await User.findById(userId)
 
     if (!user) {
         return next(new ErrorHandler(`No user found with Id: ${user}`), 400);
     }
+
+
+    await cloudinary.v2.uploader.destroy(user.avatar.public_id)
+
+    await User.findByIdAndDelete(userId, {
+        new: true
+    })
+
 
     res.status(200).json({
         success: true,

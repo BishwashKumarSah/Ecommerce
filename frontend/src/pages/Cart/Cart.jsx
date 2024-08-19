@@ -42,7 +42,7 @@ const Cart = () => {
         <div className="cart_container">
           <div className="cart_items">
             <div className="cart_heading">
-              <p>Product</p>
+              <p>Products</p>
               <p>Quantity</p>
               <p>Sub Total</p>
             </div>

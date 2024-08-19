@@ -10,6 +10,7 @@ import { Link } from "react-router-dom";
 import Loader from "../../utils/Loader/Loader";
 import { Typography } from "@mui/material";
 import MetaData from "../../utils/MetaData";
+import ListAltIcon from "@mui/icons-material/ListAlt";
 
 const columns = [
   { field: "id", headerName: "ID", minWidth: 300, flex: 1 },
@@ -86,11 +87,11 @@ export default function DataTable() {
   }, [myOrders]);
 
   return (
-    <div style={{  width: "100%" }}>
+    <div style={{ width: "100%" }}>
       <MetaData title={`${user.name} - Orders`} />
       {status === STATUSES.LOADING ? (
         <Loader />
-      ) : (
+      ) : myOrders.length > 0 ? (
         <>
           <Typography id="myOrdersHeading">{user.name}'s Orders</Typography>
           <DataGrid
@@ -105,6 +106,12 @@ export default function DataTable() {
             pageSizeOptions={[5, 10]}
           />
         </>
+      ) : (
+        <div className="emptyCart">
+          <ListAltIcon />
+          <Typography>No Product in Your Cart</Typography>
+          <Link to="/products">View Products</Link>
+        </div>
       )}
     </div>
   );

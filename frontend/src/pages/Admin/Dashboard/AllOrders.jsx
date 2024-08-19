@@ -11,6 +11,7 @@ import { deleteOrder, getAllOrders } from "../../../store/adminSlice";
 import { STATUSES } from "../../../store/statusEnums";
 import Loader from "../../../utils/Loader/Loader";
 import MetaData from "../../../utils/MetaData";
+import ListAltIcon from "@mui/icons-material/ListAlt";
 
 export default function DataTable() {
   const columns = [
@@ -109,7 +110,7 @@ export default function DataTable() {
       <MetaData title={`${user.name} - Orders`} />
       {status === STATUSES.LOADING ? (
         <Loader />
-      ) : (
+      ) : allOrders.length > 0 ? (
         <>
           <Typography id="myOrdersHeading">All Orders</Typography>
           <DataGrid
@@ -124,6 +125,12 @@ export default function DataTable() {
             pageSizeOptions={[5, 10]}
           />
         </>
+      ) : (
+        <div className="emptyCart">
+          <ListAltIcon />
+          <Typography>No Product in Your Cart</Typography>
+          <Link to="/admin/dashboard">View Dashboard</Link>
+        </div>
       )}
     </div>
   );

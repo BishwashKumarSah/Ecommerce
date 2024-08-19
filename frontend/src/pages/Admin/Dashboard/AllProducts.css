@@ -1,7 +1,7 @@
 .all_products_container {
     width: 100%;
     overflow-x: hidden;
-    /* Prevent horizontal scroll from container overflow */
+ 
 }
 
 .all_products {
@@ -10,8 +10,7 @@
 
 .productListTable {
     width: 100%;
-    overflow-x: auto;
-    /* Allow horizontal scrolling inside DataGrid if needed */
+    overflow-x: auto;   
 }
 
 .action_button {
@@ -32,11 +31,10 @@
 @media (max-width: 768px) {
     .productListTable {
         font-size: 0.875rem;
-        /* Adjust font size for smaller screens */
+   
     }
 
     #productListHeading {
-        font-size: 1.25rem;
-        /* Adjust heading size for smaller screens */
+        font-size: 1.25rem;    
     }
 }

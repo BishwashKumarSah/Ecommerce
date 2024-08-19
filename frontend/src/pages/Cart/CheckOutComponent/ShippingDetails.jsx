@@ -51,8 +51,8 @@ const ShippingDetails = ({ handleNextForm }) => {
       <div className="login_signUp_container">
         <div className="login_signUp_section">
           <div className="title">
-            <div className="login_signUp_title">
-              <p>Shipping Details</p>
+            <div className="login_signUp_title" id="shipping_title">
+              <h3>Shipping Details</h3>
             </div>
           </div>
           <div className="login_sign_up">

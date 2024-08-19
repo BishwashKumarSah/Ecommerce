@@ -1,13 +1,23 @@
-import React, { useEffect, useState } from "react";
-import Images from "../../utils/ImagesArray";
+import React, { useCallback, useEffect, useState } from "react";
+// import Images from "../../utils/ImagesArray";
+
 import "./BannerImage.css";
 import { IoIosArrowForward } from "react-icons/io";
 import { IoIosArrowBack } from "react-icons/io";
 import { BsCircleFill } from "react-icons/bs";
 
 const BannerImage = () => {
-  
   const [imgIndex, setImgIndex] = useState(0);
+
+  const Images = [
+    "/images/bannerImage1.jpg",
+    "/images/bannerImage3.jpg",
+    "/images/bannerImage4.jpg",
+    "/images/bannerImage5.jpg",
+    "/images/bannerImage6.jpg",
+    "/images/bannerImage7.jpg",
+  ];
+
   const showPrevImages = () => {
     setImgIndex((prev) => {
       if (prev === 0) {
@@ -17,25 +27,26 @@ const BannerImage = () => {
     });
   };
 
-  const showNextImages = () => {
+  const showNextImages = useCallback(() => {
     setImgIndex((prev) => {
       if (prev === Images.length - 1) {
         return 0;
       }
       return prev + 1;
     });
-  };
+  }, [Images.length]);
+
   useEffect(() => {
     const interval = setInterval(showNextImages, 3000); // Change image every 3 seconds
 
     return () => {
       clearInterval(interval); // Clear interval on component unmount
     };
-  }, []);
+  }, [showNextImages]);
 
   return (
     <section className="image-slider">
-      <div className="banner_image">
+      <div className="banner_image">       
         {Images.map((img, ind) => (
           <img
             key={ind}

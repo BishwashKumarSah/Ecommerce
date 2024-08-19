@@ -102,7 +102,7 @@ const Products = () => {
               {products && products.length > 0 ? (
                 <ul className="products_wrapper">
                   {products.map((product, index) => (
-                    <li key={index} className="products_li">
+                    <li key={index} >
                       <Product products={product} />
                     </li>
                   ))}

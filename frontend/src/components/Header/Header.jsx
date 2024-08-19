@@ -1,6 +1,5 @@
-import React, { useEffect, useState } from "react";
-import { useNavigate, NavLink, Link, Navigate } from "react-router-dom";
-import { FaRegUser } from "react-icons/fa";
+import React, { useEffect, useRef, useState } from "react";
+import { useNavigate, NavLink, Link } from "react-router-dom";
 import { FaShoppingCart } from "react-icons/fa";
 import { CiSearch } from "react-icons/ci";
 import "./Header.css";
@@ -11,10 +10,11 @@ import { logOut } from "../../store/userSlice";
 const Header = () => {
   const dispatch = useDispatch();
   const { user, isAuthenticated } = useSelector((state) => state.user);
-  // console.log("header_user", user.avatar?.url);
   const navigate = useNavigate();
   const [searchValue, setSearchValue] = useState("");
-  const [userProfileInfo, setUserProfileInfo] = useState(false);
+  const [userProfileVisible, setUserProfileVisible] = useState(false);
+
+  const profileRef = useRef(null); // Ref for profile image and dropdown
 
   const handleSearchValue = (e) => {
     setSearchValue(e.target.value);
@@ -22,11 +22,10 @@ const Header = () => {
 
   const logout = () => {
     dispatch(logOut());
-    setUserProfileInfo(false);
-    // Clear local storage & session storage
+    setUserProfileVisible(false);
     localStorage.clear();
     sessionStorage.clear();
-    return <Navigate to="/login" />;
+    navigate("/login");
   };
 
   const handleProductSearch = async () => {
@@ -36,7 +35,6 @@ const Header = () => {
       const response = await axios.get(
         `http://localhost:8000/api/v1/products?search=${searchValue}`
       );
-      // console.log(response);
       if (response.data?.data?.length > 0) {
         navigate(`/products?search=${searchValue}`);
       } else {
@@ -44,6 +42,21 @@ const Header = () => {
       }
     }
   };
+
+  const handleUserProfileClick = () => {
+    setUserProfileVisible((prev) => !prev);
+  };
+
+  const handleClickOutside = (e) => {
+    if (profileRef.current && !profileRef.current.contains(e.target)) {
+      setUserProfileVisible(false);
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
 
   return (
     <>
@@ -83,24 +96,19 @@ const Header = () => {
               </NavLink>
             </li>
             <li>
-              <div className="user_header_icon">
+              <div className="user_header_icon" ref={profileRef}>
                 <div
                   className="user_profile_image"
-                  onMouseEnter={() => setUserProfileInfo(true)}
-                  onMouseLeave={() => setUserProfileInfo(false)}
+                  onClick={handleUserProfileClick}
                 >
-                  {isAuthenticated === true ? (
+                  {isAuthenticated ? (
                     <img src={user?.avatar?.url} alt="avatar_icon" />
                   ) : (
                     <img src="/Profile.png" alt="avatar_icon" />
                   )}
                 </div>
-                {userProfileInfo && (
-                  <div
-                    className="user_icon_info"
-                    onMouseEnter={() => setUserProfileInfo(true)}
-                    onMouseLeave={() => setUserProfileInfo(false)}
-                  >
+                {userProfileVisible && (
+                  <div className="user_icon_info">
                     {isAuthenticated ? (
                       <>
                         {user.role === "admin" && (
@@ -118,7 +126,7 @@ const Header = () => {
                         <Link to="account" className="user_account">
                           Account
                         </Link>
-                        <div onClick={() => logout()} className="user_logout">
+                        <div onClick={logout} className="user_logout">
                           Logout
                         </div>
                       </>
@@ -135,6 +143,21 @@ const Header = () => {
             </li>
           </div>
         </ul>
+        <div className="search_product_media_screen">
+          <div className="search_products_media_screen">
+            <div className="search_icon" onClick={handleProductSearch}>
+              <CiSearch size={25} />
+            </div>
+            <div className="search_field">
+              <input
+                type="text"
+                placeholder="Search for Products, Items, and More"
+                value={searchValue}
+                onChange={handleSearchValue}
+              />
+            </div>
+          </div>
+        </div>
       </nav>
     </>
   );

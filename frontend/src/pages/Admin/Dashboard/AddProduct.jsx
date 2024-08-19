@@ -142,7 +142,7 @@ const AddProduct = () => {
           <AttachMoneyIcon className="login_signUp_logo" />
         </div>
 
-        <div className="sign_up_password">
+        <div className="sign_up_password add_product_textarea">
           <textarea
             cols={30}
             rows={2}

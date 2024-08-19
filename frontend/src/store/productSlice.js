@@ -65,7 +65,11 @@ export const fetchAllProducts = (search, currentPage = 1, price = [0, 10000], ca
         try {
             let URI = `api/v1/products?search=${search}&page=${currentPage}&price[gte]=${price[0]}&price[lte]=${price[1]}&ratings[gte]=${ratings}`;
             if (category) {
-                URI = `api/v1/products?search=${search}&page=${currentPage}&price[gte]=${price[0]}&price[lte]=${price[1]}&ratings[gte]=${ratings}&category=${category}`;
+                if (category === "All") {
+                    URI = `api/v1/products?search=${search}&page=${currentPage}&price[gte]=${price[0]}&price[lte]=${price[1]}&ratings[gte]=${ratings}`;
+                } else {
+                    URI = `api/v1/products?search=${search}&page=${currentPage}&price[gte]=${price[0]}&price[lte]=${price[1]}&ratings[gte]=${ratings}&category=${category}`;
+                }
             }
 
             const { data } = await axios.get(`http://localhost:8000/${URI}`)

@@ -134,7 +134,7 @@ const Payment = () => {
           </div>
           <input
             type="submit"
-            value={`Pay - ₹${orderInfo && orderInfo.SubTotal}`}
+            value={`Pay - $${orderInfo && orderInfo.SubTotal}`}
             ref={paymentBtn}
             className="paymentFormBtn"
           />

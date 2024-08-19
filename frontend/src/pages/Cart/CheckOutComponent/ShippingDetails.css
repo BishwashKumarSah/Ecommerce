@@ -1,4 +1,4 @@
-color.checkOut_title {
+.checkOut_title {
     color: red;
 }
 
@@ -21,6 +21,14 @@ color.checkOut_title {
     background-color: var(--call-to-action-hover-color);   
 }
 
+#shipping_title h3{
+    color: rgba(0, 0, 0, 0.753);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.13);
+    padding: 1vmax 0;
+    text-align: center;
+    width: 100%;
+    margin: 0;
+}
 
 
 /* Disabled button styles */

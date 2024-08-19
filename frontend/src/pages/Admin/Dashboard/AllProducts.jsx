@@ -49,17 +49,18 @@ const ProductList = ({ history }) => {
   };
 
   const columns = [
-    { field: "id", headerName: "Product ID", minWidth: 500, flex: 1 },
+    { field: "id", headerName: "Product ID", minWidth: 270, flex: 1 },
     {
       field: "name",
       headerName: "Name",
-      minWidth: 350,
+      minWidth: 150,
       flex: 1,
     },
     {
       field: "stock",
       headerName: "Stock",
       type: "number",
+      
     },
     {
       field: "price",

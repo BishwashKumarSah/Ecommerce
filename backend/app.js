@@ -1,4 +1,4 @@
-const bodyParser = require('body-parser');
+
 const express = require('express');
 const handleError = require('./middlewares/error');
 const cookieParser = require('cookie-parser')

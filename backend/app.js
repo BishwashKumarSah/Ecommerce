@@ -13,7 +13,7 @@ if (process.env.NODE_ENV !== "PRODUCTION") {
 
 const app = express()
 const corsOptions = {
-    origin: 'http://localhost:3000', // replace with your frontend's URL
+    origin: process.env.FRONTEND_URL || 'http://localhost:3000', // Use environment variable for production
     credentials: true, // Allow cookies to be sent
 };
 

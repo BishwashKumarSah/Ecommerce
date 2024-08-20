@@ -49,7 +49,7 @@ export const setUserLogin = (email, password) => {
                 headers: { "Content-Type": "application/json" },
                 withCredentials: true // Ensure cookies are sent with requests
             };
-            const { data } = await axios.post('http://localhost:8000/api/v1/user/login', { email, password }, config)
+            const { data } = await axios.post('/api/v1/user/login', { email, password }, config)
             dispatch(clearErrorMessage());
             dispatch(setStatus(STATUSES.IDLE))
             dispatch(setUser({ user: data.user, isAuthenticated: true }))

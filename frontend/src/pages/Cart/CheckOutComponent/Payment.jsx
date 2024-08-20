@@ -65,7 +65,7 @@ const Payment = () => {
       };
 
       const { data } = await axios.post(
-        "http://localhost:8000/api/v1/payment/create-stripe-payment-intent",
+        "/payment/create-stripe-payment-intent",
         paymentData,
         config
       );

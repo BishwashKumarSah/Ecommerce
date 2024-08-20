@@ -49,7 +49,7 @@ export const setUserLogin = (email, password) => {
                 headers: { "Content-Type": "application/json" },
                 withCredentials: true // Ensure cookies are sent with requests
             };
-            const { data } = await axios.post('/api/v1/user/login', { email, password }, config)
+            const { data } = await axios.post('/user/login', { email, password }, config)
             dispatch(clearErrorMessage());
             dispatch(setStatus(STATUSES.IDLE))
             dispatch(setUser({ user: data.user, isAuthenticated: true }))
@@ -69,7 +69,7 @@ export const registerUser = (formData) => {
         dispatch(setStatus(STATUSES.LOADING));
         try {
             const config = { headers: { "Content-Type": "multipart/form-data" }, withCredentials: true }
-            const { data } = await axios.post('http://localhost:8000/api/v1/user/register', formData, config);
+            const { data } = await axios.post('/user/register', formData, config);
             dispatch(clearErrorMessage());
             dispatch(setStatus(STATUSES.IDLE));
             dispatch(setUser({ user: data.user, isAuthenticated: true }));
@@ -86,7 +86,7 @@ export const updateUser = (formData) => {
         dispatch(setStatus(STATUSES.LOADING));
         try {
             const config = { headers: { "Content-Type": "multipart/form-data" }, withCredentials: true }
-            const { data } = await axios.put('http://localhost:8000/api/v1/user/updateUserProfile', formData, config);
+            const { data } = await axios.put('/user/updateUserProfile', formData, config);
             dispatch(clearErrorMessage());
             dispatch(setStatus(STATUSES.IDLE));
             dispatch(setUser({ user: data.user, isAuthenticated: true }));
@@ -104,7 +104,7 @@ export const updateUserPassword = (formData) => {
         dispatch(setStatus(STATUSES.LOADING))
         try {
             const config = { headers: { 'Content-Type': "application/json" }, withCredentials: true }
-            const { data } = await axios.put('http://localhost:8000/api/v1/user/updatePassword', formData, config);
+            const { data } = await axios.put('/user/updatePassword', formData, config);
             dispatch(clearErrorMessage());
             dispatch(setStatus(STATUSES.IDLE));
             dispatch(setUser({ user: data.user, isAuthenticated: true }));
@@ -125,7 +125,7 @@ export const forgotPassword = (formData) => {
         dispatch(setStatus(STATUSES.LOADING))
         try {
             const config = { headers: { 'Content-Type': "application/json" }, withCredentials: true }
-            await axios.post('http://localhost:8000/api/v1/user/password/reset', formData, config);
+            await axios.post('/user/password/reset', formData, config);
             dispatch(clearErrorMessage());
             dispatch(setIsUpdate(true))
             dispatch(setStatus(STATUSES.IDLE));
@@ -142,7 +142,7 @@ export const resetPassword = (token, formData) => {
         dispatch(setStatus(STATUSES.LOADING))
         try {
             const config = { headers: { 'Content-Type': "application/json" }, withCredentials: true }
-            await axios.put(`http://localhost:8000/api/v1/user/password/reset/${token}`, formData, config);
+            await axios.put(`/user/password/reset/${token}`, formData, config);
          
             dispatch(clearErrorMessage());
             dispatch(setIsUpdate(true))
@@ -161,7 +161,7 @@ export const loadUser = () => {
     return async function loadUserThunk(dispatch, getState) {
         dispatch(setStatus(STATUSES.LOADING))
         try {
-            const { data } = await axios.get('http://localhost:8000/api/v1/me', { withCredentials: true })
+            const { data } = await axios.get('/me', { withCredentials: true })
             dispatch(setUser({ user: data.user, isAuthenticated: true }))
             dispatch(clearErrorMessage())
             dispatch(setStatus(STATUSES.IDLE));
@@ -179,7 +179,7 @@ export const logOut = () => {
     return async function (dispatch) {
         dispatch(setStatus(STATUSES.LOADING))
         try {
-            await axios.post('http://localhost:8000/api/v1/user/logout', {}, { withCredentials: true })         
+            await axios.post('/user/logout', {}, { withCredentials: true })         
             dispatch(clearErrorMessage())
             dispatch(setStatus(STATUSES.IDLE));
             dispatch(setUser({ user: null, isAuthenticated: false }))

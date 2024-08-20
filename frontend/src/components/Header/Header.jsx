@@ -34,7 +34,7 @@ const Header = () => {
       return;
     } else {
       const response = await axios.get(
-        `http://localhost:8000/api/v1/products?search=${searchValue}`
+        `/products?search=${searchValue}`
       );
       if (response.data?.data?.length > 0) {
         navigate(`/products?search=${searchValue}`);

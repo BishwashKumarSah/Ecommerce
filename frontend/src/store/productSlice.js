@@ -49,7 +49,7 @@ export const fetchFeaturedProducts = () => {
     return async function fetchProductsThunk(dispatch) {
         dispatch(setStatus(STATUSES.LOADING));
         try {
-            const { data } = await axios.get('http://localhost:8000/api/v1/products');
+            const { data } = await axios.get('/products');
             dispatch(setFeaturedProducts(data));
             dispatch(setStatus(STATUSES.IDLE));
         } catch (error) {
@@ -89,7 +89,7 @@ export const fetchProductDetails = (id) => {
     return async function fetchProductDetailsThunk(dispatch) {
         dispatch(setStatus(STATUSES.LOADING));
         try {
-            const { data } = await axios.get(`http://localhost:8000/api/v1/product/${id}`);
+            const { data } = await axios.get(`/product/${id}`);
             dispatch(setSingleProduct(data));
             dispatch(setStatus(STATUSES.IDLE));
         } catch (error) {
@@ -103,7 +103,7 @@ export const newReview = (myForm, productId) => {
     return async function newReviewThunk(dispatch, getState) {
         dispatch(setStatus(STATUSES.LOADING));
         try {
-            const { data } = await axios.put('http://localhost:8000/api/v1/review', myForm, {
+            const { data } = await axios.put('/review', myForm, {
                 withCredentials: true,
                 headers: { "Content-Type": 'application/json' }
             });

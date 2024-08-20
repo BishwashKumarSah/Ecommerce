@@ -47,7 +47,7 @@ export const createNewOrder = (order) => {
                 },
                 withCredentials: true
             }
-            const { data } = await axios.post('http://localhost:8000/api/v1/order/new', order, config)
+            const { data } = await axios.post('/order/new', order, config)
             dispatch(setOrder(data.order))
             dispatch(setStatus(STATUSES.IDLE))
 
@@ -63,7 +63,7 @@ export const getMyOrders = () => {
     return async function getMyOrdersThunk(dispatch, getState) {
         dispatch(setStatus(STATUSES.LOADING))
         try {
-            const { data } = await axios.get('http://localhost:8000/api/v1/orders/me', { withCredentials: true })
+            const { data } = await axios.get('/orders/me', { withCredentials: true })
             dispatch(setMyOrder(data.orders))
             dispatch(setStatus(STATUSES.IDLE))
         } catch (error) {
@@ -78,7 +78,7 @@ export const getOrderDetails = (id) => {
     return async function getOrderDetailsThunk(dispatch) {
         dispatch(setStatus(STATUSES.LOADING))
         try {
-            const { data } = await axios.get(`http://localhost:8000/api/v1/order/${id}`, { withCredentials: true })         
+            const { data } = await axios.get(`/order/${id}`, { withCredentials: true })         
             dispatch(setMyOrderDetails(data.order))
             dispatch(setStatus(STATUSES.IDLE))
 

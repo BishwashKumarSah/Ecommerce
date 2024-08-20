@@ -29,7 +29,7 @@ class ProductClass {
         } : {}
 
         // here this.query = (Product.find()) => which is also an object. here we are modifying the query to search for specific products 
-        // ie. http://localhost:8000/api/v1/products?search="Apple" here search="Apple" is the this.queryObj so we are modifying this.query method to 
+        // ie. /products?search="Apple" here search="Apple" is the this.queryObj so we are modifying this.query method to 
         // Product.find().find(queryObj) 
 
         this.query = this.query.find({ ...queryObj })

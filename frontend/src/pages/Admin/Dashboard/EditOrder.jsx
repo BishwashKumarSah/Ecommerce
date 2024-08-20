@@ -58,7 +58,7 @@ const EditOrderDetails = () => {
       ) : (
         <Fragment>
           <MetaData title="Order Details" />
-          <div className="orderDetailsPage">
+          <div className="orderDetailsPage" style={{padding:"1rem"}}>
             <div className="orderDetailsContainer shipping_container">
               <div
                 className="order_details_info_grid"

@@ -92,7 +92,7 @@ const resetUserPasswordToken = asyncHandler(async (req, res, next) => {
     await user.save({ validateBeforeSave: false })
 
 
-    const resetPasswordUrl = `${process.env.FRONTEND_URL}/user/password/reset/${resetToken}`
+    const resetPasswordUrl = `${req.protocol}:://${req.get("host")}/user/password/reset/${resetToken}`
     const message = `Please reset your password using this link: \n\n ${resetPasswordUrl} \n\n The link expires in 20 minutes. \n If you have not requested for password reset, please ignore the message.`
 
     try {

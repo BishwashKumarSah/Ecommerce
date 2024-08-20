@@ -75,7 +75,6 @@ const EditProduct = () => {
       formData.append("images", file); //we have to use formData if we are using a file/multiple files upload to avoid some bug in backend. like if i did not use then the key was a string not a object key. image:[](right) but it says 'image[]':(wrong it was in string)
     }
 
- 
     dispatch(editProduct(id, formData));
     if (status === STATUSES.IDLE) {
       setSuccess(true);
@@ -126,7 +125,7 @@ const EditProduct = () => {
         encType="multipart/form-data"
         onSubmit={handleEditProduct}
       >
-        <h3>Create Product</h3>
+        <h3>Update Product</h3>
         <div className="sign_up_name">
           <input
             type="text"
@@ -228,7 +227,7 @@ const EditProduct = () => {
           type="submit"
           disabled={status === STATUSES.LOADING}
         >
-          {status === STATUSES.LOADING ? "Creating..." : "Create"}
+          {status === STATUSES.LOADING ? "Updating..." : "Update"}
         </button>
       </form>
     </div>

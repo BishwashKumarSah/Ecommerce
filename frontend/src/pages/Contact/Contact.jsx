@@ -1,12 +1,14 @@
 import React from "react";
-import MetaData from "../../utils/MetaData";
+import "./Contact.css";
+import Button from '@mui/material/Button';
 
 const Contact = () => {
   return (
-    <>
-      <MetaData title="Contact Us" />
-      <div className="contact">Contact</div>
-    </>
+    <div className="contactContainer">
+      <a className="mailBtn" href="mailto:sahkumar.bishwash@gmail.com">
+        <Button>Contact: mailto:sahkumar.bishwash@gmail.com</Button>
+      </a>
+    </div>
   );
 };
 

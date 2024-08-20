@@ -92,8 +92,7 @@ export const updateUser = (formData) => {
             dispatch(setUser({ user: data.user, isAuthenticated: true }));
             dispatch(setIsUpdate(true))
             dispatch(loadUser())
-        } catch (error) {
-            console.log("errorUpate", error);
+        } catch (error) {          
             dispatch(setStatus(STATUSES.ERROR));
             dispatch(setErrorMessage(error.response?.data?.message || error.message));
         }
@@ -114,7 +113,7 @@ export const updateUserPassword = (formData) => {
 
 
         } catch (error) {
-            console.log("errorUpdatePassword", error);
+          
             dispatch(setStatus(STATUSES.ERROR));
             dispatch(setErrorMessage(error.response?.data?.message || error.message));
         }
@@ -126,13 +125,13 @@ export const forgotPassword = (formData) => {
         dispatch(setStatus(STATUSES.LOADING))
         try {
             const config = { headers: { 'Content-Type': "application/json" }, withCredentials: true }
-            const { data } = await axios.post('http://localhost:8000/api/v1/user/password/reset', formData, config);
+            await axios.post('http://localhost:8000/api/v1/user/password/reset', formData, config);
             dispatch(clearErrorMessage());
             dispatch(setIsUpdate(true))
             dispatch(setStatus(STATUSES.IDLE));
 
         } catch (error) {
-            console.log("errorUpdatePassword", error);
+           
             dispatch(setStatus(STATUSES.ERROR));
             dispatch(setErrorMessage(error.response?.data?.message || error.message));
         }
@@ -143,14 +142,14 @@ export const resetPassword = (token, formData) => {
         dispatch(setStatus(STATUSES.LOADING))
         try {
             const config = { headers: { 'Content-Type': "application/json" }, withCredentials: true }
-            const { data } = await axios.put(`http://localhost:8000/api/v1/user/password/reset/${token}`, formData, config);
-            console.log("data", data);
+            await axios.put(`http://localhost:8000/api/v1/user/password/reset/${token}`, formData, config);
+         
             dispatch(clearErrorMessage());
             dispatch(setIsUpdate(true))
             dispatch(setStatus(STATUSES.IDLE));
 
         } catch (error) {
-            console.log("errorUpdatePassword", error);
+           
             dispatch(setStatus(STATUSES.ERROR));
             dispatch(setErrorMessage(error.response?.data?.message || error.message));
         }
@@ -180,8 +179,7 @@ export const logOut = () => {
     return async function (dispatch) {
         dispatch(setStatus(STATUSES.LOADING))
         try {
-            const { data } = await axios.post('http://localhost:8000/api/v1/user/logout', {}, { withCredentials: true })
-            console.log("logout successfully");
+            await axios.post('http://localhost:8000/api/v1/user/logout', {}, { withCredentials: true })         
             dispatch(clearErrorMessage())
             dispatch(setStatus(STATUSES.IDLE));
             dispatch(setUser({ user: null, isAuthenticated: false }))

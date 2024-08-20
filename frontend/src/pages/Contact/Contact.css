@@ -1,0 +1,29 @@
+.contactContainer {    
+    min-height: 100dvh;
+    width: 100%;
+    max-width: 100%;
+    display: grid;
+    align-items: center;
+    justify-content: center;
+    background-color: white; 
+}
+
+.mailBtn {
+    text-decoration: none;
+    transform: translateX(-100vw);
+    animation: mailBtnAnimation 2s forwards;
+}
+
+.mailBtn>button {
+    text-decoration: none;
+    font-size: 2rem;
+    font-weight: 400;
+    cursor: url("https://img.icons8.com/color/48/000000/edit--v2.png"), pointer;
+    padding: 2vmax;
+}
+
+@keyframes mailBtnAnimation {
+    to {
+        transform: translateX(0);
+    }
+}

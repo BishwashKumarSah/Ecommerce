@@ -2,8 +2,9 @@ const app = require('./app')
 const cloudinary = require('cloudinary')
 const { connectToDatabase } = require('./config/database')
 
-const dotenv = require('dotenv')
-dotenv.config({ path: 'backend/config/config.env' })
+if (process.env.NODE_ENV !== "PRODUCTION") {
+    require('dotenv').config({ path: 'backend/config/config.env' })
+}
 
 //Database
 connectToDatabase(process.env.DATABASE_URI)

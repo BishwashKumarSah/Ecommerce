@@ -62,7 +62,7 @@ function App() {
     }
   }, [isAuthenticated]);
 
-  // Ensure correct paths for redirection based on `isAuthenticated`
+  // window.addEventListener('contextmenu',(e) => e.preventDefault())
 
 
   return (

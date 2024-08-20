@@ -6,7 +6,7 @@ import {
   fetchProductDetails,
   newReview,
 } from "../../store/productSlice";
-import { useParams } from "react-router-dom";
+import { Navigate, useNavigate, useParams } from "react-router-dom";
 import { STATUSES } from "../../store/statusEnums";
 import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
 import { BsCircleFill } from "react-icons/bs";
@@ -28,6 +28,7 @@ import { getMyOrders } from "../../store/orderSlice";
 import Loader from "../../utils/Loader/Loader";
 
 const ProductDetails = () => {
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const { product, status, errorMessage } = useSelector(
     (state) => state.products
@@ -40,6 +41,7 @@ const ProductDetails = () => {
   const { status: userStatus, isAuthenticated } = useSelector(
     (state) => state.user
   );
+  const { cartItems } = useSelector((state) => state.cart);
 
   const { id } = useParams();
 
@@ -48,6 +50,7 @@ const ProductDetails = () => {
   const [openReviewDialog, setOpenReviewDialog] = useState(false);
   const [rating, setRating] = useState(0);
   const [comment, setComment] = useState("");
+  const [addSuccess, setAddSuccess] = useState(false);
 
   const restrictReviewToOnlyValidUsers = () => {
     if (userStatus === STATUSES.IDLE && isAuthenticated === false) {
@@ -70,7 +73,7 @@ const ProductDetails = () => {
     if (restrictReviewToOnlyValidUsers()) {
       const myForm = { rating, comment, productId: id };
       dispatch(newReview(myForm, id)).then(() => {
-        dispatch(fetchProductDetails(id)); // Fetch product details again to update the ratings and reviews
+        dispatch(fetchProductDetails(id));
       });
       setOpenReviewDialog(false);
     } else {
@@ -121,8 +124,31 @@ const ProductDetails = () => {
   };
 
   const handleAddCartItems = () => {
-    dispatch(addToCartItems(product?.data?._id, quantity));
+    dispatch(addToCartItems(product?.data?._id, quantity)).then(() => toast.success('Item Added to Cart'));
   };
+
+  const handleGoToCart = () => {
+    navigate("/cart");
+  };
+
+  const handleBuyNow = () => {
+    dispatch(addToCartItems(product?.data?._id, quantity)).then(() => {      
+      navigate('/checkout');
+    });
+  };
+
+  useEffect(() => {
+    setAddSuccess(false);
+    const val = localStorage.getItem("cartItems");
+    if (val.length > 0) {
+      let isFound = cartItems.some(
+        (cart) => cart.product_id === product?.data?._id
+      );  
+      if (isFound === true) {
+        setAddSuccess(true);
+      }
+    }
+  }, [cartItems, product?.data?._id]);
 
   useEffect(() => {
     if (product?.data?.images?.length) {
@@ -211,6 +237,9 @@ const ProductDetails = () => {
               handleInputChange={handleInputChange}
               handleBlur={handleBlur}
               handleAddCartItems={handleAddCartItems}
+              handleBuyNow={handleBuyNow}
+              addSuccess={addSuccess}
+              handleGoToCart={handleGoToCart}
               onOpenReviewDialog={submitReviewToggle} // Pass handler function
             />
           </div>

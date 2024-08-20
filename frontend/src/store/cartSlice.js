@@ -56,13 +56,13 @@ export const addToCartItems = (product_id, quantity) => {
 };
 
 export const removeFromCartItems = (product_id, quantity) => {
-    return function removeFromCartItemsThunk(dispatch, getState) {
+    return function removeFromCartThunk(dispatch, getState) {
         const { cartItems } = getState().cart;
         const itemToRemove = cartItems.find((item) => item.product_id === product_id);
-        
+
 
         if (itemToRemove) {
-         
+
             let updatedCartItems;
             if (itemToRemove.quantity - quantity <= 0) {
                 updatedCartItems = cartItems.filter((item) => item.product_id !== product_id);
@@ -75,6 +75,13 @@ export const removeFromCartItems = (product_id, quantity) => {
             }
             localStorage.setItem("cartItems", JSON.stringify(updatedCartItems));
         }
+    };
+};
+
+export const removeFromCartItemsThunk = (product_id) => {
+    return function removeFromCartItemsThunk(dispatch, getState) {
+        dispatch(removeCartItem(product_id));
+        return Promise.resolve(); // Return a resolved promise so that .then() works
     };
 };
 

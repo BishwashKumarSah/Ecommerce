@@ -164,7 +164,7 @@ export const deleteProduct = (id) => {
         try {
             const config = { withCredentials: true }
             await axios.delete(`http://localhost:8000/api/v1/admin/product/${id}`, config)
-
+            dispatch(getAllProducts())
             dispatch(setStatus(STATUSES.IDLE))
 
         } catch (error) {

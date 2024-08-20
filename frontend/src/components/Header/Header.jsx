@@ -10,6 +10,7 @@ import { logOut } from "../../store/userSlice";
 const Header = () => {
   const dispatch = useDispatch();
   const { user, isAuthenticated } = useSelector((state) => state.user);
+  const { cartItems } = useSelector((state) => state.cart);
   const navigate = useNavigate();
   const [searchValue, setSearchValue] = useState("");
   const [userProfileVisible, setUserProfileVisible] = useState(false);
@@ -92,9 +93,14 @@ const Header = () => {
           <div className="nav_links_icons">
             <li>
               <NavLink className="anchor_tag" to="/cart">
-                <FaShoppingCart size={28} />
+                <div className="cart_icon_container">
+                  <FaShoppingCart size={30} className="shopping" />
+                  {cartItems && <div className="cart_count">{cartItems.length}</div>}
+                </div>
+                <div>Cart</div>
               </NavLink>
             </li>
+
             <li>
               <div className="user_header_icon" ref={profileRef}>
                 <div

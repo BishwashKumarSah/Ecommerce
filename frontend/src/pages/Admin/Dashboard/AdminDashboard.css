@@ -20,7 +20,7 @@
 
 @media (max-width: 480px) {
     .dashboard_cards {
-        grid-template-columns: 1fr;
+        grid-template-columns: 100%;
     }
 }
 
@@ -94,20 +94,28 @@
 
 @media (max-width: 768px) {
     .pie_world_map_container {
-        grid-template-columns: 1fr;
+        grid-template-columns: 100%;
+    }
+}
+
+@media (max-width: 900px) {
+    .pie_world_map_container {
+        grid-template-columns: 100%;
+    }
+
+    .world_map_container figure {
+        width: 100%;
+        overflow-x: scroll
     }
 }
 
 .world_map_container {
-    width: 100%;
-    height: 100%;  
-  
+    max-width: 100%;
+    max-height: 100%;
 }
 
 .world_map_container svg {
-    width: 100%;
-    height: auto;   
-    max-width: 100%;
-    background-position: center
-  
+    height: auto;
+    background-position: center;
+
 }

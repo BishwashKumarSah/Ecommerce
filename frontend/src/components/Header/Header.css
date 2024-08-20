@@ -1,7 +1,7 @@
 nav {
     justify-content: space-between;
     width: 100%;
-  
+
 }
 
 .unordered_list {
@@ -41,6 +41,37 @@ nav {
     gap: 1rem;
 }
 
+.nav_links_icons .cart_icon_container {
+    position: relative;   
+}
+
+.anchor_tag {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+}
+
+.cart_count {
+    position: absolute;
+    top: -7px;
+    left: 15px;
+    /* left: 11px;
+    top: 7px; */
+    padding: 0.2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 7px;
+    width: 22px;
+    height: 22px;
+    background-color: #ff6161;   
+    font-weight: 400;
+    color: black;
+    line-height: 16px;
+    font-size: 12px;
+}
+
 .user_header_icon {
     position: relative;
     z-index: 99;
@@ -54,6 +85,8 @@ nav {
 .user_profile_image {
     width: 40px;
     height: 40px;
+    overflow: hidden;
+    border-radius: 50%;
 }
 
 .user_icon_info {

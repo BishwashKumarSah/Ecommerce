@@ -110,8 +110,7 @@ const Payment = () => {
       }
     } catch (error) {
       toast.error(error.message);
-      paymentBtn.current.disabled = false;
-      console.log("rrrr", error);
+      paymentBtn.current.disabled = false;  
     }
   };
   return (

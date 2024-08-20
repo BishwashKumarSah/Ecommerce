@@ -8,9 +8,7 @@ import { Button } from "@mui/material";
 import { Link } from "react-router-dom";
 import { Typography } from "@mui/material";
 import {
-  deleteOrder,
-  deleteUserProfile,
-  getAllOrders,
+  deleteUserProfile,  
   getAllUsers,
 } from "../../../store/adminSlice";
 import { STATUSES } from "../../../store/statusEnums";
@@ -63,7 +61,7 @@ export default function DataTable() {
       },
     },
   ];
-  const { allUsers, message, status, errorMessage } = useSelector(
+  const { allUsers, status, errorMessage } = useSelector(
     (state) => state.admin
   );
 
@@ -114,7 +112,7 @@ export default function DataTable() {
       {status === STATUSES.LOADING ? (
         <Loader />
       ) : allUsers.length > 0 ? (
-        <>
+        <div style={{paddingLeft:"1rem"}}>
           <Typography id="myOrdersHeading">All User Details</Typography>
           <DataGrid
             rows={rows}
@@ -127,7 +125,7 @@ export default function DataTable() {
             }}
             pageSizeOptions={[5, 10]}
           />
-        </>
+        </div>
       ) : (
         <div className="emptyCart">
           <ListAltIcon />

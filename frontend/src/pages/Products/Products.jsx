@@ -108,7 +108,7 @@ const Products = () => {
                   ))}
                 </ul>
               ) : (
-                <h1>No Products Found</h1>
+                <h3  style={{textAlign:'center', height:'100%',width:'100%'}}>Sorry, No Products Found!</h3>
               )}
             </div>
           )}

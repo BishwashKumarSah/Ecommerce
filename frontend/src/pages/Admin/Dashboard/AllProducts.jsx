@@ -12,7 +12,7 @@ import { STATUSES } from "../../../store/statusEnums";
 import { deleteProduct, getAllProducts } from "../../../store/adminSlice";
 import { Button } from "@mui/material";
 
-const ProductList = ({ history }) => {
+const ProductList = () => {
   const dispatch = useDispatch();
 
   const { errorMessage, productsArray, status } = useSelector(
@@ -64,7 +64,7 @@ const ProductList = ({ history }) => {
     },
     {
       field: "price",
-      headerName: "Price",
+      headerName: "Price($)",
       type: "number",
       minWidth: 150,
     },
@@ -126,7 +126,6 @@ const ProductList = ({ history }) => {
       <div className="all_products_container">
         <div className="all_products">
           <h3 id="productListHeading">ALL PRODUCTS</h3>
-
           <DataGrid
             rows={rows}
             columns={columns}

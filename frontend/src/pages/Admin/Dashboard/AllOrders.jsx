@@ -69,7 +69,7 @@ export default function DataTable() {
   const handleOrderDelete = (id) => {
     dispatch(deleteOrder(id)).then(() =>
       dispatch(getAllOrders()).then(() =>
-        toast.success("Product Deleted Successfully")
+        toast.success("Order Deleted Successfully")
       )
     );
   };
@@ -111,7 +111,7 @@ export default function DataTable() {
       {status === STATUSES.LOADING ? (
         <Loader />
       ) : allOrders.length > 0 ? (
-        <>
+        <div className="all_orders_admin" style={{ paddingLeft: "1rem" }}>
           <Typography id="myOrdersHeading">All Orders</Typography>
           <DataGrid
             rows={rows}
@@ -124,7 +124,7 @@ export default function DataTable() {
             }}
             pageSizeOptions={[5, 10]}
           />
-        </>
+        </div>
       ) : (
         <div className="emptyCart">
           <ListAltIcon />

@@ -7,14 +7,17 @@ import Loader from "../../utils/Loader/Loader";
 
 const ProductDescription = React.memo(
   ({
+    addSuccess,
     product,
     status,
     quantity,
+    handleBuyNow,
     handleRemoveProducts,
     handleAddProducts,
     handleInputChange,
     handleBlur,
     handleAddCartItems,
+    handleGoToCart,
     onOpenReviewDialog,
     restrictReviewToOnlyValidUsers,
   }) => {
@@ -63,7 +66,7 @@ const ProductDescription = React.memo(
               </div>
               <h3 className="product_price"> ${product.data.price}</h3>
 
-              <div className="number">
+              {product.data.stock >= 1 && <div className="number">
                 <label htmlFor="quantity">Quantity:</label>
                 <button
                   className="minus"
@@ -89,13 +92,21 @@ const ProductDescription = React.memo(
                 >
                   +
                 </button>
-              </div>
-              <div className="product_cart_actions">
-                <Button className="add_to_cart" onClick={handleAddCartItems}>
-                  Add To Cart
+              </div>}
+              {product.data.stock >= 1 && <div className="product_cart_actions">
+                {addSuccess ? (
+                  <Button className="add_to_cart" onClick={handleGoToCart} >
+                    Go To Cart
+                  </Button>
+                ) : (
+                  <Button className="add_to_cart" onClick={handleAddCartItems} disabled={ product.data.stock < 1 ? true:false}>
+                    Add To Cart
+                  </Button>
+                )}
+                <Button className="buy_now" onClick={handleBuyNow} disabled={ product.data.stock < 1 ? true:false}>
+                  Buy Now
                 </Button>
-                <Button className="buy_now">Buy Now</Button>
-              </div>
+              </div>}
               <div className="product_status">
                 <p>
                   Status:

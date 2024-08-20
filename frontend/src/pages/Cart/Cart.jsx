@@ -8,7 +8,9 @@ import {
   addToCartItems,
   removeCartItem,
   removeFromCartItems,
+  removeFromCartItemsThunk,
 } from "../../store/cartSlice";
+import toast from "react-hot-toast";
 
 const Cart = () => {
   const dispatch = useDispatch();
@@ -28,6 +30,12 @@ const Cart = () => {
     if (newQuantity < stock) {
       dispatch(addToCartItems(id, 1));
     }
+  };
+
+  const handleCartProductRemove = (item) => {
+    dispatch(removeFromCartItemsThunk(item.product_id)).then(() =>
+      toast.success("Item Removed From Cart")
+    );
   };
 
   return (
@@ -57,7 +65,7 @@ const Cart = () => {
                     <p>Price: ${item.price}</p>
                     <p
                       className="remove_cart_item"
-                      onClick={() => dispatch(removeCartItem(item.product_id))}
+                      onClick={() => handleCartProductRemove(item)}
                     >
                       Remove
                     </p>
@@ -99,7 +107,7 @@ const Cart = () => {
                 <div className="cart_subtotal price">
                   <div className="sub_total">Sub Total</div>
                   <p className="cart_subtotal_price">
-                    ${item.price * item.quantity}
+                    ${(item.price * item.quantity).toFixed(3)}
                   </p>
                 </div>
               </div>
@@ -108,10 +116,9 @@ const Cart = () => {
               <div></div>
               <p>Gross Total</p>
               <div className="cartGrossProfitBox price">
-                <p>{`$${cartItems.reduce(
-                  (acc, item) => acc + item.quantity * item.price,
-                  0
-                )}`}</p>
+                <p>{`$${cartItems
+                  .reduce((acc, item) => acc + item.quantity * item.price, 0)
+                  .toFixed(3)}`}</p>
               </div>
               <div className="checkOutBtn">
                 <button onClick={() => navigate("/login?redirect=checkout")}>

@@ -1,3 +1,6 @@
+.all_products_container{
+    padding-left: 2rem;
+}
 .dashboard_container {
     display: grid;
     grid-template-columns: auto 1fr;
@@ -23,12 +26,11 @@
 .dashboard_main_content {
     width: 100%;
     height: 100%;
+    overflow-x: auto;
     border-left: 1px solid rgba(178, 169, 169, 0.7);
-    padding: 2rem;
-    box-sizing: border-box;
+    
     /* Include padding in the element's width */
-    overflow-y: hidden;
-    /* Prevent horizontal scroll due to content overflow */
+
 }
 
 /* Media Queries */
@@ -38,7 +40,7 @@
     }
 
     .dashboard_main_content {
-        padding: 1.5rem;
+        padding: 1rem;
 
     }
 }
@@ -52,7 +54,7 @@
     }
 
     .dashboard_container {
-        grid-template-columns: 1fr;
+        grid-template-columns: 100%;
 
     }
 

@@ -105,7 +105,7 @@ const updateProduct = asyncHandler(async (req, res, next) => {
 
     let product = await Product.findById(req.params.id)
 
-   
+
 
     if (!product) {
         return next(new ErrorHandler(`Cannot get the product with id ${req.params.id}`, 400));
@@ -161,7 +161,7 @@ const deleteProduct = asyncHandler(async (req, res, next) => {
         return next(new ErrorHandler(`Cannot get the product with id ${req.params.id}`, 400));
     }
     for (let index = 0; index < product.images.length; index++) {
-        await cloudinary.v2.uploader.destroy(product.images[i].public_id);
+        await cloudinary.v2.uploader.destroy(product.images[index].public_id);
     }
     // this will return the deleted product not the remaning data after deleting
     product = await Product.findByIdAndDelete(req.params.id)
@@ -232,14 +232,14 @@ const getAllProductReviews = asyncHandler(async (req, res, next) => {
     res.status(200).json({
         success: true,
         message: 'All Reviews Fetched',
-        ratings:product.ratings,
+        ratings: product.ratings,
         reviews: product.reviews
     })
 })
 
 // Delete Specific Product Review.
 const deleteProductReview = asyncHandler(async (req, res, next) => {
-    
+
     const product = await Product.findById(req.query.productId);
 
     if (!product) {

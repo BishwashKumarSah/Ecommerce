@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./AddProduct.css";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -8,7 +8,7 @@ import SecurityIcon from "@mui/icons-material/Security";
 import { STATUSES } from "../../../store/statusEnums";
 import toast from "react-hot-toast";
 import {
-  createNewProduct,
+
   getUserProfileDetails,
   updateUserDetails,
 } from "../../../store/adminSlice";
@@ -25,7 +25,7 @@ const AddProduct = () => {
     status,
     errorMessage,
   } = useSelector((state) => state.admin);
-  const [success, setSuccess] = useState(false);
+  
 
   const [userData, setUserData] = useState({});
 
@@ -54,8 +54,7 @@ const AddProduct = () => {
     });
   };
 
-  const validateProductData = (data) => {
-    console.log(data.name);
+  const validateProductData = (data) => {  
     if (data.name.length <= 5 || data.name.length >= 30) {
       toast.error(
         "Name Should be greater than 5 characters and less than 30 characters"
@@ -83,7 +82,7 @@ const AddProduct = () => {
     if (status === STATUSES.ERROR) {
       toast.error(errorMessage);
     }
-  }, [errorMessage, status, success, navigate]);
+  }, [errorMessage, status, navigate]);
 
   return (
     <div className="create_product_container">

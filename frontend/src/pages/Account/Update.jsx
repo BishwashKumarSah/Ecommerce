@@ -4,6 +4,7 @@ import SignUp from "../Login/SignUp";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { setIsUpdate } from "../../store/userSlice";
+import MetaData from "../../utils/MetaData";
 
 const Update = () => {
   const navigate = useNavigate();
@@ -18,6 +19,7 @@ const Update = () => {
   }, [isUpdated, navigate, dispatch]);
   return (
     <div className="login_signUp_container">
+      <MetaData title="Update Profile" />
       <div className="login_signUp_section">
         <div className="title">
           <div className="login_signUp_title">

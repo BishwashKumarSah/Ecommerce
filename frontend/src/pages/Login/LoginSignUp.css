@@ -164,10 +164,9 @@
     position: absolute;
     left: 0;
     bottom: 0;
-    /* border: 1px solid green; */
     min-height: 100%;
     width: 100%;
-    font-size: 2rem !important;
+    margin-left: 12px;   
 }
 
 .shiftToNeutral {

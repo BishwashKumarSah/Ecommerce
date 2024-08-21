@@ -11,6 +11,7 @@ import {
   removeFromCartItemsThunk,
 } from "../../store/cartSlice";
 import toast from "react-hot-toast";
+import MetaData from "../../utils/MetaData";
 
 const Cart = () => {
   const dispatch = useDispatch();
@@ -40,6 +41,7 @@ const Cart = () => {
 
   return (
     <Fragment>
+      <MetaData title="Cart" />
       {cartItems.length === 0 ? (
         <div className="emptyCart">
           <RemoveShoppingCartIcon />

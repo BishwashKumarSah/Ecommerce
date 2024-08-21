@@ -11,6 +11,7 @@ import toast from "react-hot-toast";
 import categories from "../../../utils/Categories";
 import { createNewProduct } from "../../../store/adminSlice";
 import { useNavigate } from "react-router-dom";
+import MetaData from "../../../utils/MetaData";
 
 const AddProduct = () => {
   const dispatch = useDispatch();
@@ -109,6 +110,7 @@ const AddProduct = () => {
 
   return (
     <div className="create_product_container">
+      <MetaData title="Create Product" />
       <form
         action=""
         className="create_product_form"

@@ -9,6 +9,7 @@ import AccountBalanceIcon from "@mui/icons-material/AccountBalance";
 import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
 import Loader from "../../utils/Loader/Loader";
+import MetaData from "../../utils/MetaData";
 
 const Checkout = ({ stripePublishableKey }) => {
   const stripePromise = loadStripe(stripePublishableKey);
@@ -40,6 +41,7 @@ const Checkout = ({ stripePublishableKey }) => {
 
   return (
     <>
+      <MetaData title="Checkout" />
       <h3>CheckOut</h3>
       <Stepper steps={CHECKOUT_STEPS} />
     </>

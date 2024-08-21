@@ -158,14 +158,13 @@ export const resetPassword = (token, formData) => {
 
 
 export const loadUser = () => {
-    return async function loadUserThunk(dispatch, getState) {
+    return async function loadUserThunk(dispatch) {
         dispatch(setStatus(STATUSES.LOADING))
         try {
             const { data } = await axios.get('/api/v1/me', { withCredentials: true })
             dispatch(setUser({ user: data.user, isAuthenticated: true }))
             dispatch(clearErrorMessage())
-            dispatch(setStatus(STATUSES.IDLE));
-            
+            dispatch(setStatus(STATUSES.IDLE));            
 
         } catch (error) {
             dispatch(setUser({ user: null, isAuthenticated: false }))

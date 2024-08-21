@@ -36,7 +36,7 @@ const ForgotPassword = () => {
   }, [isUpdated, navigate, dispatch]);
 
   return (
-    <Fragment>
+    <Fragment>      
       {status === STATUSES.LOADING ? (
         <Loader />
       ) : (

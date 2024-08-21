@@ -8,7 +8,6 @@ const Dashboard = () => {
   return (
     <div className="dashboard_container">
       <SideNav />
-
       <div className="dashboard_main_content">
         <Outlet />
       </div>

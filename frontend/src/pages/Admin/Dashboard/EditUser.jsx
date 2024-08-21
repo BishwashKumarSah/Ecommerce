@@ -8,11 +8,11 @@ import SecurityIcon from "@mui/icons-material/Security";
 import { STATUSES } from "../../../store/statusEnums";
 import toast from "react-hot-toast";
 import {
-
   getUserProfileDetails,
   updateUserDetails,
 } from "../../../store/adminSlice";
 import { useNavigate, useParams } from "react-router-dom";
+import MetaData from "../../../utils/MetaData";
 
 const AddProduct = () => {
   const dispatch = useDispatch();
@@ -25,7 +25,6 @@ const AddProduct = () => {
     status,
     errorMessage,
   } = useSelector((state) => state.admin);
-  
 
   const [userData, setUserData] = useState({});
 
@@ -54,7 +53,7 @@ const AddProduct = () => {
     });
   };
 
-  const validateProductData = (data) => {  
+  const validateProductData = (data) => {
     if (data.name.length <= 5 || data.name.length >= 30) {
       toast.error(
         "Name Should be greater than 5 characters and less than 30 characters"
@@ -86,6 +85,7 @@ const AddProduct = () => {
 
   return (
     <div className="create_product_container">
+      <MetaData title="Edit User" />
       <form
         action=""
         className="create_product_form"
@@ -129,8 +129,12 @@ const AddProduct = () => {
             disabled={status === STATUSES.LOADING}
           >
             <option value="">Role</option>
-            <option value="admin" style={{color:"green"}}>Admin</option>
-            <option value="user" style={{color:"red"}}>User</option>
+            <option value="admin" style={{ color: "green" }}>
+              Admin
+            </option>
+            <option value="user" style={{ color: "red" }}>
+              User
+            </option>
           </select>
           <SecurityIcon className="login_signUp_logo" />
         </div>

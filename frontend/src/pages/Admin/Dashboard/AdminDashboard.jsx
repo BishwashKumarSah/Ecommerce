@@ -19,6 +19,7 @@ import InStockOutOfStockChart from "../Charts/InStockOutOfStock";
 import toast from "react-hot-toast";
 import WorldMapHeatmap from "../Charts/WorldMapSales";
 import { Link } from "react-router-dom";
+import MetaData from "../../../utils/MetaData";
 
 const AdminDashboard = () => {
   const [year, setYear] = useState(2024);
@@ -31,15 +32,13 @@ const AdminDashboard = () => {
     totalUser,
   } = useSelector((state) => state.admin);
 
-  const {
-    countryWiseSalesData: salesMap,  
-    status: salesStatus,
-  } = useSelector((state) => state.admin);
+  const { countryWiseSalesData: salesMap, status: salesStatus } = useSelector(
+    (state) => state.admin
+  );
 
-  const {
-    allProducts,   
-    status: productStatus,
-  } = useSelector((state) => state.admin);
+  const { allProducts, status: productStatus } = useSelector(
+    (state) => state.admin
+  );
 
   const data = new Array(12).fill(0); // Initialize array for 12 months
 
@@ -82,6 +81,7 @@ const AdminDashboard = () => {
 
   return (
     <>
+      <MetaData title="Admin Dashboard" />
       <div className="admin_dashboard">
         <div className="dashboard_cards">
           <Cards

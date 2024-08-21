@@ -13,6 +13,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { fetchProductDetails } from "../../../store/productSlice";
 import Loader from "../../../utils/Loader/Loader";
 import { editProduct } from "../../../store/adminSlice";
+import MetaData from "../../../utils/MetaData";
 
 const EditProduct = () => {
   const dispatch = useDispatch();
@@ -119,6 +120,7 @@ const EditProduct = () => {
     <Loader />
   ) : (
     <div className="create_product_container">
+      <MetaData title="Edit Product" />
       <form
         action=""
         className="create_product_form"

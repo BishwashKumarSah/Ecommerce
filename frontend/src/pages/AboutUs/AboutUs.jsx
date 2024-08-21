@@ -3,6 +3,7 @@ import "./AboutUs.css";
 import { Button, Typography, Avatar } from "@mui/material";
 
 import LanguageIcon from "@mui/icons-material/Language";
+import MetaData from "../../utils/MetaData";
 
 const AboutUs = () => {
   const visitPortfolio = () => {
@@ -10,11 +11,11 @@ const AboutUs = () => {
   };
   return (
     <div className="aboutSection">
+      <MetaData title="About Us" />
       <div></div>
       <div className="aboutSectionGradient"></div>
       <div className="aboutSectionContainer">
         <Typography component="h1">About Us</Typography>
-
         <div>
           <div>
             <Avatar
@@ -34,7 +35,10 @@ const AboutUs = () => {
           <div className="aboutSectionContainer2">
             <Typography component="h2">Our WebSite</Typography>
 
-            <a href="https://bishwashkumarsah.github.io/portfolio-design/" target="blank">
+            <a
+              href="https://bishwashkumarsah.github.io/portfolio-design/"
+              target="blank"
+            >
               <LanguageIcon className="instagramSvgIcon" />
             </a>
           </div>

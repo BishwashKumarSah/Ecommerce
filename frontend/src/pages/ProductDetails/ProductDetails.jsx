@@ -21,6 +21,7 @@ import { addToCartItems } from "../../store/cartSlice";
 import toast from "react-hot-toast";
 import { getMyOrders } from "../../store/orderSlice";
 import Loader from "../../utils/Loader/Loader";
+import MetaData from "../../utils/MetaData";
 
 const ProductDetails = () => {
   const navigate = useNavigate();
@@ -175,6 +176,7 @@ const ProductDetails = () => {
     <Fragment>
       {product && (
         <>
+          <MetaData title={product?.name} />
           <div className="product_details_component">
             <div className="product_sticky">
               <div className="product_details_images">

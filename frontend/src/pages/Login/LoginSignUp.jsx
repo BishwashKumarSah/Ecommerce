@@ -2,7 +2,7 @@ import { Fragment, useEffect, useRef, useState } from "react";
 import MailOutlineIcon from "@mui/icons-material/MailOutline";
 import LockOpenIcon from "@mui/icons-material/LockOpen";
 import "./LoginSignUp.css";
-import { Link,useLocation } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { STATUSES } from "../../store/statusEnums";
 import { setUserLogin } from "../../store/userSlice";
@@ -10,6 +10,7 @@ import { useNavigate } from "react-router-dom";
 import SignUp from "./SignUp";
 import toast from "react-hot-toast";
 import Loader from "../../utils/Loader/Loader";
+import MetaData from "../../utils/MetaData";
 
 const LoginSignUp = () => {
   const dispatch = useDispatch();
@@ -20,7 +21,7 @@ const LoginSignUp = () => {
   const navigate = useNavigate();
 
   // To check if /login?redirect=checkout, if so redirect to /checkout or else redirect to /account
-  const { search } = useLocation(); 
+  const { search } = useLocation();
   const queryParams = new URLSearchParams(search);
   const redirect = queryParams.get("redirect") || "account";
 
@@ -62,17 +63,17 @@ const LoginSignUp = () => {
     dispatch(setUserLogin(loginEmail, loginPassword));
   };
 
+ 
+
   useEffect(() => {
-    
     if (status === STATUSES.IDLE && isAuthenticated === true) {
       navigate(`/${redirect}`);
     }
-    if (status === STATUSES.ERROR) {
-      toast.error(errorMessage);
-    }
-  }, [status, navigate, isAuthenticated, redirect, errorMessage]);
+  }, [status, navigate, isAuthenticated, redirect]);
+
   return (
     <Fragment>
+      <MetaData title="Ekart" />
       {status === STATUSES.LOADING ? (
         <Loader />
       ) : (

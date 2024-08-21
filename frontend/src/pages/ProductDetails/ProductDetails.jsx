@@ -1,12 +1,8 @@
 import React, { Fragment, useCallback, useEffect, useState } from "react";
 import "./ProductDetails.css";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  clearErrorMessage,
-  fetchProductDetails,
-  newReview,
-} from "../../store/productSlice";
-import { Navigate, useNavigate, useParams } from "react-router-dom";
+import { fetchProductDetails, newReview } from "../../store/productSlice";
+import { useNavigate, useParams } from "react-router-dom";
 import { STATUSES } from "../../store/statusEnums";
 import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
 import { BsCircleFill } from "react-icons/bs";
@@ -34,8 +30,7 @@ const ProductDetails = () => {
     (state) => state.products
   );
   const {
-    myOrders,
-    status: orderStatus,
+    myOrders,    
     errorMessageMessage: orderErrorMessage,
   } = useSelector((state) => state.order);
   const { status: userStatus, isAuthenticated } = useSelector(
@@ -83,13 +78,13 @@ const ProductDetails = () => {
 
   const showPrevImages = () => {
     setImageIndex((prev) =>
-      prev === 0 ? product.data.images.length - 1 : prev - 1
+      prev === 0 ? product?.data?.images?.length - 1 : prev - 1
     );
   };
 
   const showNextImages = useCallback(() => {
     setImageIndex((prev) =>
-      prev === product.data.images.length - 1 ? 0 : prev + 1
+      prev === product?.data?.images?.length - 1 ? 0 : prev + 1
     );
   }, [product?.data?.images]);
 
@@ -100,7 +95,7 @@ const ProductDetails = () => {
   };
 
   const handleAddProducts = () => {
-    if (quantity < product.data.stock) {
+    if (quantity < product?.data?.stock) {
       setQuantity((prev) => prev + 1);
     }
   };
@@ -111,7 +106,7 @@ const ProductDetails = () => {
       setQuantity(1);
     } else {
       var parseVal = parseInt(e.target.value, 10);
-      if (parseVal >= 0 && parseVal <= product.data.stock) {
+      if (parseVal >= 0 && parseVal <= product?.data?.stock) {
         setQuantity(parseVal);
       }
     }
@@ -124,7 +119,9 @@ const ProductDetails = () => {
   };
 
   const handleAddCartItems = () => {
-    dispatch(addToCartItems(product?.data?._id, quantity)).then(() => toast.success('Item Added to Cart'));
+    dispatch(addToCartItems(product?.data?._id, quantity)).then(() =>
+      toast.success("Item Added to Cart")
+    );
   };
 
   const handleGoToCart = () => {
@@ -132,18 +129,18 @@ const ProductDetails = () => {
   };
 
   const handleBuyNow = () => {
-    dispatch(addToCartItems(product?.data?._id, quantity)).then(() => {      
-      navigate('/checkout');
+    dispatch(addToCartItems(product?.data?._id, quantity)).then(() => {
+      navigate("/checkout");
     });
   };
 
   useEffect(() => {
     setAddSuccess(false);
     const val = localStorage.getItem("cartItems");
-    if (val.length > 0) {
+    if (val?.length > 0) {
       let isFound = cartItems.some(
         (cart) => cart.product_id === product?.data?._id
-      );  
+      );
       if (isFound === true) {
         setAddSuccess(true);
       }
@@ -183,8 +180,8 @@ const ProductDetails = () => {
           <div className="product_details_component">
             <div className="product_sticky">
               <div className="product_details_images">
-                {product.data.images.length > 0 &&
-                  product.data.images.map((image, ind) => (
+                {product?.data?.images?.length > 0 &&
+                  product?.data?.images?.map((image, ind) => (
                     <div key={ind} className="product_images">
                       <img
                         src={image.url}
@@ -210,7 +207,7 @@ const ProductDetails = () => {
                   <IoIosArrowForward className="btn_next_icon" size={56} />
                 </button>
                 <div className="circle-slider">
-                  {product.data.images.map((_, index) => (
+                  {product?.data?.images?.map((_, index) => (
                     <button
                       key={index}
                       className="circle-icon-btn"
@@ -248,7 +245,7 @@ const ProductDetails = () => {
               <h3>REVIEWS</h3>
             </div>
 
-            {product.data.reviews && product.data.reviews.length > 0 ? (
+            {product?.data?.reviews && product?.data?.reviews?.length > 0 ? (
               <div className="section_review">
                 <div className="reviews">
                   {product.data.reviews.map((review) => (

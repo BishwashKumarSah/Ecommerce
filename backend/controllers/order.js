@@ -57,7 +57,7 @@ const myOrders = asyncHandler(async (req, res, next) => {
 const getAllOrders = asyncHandler(async (req, res, next) => {
     const orders = await Order.find({}).populate("user", "name email")
 
-    const totalOrders = orders.length;
+    const totalOrders = orders?.length;
 
     const SalesMap = new Map()
     orders.map((order, index) => {

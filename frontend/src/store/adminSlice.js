@@ -81,7 +81,7 @@ export const getAllProducts = () => {
     return async function getAllProductsThunk(dispatch, getState) {
         dispatch(setStatus(STATUSES.LOADING))
         try {
-            const { data } = await axios.get('/admin/products', { withCredentials: true });
+            const { data } = await axios.get('/api/v1/admin/products', { withCredentials: true });
             dispatch(setAllProducts({ data, products: data.products }))
             dispatch(setStatus(STATUSES.IDLE))
         } catch (error) {
@@ -96,7 +96,7 @@ export const getTotalProfits = (year) => {
     return async function getTotalProfitsThunk(dispatch, getState) {
         dispatch(setStatus(STATUSES.LOADING))
         try {
-            const { data } = await axios.get(`/admin/totalProfits/${year}`, { withCredentials: true });
+            const { data } = await axios.get(`/api/v1/admin/totalProfits/${year}`, { withCredentials: true });
 
             dispatch(setTotalProfits({ year: data.year, totalProfits: data.totalProfit }))
             dispatch(setStatus(STATUSES.IDLE))
@@ -112,7 +112,7 @@ export const getCountryWiseSalesData = () => {
     return async function getCountryWiseSalesDataThunk(dispatch) {
         dispatch(setStatus(STATUSES.LOADING))
         try {
-            const { data } = await axios.get(`/admin/orders`, { withCredentials: true });
+            const { data } = await axios.get(`/api/v1/admin/orders`, { withCredentials: true });
 
             dispatch(setCountryWiseSalesData(data.salesMap))
             dispatch(setTotalProfit({ totalProfits: data.total_Amount, totalOrders: data.totalOrders }))
@@ -128,7 +128,7 @@ export const getTotalUserCount = () => {
     return async function getTotalUserCountThunk(dispatch) {
         dispatch(setStatus(STATUSES.LOADING))
         try {
-            const { data } = await axios.get(`/admin/users`, { withCredentials: true });
+            const { data } = await axios.get(`/api/v1/admin/users`, { withCredentials: true });
             dispatch(setTotalUser(data.totalUser))
             dispatch(setStatus(STATUSES.IDLE))
         } catch (error) {
@@ -146,7 +146,7 @@ export const createNewProduct = (product) => {
         dispatch(setStatus(STATUSES.LOADING))
         try {
             const config = { headers: { "Content-Type": "multipart/form-data" }, withCredentials: true }
-            const { data } = await axios.post('/admin/product/new', product, config)
+            const { data } = await axios.post('/api/v1/admin/product/new', product, config)
             dispatch(setNewProduct(data.data))
             dispatch(setStatus(STATUSES.IDLE))
 
@@ -163,7 +163,7 @@ export const deleteProduct = (id) => {
         dispatch(setStatus(STATUSES.LOADING))
         try {
             const config = { withCredentials: true }
-            await axios.delete(`/admin/product/${id}`, config)
+            await axios.delete(`/api/v1/admin/product/${id}`, config)
             dispatch(getAllProducts())
             dispatch(setStatus(STATUSES.IDLE))
 
@@ -197,7 +197,7 @@ export const getAllOrders = () => {
     return async function getAllOrdersThunk(dispatch) {
         dispatch(setStatus(STATUSES.LOADING))
         try {
-            const { data } = await axios.get('/admin/orders', { withCredentials: true });
+            const { data } = await axios.get('/api/v1/admin/orders', { withCredentials: true });
             dispatch(setAllOrders(data.orders))
             dispatch(setStatus(STATUSES.IDLE))
         } catch (error) {
@@ -215,7 +215,7 @@ export const updateOrderStatus = (id, formData) => {
         try {
 
             const config = { withCredentials: true }
-            const { data } = await axios.put(`/admin/order/${id}`, formData, config);
+            const { data } = await axios.put(`/api/v1/admin/order/${id}`, formData, config);
             dispatch(getOrderDetails(id));
             dispatch(setStatus(STATUSES.IDLE))
         } catch (error) {
@@ -232,7 +232,7 @@ export const deleteOrder = (id, formData) => {
         try {
 
             const config = { withCredentials: true }
-            const { data } = await axios.delete(`/admin/order/${id}`, config);
+            const { data } = await axios.delete(`/api/v1/admin/order/${id}`, config);
             // dispatch(getAllOrders());
             dispatch(setStatus(STATUSES.IDLE))
         } catch (error) {
@@ -250,7 +250,7 @@ export const getAllUsers = () => {
         try {
 
             const config = { withCredentials: true }
-            const { data } = await axios.get(`/admin/users`, config);
+            const { data } = await axios.get(`/api/v1/admin/users`, config);
             dispatch(setAllUsers({ users: data.users, message: data.message }));
             dispatch(setStatus(STATUSES.IDLE))
         } catch (error) {
@@ -266,7 +266,7 @@ export const getUserProfileDetails = (id) => {
         dispatch(setStatus(STATUSES.LOADING))
         try {
             const config = { withCredentials: true }
-            const { data } = await axios.get(`/admin/user/${id}`, config);
+            const { data } = await axios.get(`/api/v1/admin/user/${id}`, config);
             dispatch(setUserProfile({ user: data.user, message: data.message, success: data.success }));
             dispatch(setStatus(STATUSES.IDLE))
         } catch (error) {
@@ -282,7 +282,7 @@ export const updateUserDetails = (id, formData) => {
         dispatch(setStatus(STATUSES.LOADING))
         try {
             const config = { headers: { 'Content-Type': 'application/json' }, withCredentials: true }
-            const { data } = await axios.put(`/admin/user/${id}`, formData, config);
+            const { data } = await axios.put(`/api/v1/admin/user/${id}`, formData, config);
             dispatch(setUserProfile({ user: data.user, message: data.message, success: data.success }));
             dispatch(setStatus(STATUSES.IDLE))
         } catch (error) {
@@ -298,7 +298,7 @@ export const deleteUserProfile = (id) => {
         dispatch(setStatus(STATUSES.LOADING))
         try {
             const config = { withCredentials: true }
-            await axios.delete(`/admin/user/${id}`, config);
+            await axios.delete(`/api/v1/admin/user/${id}`, config);
             dispatch(getAllUsers());
             dispatch(setStatus(STATUSES.IDLE))
         } catch (error) {
@@ -315,7 +315,7 @@ export const getAllReviews = (id) => {
         dispatch(setStatus(STATUSES.LOADING))
         try {
             const config = { withCredentials: true }
-            const { data } = await axios.get(`/reviews?id=${id}`, config);
+            const { data } = await axios.get(`/api/v1/reviews?id=${id}`, config);
             dispatch(setAllReviews({ reviews: data.reviews, ratings: data.ratings, success: data.success, message: data.message }));
             dispatch(setStatus(STATUSES.IDLE))
         } catch (error) {
@@ -331,7 +331,7 @@ export const deleteReviews = (reviewId, productId) => {
         dispatch(setStatus(STATUSES.LOADING))
         try {
             const config = { withCredentials: true }
-            const { data } = await axios.delete(`/reviews?productId=${productId}&id=${reviewId}`, config);
+            const { data } = await axios.delete(`/api/v1/reviews?productId=${productId}&id=${reviewId}`, config);
             dispatch(setAllReviews({ reviews: data.reviews, ratings: data.ratings, success: data.success, message: data.message }));
             dispatch(setStatus(STATUSES.IDLE))
         } catch (error) {

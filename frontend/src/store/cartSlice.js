@@ -26,7 +26,7 @@ export default cartSlice.reducer;
 
 export const addToCartItems = (product_id, quantity) => {
     return async function addToCartItemsThunk(dispatch, getState) {
-        const { data } = await axios.get(`/product/${product_id}`);
+        const { data } = await axios.get(`/api/v1/product/${product_id}`);
         const newItem = {
             product_id: data.data._id,
             name: data.data.name,

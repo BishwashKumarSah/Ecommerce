@@ -49,7 +49,7 @@ export const fetchFeaturedProducts = () => {
     return async function fetchProductsThunk(dispatch) {
         dispatch(setStatus(STATUSES.LOADING));
         try {
-            const { data } = await axios.get('/products');
+            const { data } = await axios.get('/api/v1/products');
             dispatch(setFeaturedProducts(data));
             dispatch(setStatus(STATUSES.IDLE));
         } catch (error) {
@@ -72,7 +72,7 @@ export const fetchAllProducts = (search, currentPage = 1, price = [0, 10000], ca
                 }
             }
 
-            const { data } = await axios.get(`http://localhost:8000/${URI}`)
+            const { data } = await axios.get(`/${URI}`)
 
 
             dispatch(setProducts({ products: data.data, totalProductsCount: data.totalProductsCount }))
@@ -89,7 +89,7 @@ export const fetchProductDetails = (id) => {
     return async function fetchProductDetailsThunk(dispatch) {
         dispatch(setStatus(STATUSES.LOADING));
         try {
-            const { data } = await axios.get(`/product/${id}`);
+            const { data } = await axios.get(`/api/v1/product/${id}`);
             dispatch(setSingleProduct(data));
             dispatch(setStatus(STATUSES.IDLE));
         } catch (error) {
@@ -103,7 +103,7 @@ export const newReview = (myForm, productId) => {
     return async function newReviewThunk(dispatch, getState) {
         dispatch(setStatus(STATUSES.LOADING));
         try {
-            const { data } = await axios.put('/review', myForm, {
+            const { data } = await axios.put('/api/v1/review', myForm, {
                 withCredentials: true,
                 headers: { "Content-Type": 'application/json' }
             });

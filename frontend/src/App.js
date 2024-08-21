@@ -44,7 +44,7 @@ function App() {
 
   const getStripeAPIKey = async () => {
     try {
-      const { data } = await axios.get('/payment/getStripePublishableKey', { withCredentials: true });
+      const { data } = await axios.get('/api/v1/payment/getStripePublishableKey', { withCredentials: true });
       if (data) {
         setStripeAPIKey(data.stripePublishableKey);
       }

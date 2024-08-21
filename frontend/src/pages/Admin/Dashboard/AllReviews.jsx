@@ -12,12 +12,9 @@ import { STATUSES } from "../../../store/statusEnums";
 import MetaData from "../../../utils/MetaData";
 
 const ProductReviews = () => {
-  const dispatch = useDispatch();
-  // const { error: deleteError, isDeleted } = useSelector(
-  //   (state) => state.review
-  // );
+  const dispatch = useDispatch(); 
 
-  const { errorMessage, allReviews, ratings, status, success, message } =
+  const { errorMessage, allReviews, ratings, status } =
     useSelector((state) => state.admin);
 
   const [productId, setProductId] = useState("");

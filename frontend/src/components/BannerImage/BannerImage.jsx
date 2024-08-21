@@ -8,7 +8,8 @@ const BannerImage = () => {
   const [imgIndex, setImgIndex] = useState(0);
 
   const Images = [
-    "/images/bannerImage1.jpg",
+    "/images/bannerImage1.jpg",   
+    "/images/bannerImage2.jpg",   
     "/images/bannerImage3.jpg",
     "/images/bannerImage4.jpg",
     "/images/bannerImage5.jpg",

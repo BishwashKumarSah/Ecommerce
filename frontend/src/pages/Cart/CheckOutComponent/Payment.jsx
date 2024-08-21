@@ -32,7 +32,7 @@ const Payment = () => {
 
   const paymentData = {
     amount: Math.round(orderInfo.SubTotal * 100), // to convert rupee to paisa cuz stripe take paisa not rupee.
-    currency: "inr",
+    currency: "usd",
   };
 
   const order = {
@@ -109,7 +109,7 @@ const Payment = () => {
       }
     } catch (error) {
       toast.error(error.message);
-      paymentBtn.current.disabled = false;  
+      paymentBtn.current.disabled = false;
     }
   };
   return (

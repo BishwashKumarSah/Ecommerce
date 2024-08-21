@@ -6,7 +6,6 @@ import { useNavigate, useParams } from "react-router-dom";
 import { STATUSES } from "../../store/statusEnums";
 import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
 import { BsCircleFill } from "react-icons/bs";
-
 import {
   Dialog,
   DialogActions,
@@ -29,10 +28,9 @@ const ProductDetails = () => {
   const { product, status, errorMessage } = useSelector(
     (state) => state.products
   );
-  const {
-    myOrders,    
-    errorMessageMessage: orderErrorMessage,
-  } = useSelector((state) => state.order);
+  const { myOrders, errorMessageMessage: orderErrorMessage } = useSelector(
+    (state) => state.order
+  );
   const { status: userStatus, isAuthenticated } = useSelector(
     (state) => state.user
   );
@@ -237,7 +235,7 @@ const ProductDetails = () => {
               handleBuyNow={handleBuyNow}
               addSuccess={addSuccess}
               handleGoToCart={handleGoToCart}
-              onOpenReviewDialog={submitReviewToggle} 
+              onOpenReviewDialog={submitReviewToggle}
             />
           </div>
           <div className="reviews_section">

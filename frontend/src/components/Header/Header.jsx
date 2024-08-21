@@ -95,7 +95,9 @@ const Header = () => {
               <NavLink className="anchor_tag" to="/cart">
                 <div className="cart_icon_container">
                   <FaShoppingCart size={30} className="shopping" />
-                  {cartItems && <div className="cart_count">{cartItems.length}</div>}
+                  {cartItems && cartItems.length > 0 && (
+                    <div className="cart_count">{cartItems.length}</div>
+                  )}
                 </div>
                 <div>Cart</div>
               </NavLink>

@@ -9,7 +9,7 @@
 
 .product_sticky {
     max-width: 500px;
-    max-height: 500px;
+    height: 70vh;
     position: sticky;
     align-self: flex-start;
     top: 0;
@@ -22,12 +22,10 @@
     overflow: hidden;
     display: flex;
 }
-
-
-
 .product_images {
     min-width: 100%;
     height: 100%;
+    max-height: 70vh;
 }
 
 .product_images img {

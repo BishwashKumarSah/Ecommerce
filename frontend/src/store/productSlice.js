@@ -63,16 +63,16 @@ export const fetchAllProducts = (search, currentPage = 1, price = [0, 10000], ca
     return async function fetchAllProducts(dispatch) {
         dispatch(setStatus(STATUSES.LOADING))
         try {
-            let URI = `api/v1/products?search=${search}&page=${currentPage}&price[gte]=${price[0]}&price[lte]=${price[1]}&ratings[gte]=${ratings}`;
+            let URI = `products?search=${search}&page=${currentPage}&price[gte]=${price[0]}&price[lte]=${price[1]}&ratings[gte]=${+ratings}`;
             if (category) {
                 if (category === "All") {
-                    URI = `api/v1/products?search=${search}&page=${currentPage}&price[gte]=${price[0]}&price[lte]=${price[1]}&ratings[gte]=${ratings}`;
+                    URI = `products?search=${search}&page=${currentPage}&price[gte]=${price[0]}&price[lte]=${price[1]}&ratings[gte]=${+ratings}`;
                 } else {
-                    URI = `api/v1/products?search=${search}&page=${currentPage}&price[gte]=${price[0]}&price[lte]=${price[1]}&ratings[gte]=${ratings}&category=${category}`;
+                    URI = `products?search=${search}&page=${currentPage}&price[gte]=${price[0]}&price[lte]=${price[1]}&ratings[gte]=${+ratings}&category=${category}`;
                 }
             }
 
-            const { data } = await axios.get(`/${URI}`)
+            const { data } = await axios.get(`/api/v1/${URI}`)
 
 
             dispatch(setProducts({ products: data.data, totalProductsCount: data.totalProductsCount }))

@@ -87,9 +87,7 @@ const getAllProductsAdmin = asyncHandler(async (req, res, next) => {
 const getSingleProduct = asyncHandler(async (req, res, next) => {
     // return next(new ErrorHandler("This is a demo error"),500)
 
-
-    const product = await Product.findById(req.params.id)
-    console.log(product);
+    const product = await Product.findById(req.params.id)   
 
     if (!product) {
         return next(new ErrorHandler(`Cannot get the product with id ${req.params.id}`, 400));

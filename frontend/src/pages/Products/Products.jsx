@@ -12,10 +12,9 @@ import Pagination from "../../components/Pagination/Pagination";
 import Loader from "../../utils/Loader/Loader";
 import toast from "react-hot-toast";
 import categories from "../../utils/Categories";
+import ProductNotFound from "../../images/ProductNotFoundSVG.jpg";
 
 const Products = () => {
-  
-
   const { search } = useLocation();
   const dispatch = useDispatch();
   const { products, errorMessage, status } = useSelector(
@@ -30,21 +29,37 @@ const Products = () => {
   const [activeCategory, setActiveCategory] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
 
-  const handleRatingChange = (newValue) => {
+  const handleRatingChange = (event, newValue) => {
     setRatings(newValue);
   };
 
   const handleCategoryFilter = (category) => {
     setCategory(category);
     setActiveCategory(category);
+    setCurrentPage(1);
   };
 
   useEffect(() => {
     const queryParams = new URLSearchParams(search);
     const searchQuery = queryParams.get("search") || ""; // Default to empty string if not present
-    dispatch(
-      fetchAllProducts(searchQuery, currentPage, price, category, ratings)
-    );
+
+    const validRatings = Number(ratings);
+    const validPrice = price.map((p) => Number(p));
+
+    // Ensure ratings and price are valid numbers before dispatching the action
+    if (!isNaN(validRatings) && !validPrice.some(isNaN)) {
+      dispatch(
+        fetchAllProducts(
+          searchQuery,
+          currentPage,
+          validPrice,
+          category,
+          validRatings
+        )
+      );
+    } else {
+      console.error("Invalid number in ratings or price");
+    }
   }, [dispatch, currentPage, search, price, category, ratings]);
 
   useEffect(() => {
@@ -102,13 +117,18 @@ const Products = () => {
               {products && products.length > 0 ? (
                 <ul className="products_wrapper">
                   {products.map((product, index) => (
-                    <li key={index} >
+                    <li key={index}>
                       <Product products={product} />
                     </li>
                   ))}
                 </ul>
               ) : (
-                <h3  style={{textAlign:'center', height:'100%',width:'100%'}}>Sorry, No Products Found!</h3>
+                <div className="product_not_found">
+                  <div className="product_not_found_icon">
+                    <img src={ProductNotFound} alt="product_not_found_icon" />
+                  </div>
+                  <h3>Sorry, No Products Found!</h3>
+                </div>
               )}
             </div>
           )}

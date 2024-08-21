@@ -2,10 +2,8 @@ import "./Pagination.css";
 
 const Pagination = ({
   currentPage,
-  setCurrentPage,
-  productsPerPage,
-  totalButtons,
-  totalProductsCount,
+  setCurrentPage,  
+  totalButtons, 
 }) => {
   const maxButtonsToShow = 4; // Maximum number of page buttons to show
 

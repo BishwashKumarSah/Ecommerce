@@ -32,21 +32,19 @@ const AdminDashboard = () => {
   } = useSelector((state) => state.admin);
 
   const {
-    countryWiseSalesData: salesMap,
-    errorMessage: salesError,
+    countryWiseSalesData: salesMap,  
     status: salesStatus,
   } = useSelector((state) => state.admin);
 
   const {
-    allProducts,
-    errorMessage: productErrorMessage,
+    allProducts,   
     status: productStatus,
   } = useSelector((state) => state.admin);
 
   const data = new Array(12).fill(0); // Initialize array for 12 months
 
   profits?.totalProfits?.forEach((p) => {
-    data[p.month - 1] = p.totalProfit; // p.month is 1 to 12
+    data[p.month - 1] = Number(p.totalProfit).toFixed(3); // p.month is 1 to 12
   });
 
   const dispatch = useDispatch();
@@ -88,7 +86,7 @@ const AdminDashboard = () => {
         <div className="dashboard_cards">
           <Cards
             cardTitle="Total Profits"
-            data={`$${totalProfits}`}
+            data={`$${Number(totalProfits).toFixed(3)}`}
             icon={<MonetizationOnIcon />}
           />
           <Link to="/admin/dashboard/allProducts">
@@ -127,7 +125,7 @@ const AdminDashboard = () => {
                   value={year}
                 >
                   <option value="">Year</option>
-                  {profits?.year?.map((year, id) => {
+                  {profits?.year?.map((year) => {
                     return (
                       <option value={year} key={year}>
                         {year}

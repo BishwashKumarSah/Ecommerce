@@ -16,9 +16,9 @@ const ConfirmOrder = ({ handleNextForm }) => {
 
   const shippingCharges = SubTotal > 1000 ? 0 : 200;
 
-  const tax = SubTotal * 0.18;
+  const tax = Number(SubTotal * 0.18).toFixed(3);
 
-  const totalPrice = SubTotal + tax + shippingCharges;
+  const totalPrice = Number(SubTotal + tax + shippingCharges).toFixed(3);
 
   const handleCheckOut = () => {
     const data = {
@@ -71,9 +71,9 @@ const ConfirmOrder = ({ handleNextForm }) => {
                       <p>{item.name}</p>
                     </div>
                     <div>
-                      {`${item.quantity} X $${item.price} = $${
+                      {`${item.quantity} X $${item.price} = $${(
                         item.quantity * item.price
-                      }`}
+                      ).toFixed(3)}`}
                     </div>
                   </Link>
                 ))}

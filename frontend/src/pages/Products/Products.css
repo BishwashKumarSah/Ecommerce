@@ -7,7 +7,7 @@
 
 .filters {
     padding: 100px 15px 0;
-    position: sticky; 
+    position: sticky;
     top: 0;
 }
 
@@ -58,6 +58,14 @@
 
 .product_ratings {
     padding: 10px;
+}
+
+.product_not_found {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
 }
 
 @media (max-width: 1200px) {

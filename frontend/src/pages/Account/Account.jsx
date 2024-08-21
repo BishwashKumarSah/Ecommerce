@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect } from "react";
+import React, { Fragment } from "react";
 import { useSelector } from "react-redux";
 import MetaData from "../../utils/MetaData";
 import { Link, Navigate } from "react-router-dom";

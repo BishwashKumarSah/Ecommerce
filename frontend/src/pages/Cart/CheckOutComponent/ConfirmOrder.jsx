@@ -9,16 +9,20 @@ const ConfirmOrder = ({ handleNextForm }) => {
   const { user } = useSelector((state) => state.user);
   const Address = `${shippingInfo.address}, ${shippingInfo.city}, ${shippingInfo.state}, ${shippingInfo.pinCode}, ${shippingInfo.country}`;
 
+  // Calculate SubTotal
   const SubTotal = cartItems.reduce(
     (acc, item) => acc + item.quantity * item.price,
     0
   );
 
+  // Calculate shipping charges
   const shippingCharges = SubTotal > 1000 ? 0 : 200;
 
-  const tax = Number(SubTotal * 0.18).toFixed(3);
+  // Calculate tax (GST)
+  const tax = +(SubTotal * 0.18).toFixed(2);
 
-  const totalPrice = Number(SubTotal + tax + shippingCharges).toFixed(3);
+  // Calculate total price
+  const totalPrice = +(SubTotal + shippingCharges + tax).toFixed(2);
 
   const handleCheckOut = () => {
     const data = {
@@ -30,6 +34,7 @@ const ConfirmOrder = ({ handleNextForm }) => {
     sessionStorage.setItem("orderInfo", JSON.stringify(data));
     handleNextForm();
   };
+
   return (
     <Fragment>
       <MetaData title="Confirm Order" />
@@ -73,7 +78,7 @@ const ConfirmOrder = ({ handleNextForm }) => {
                     <div>
                       {`${item.quantity} X $${item.price} = $${(
                         item.quantity * item.price
-                      ).toFixed(3)}`}
+                      ).toFixed(2)}`}
                     </div>
                   </Link>
                 ))}
@@ -85,19 +90,19 @@ const ConfirmOrder = ({ handleNextForm }) => {
           <div className="charges">
             <div className="subTotal">
               <p>SubTotal:</p>
-              <span>${SubTotal}</span>
+              <span>${SubTotal.toFixed(2)}</span>
             </div>
             <div className="shippingCharges">
-              <p>shippingCharges:</p>
-              <span>${shippingCharges}</span>
+              <p>Shipping Charges:</p>
+              <span>${shippingCharges.toFixed(2)}</span>
             </div>
             <div className="GST">
               <p>GST:</p>
-              <span>${tax}</span>
+              <span>${tax.toFixed(2)}</span>
             </div>
             <div className="Total">
               <p>Total:</p>
-              <span>${totalPrice}</span>
+              <span>${totalPrice.toFixed(2)}</span>
             </div>
             <button className="checkOut_btn" onClick={handleCheckOut}>
               Proceed To CheckOut

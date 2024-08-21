@@ -9,7 +9,7 @@ const Product = ({ products }) => {
     color: "rgba(20,20,20,0.1)",
     activeColor: "tomato",
     size: window.innerWidth < 600 ? 20 : 25,
-    value: products.ratings,
+    value: Number(products.ratings),
     isHalf: true,
   };
   return (

@@ -12,10 +12,11 @@ import { STATUSES } from "../../../store/statusEnums";
 import MetaData from "../../../utils/MetaData";
 
 const ProductReviews = () => {
-  const dispatch = useDispatch(); 
+  const dispatch = useDispatch();
 
-  const { errorMessage, allReviews, ratings, status } =
-    useSelector((state) => state.admin);
+  const { errorMessage, allReviews, ratings, status } = useSelector(
+    (state) => state.admin
+  );
 
   const [productId, setProductId] = useState("");
 
@@ -100,7 +101,7 @@ const ProductReviews = () => {
     color: "rgba(20,20,20,0.1)",
     activeColor: "tomato",
     size: window.innerWidth < 600 ? 20 : 25,
-    value: ratings,
+    value: Number(ratings),
     isHalf: true,
   };
 

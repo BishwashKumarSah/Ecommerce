@@ -176,7 +176,7 @@ const ProductDetails = () => {
     <Fragment>
       {product && (
         <>
-          <MetaData title={product?.name} />
+          <MetaData title={product?.data?.name} />
           <div className="product_details_component">
             <div className="product_sticky">
               <div className="product_details_images">
@@ -266,7 +266,7 @@ const ProductDetails = () => {
             <DialogTitle>Submit Review</DialogTitle>
             <DialogContent>
               <Rating
-                onChange={(newValue) => setRating(newValue)}
+                onChange={(event, newValue) => setRating(newValue)}
                 value={rating}
                 size="large"
               />

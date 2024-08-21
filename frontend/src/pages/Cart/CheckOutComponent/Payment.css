@@ -5,9 +5,11 @@
     height: 65vh;
     margin: 2vmax;
   }
+
   .credit_card_number{
     padding-top: 2rem;
   }
+
   .payment_container form {
     width: 100%;
     max-width: 500px;
@@ -16,7 +18,6 @@
     flex-direction: column;
     align-items: center;
   }
-
   
   .payment_container h3 {
     color: rgba(0, 0, 0, 0.753);
@@ -45,8 +46,7 @@
     border-radius: 4px;
     outline: none;
     font-size: 1.2vmax;
-    background-color: #fff;
-   
+    background-color: #fff;   
   }
   
   .payment_container svg {
@@ -89,7 +89,6 @@
       padding: 3vw 0;
       width: 100%;
     }
-
   
     .payment_input,
     .expiry_input,

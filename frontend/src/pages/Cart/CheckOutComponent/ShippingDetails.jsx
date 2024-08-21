@@ -1,11 +1,11 @@
-import React, { Fragment, useState } from "react";
+import React, { useState } from "react";
 import "./ShippingDetails.css";
 import HomeIcon from "@mui/icons-material/Home";
 import LocationCityIcon from "@mui/icons-material/LocationCity";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 import PhoneIcon from "@mui/icons-material/Phone";
 import PublicIcon from "@mui/icons-material/Public";
-import { Country, State, City } from "country-state-city";
+import { Country, State } from "country-state-city";
 import { useDispatch, useSelector } from "react-redux";
 import MetaData from "../../../utils/MetaData";
 import { toast } from "react-hot-toast";

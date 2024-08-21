@@ -1,4 +1,3 @@
-/* Import Poppins font from Google Fonts */
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500&display=swap');
 
 /* Main container for the DataTable component */
@@ -11,8 +10,8 @@
   display: flex;
   flex-direction: column;
   height: 100vh;
-  overflow: hidden; /* Ensure content doesn't overflow */
-  font-family: 'Poppins', sans-serif; /* Apply Poppins font */
+  overflow: hidden; 
+  font-family: 'Poppins', sans-serif; 
 }
 
 /* Heading style */
@@ -30,26 +29,26 @@
 .MuiDataGrid-root {
   background-color: white;
   border: none;
-  font-family: 'Poppins', sans-serif; /* Apply Poppins font */
-  overflow: hidden; /* Ensure the DataGrid content is properly contained */
+  font-family: 'Poppins', sans-serif;
+  overflow: hidden; 
 }
 
 /* Column header styles */
 .MuiDataGrid-columnHeader {
   background-color: tomato;
-  padding: 0.75rem !important; /* Adjust padding to ensure space for text */
-  white-space: nowrap; /* Prevent text from wrapping */
-  overflow: hidden; /* Hide overflowing text */
-  text-overflow: ellipsis; /* Display ellipsis when text overflows */
+  padding: 0.75rem !important; 
+  white-space: nowrap;
+  overflow: hidden; 
+  text-overflow: ellipsis; 
 }
 
 /* Header text style */
 .MuiDataGrid-columnHeaderTitle {
   color: rgb(255, 255, 255);
-  font: 500 1rem "Poppins" !important; /* Adjust font size to fit */
-  overflow: hidden; /* Hide overflowing text */
-  text-overflow: ellipsis; /* Display ellipsis when text overflows */
-  white-space: nowrap; /* Prevent text from wrapping */
+  font: 500 1rem "Poppins" !important; 
+  overflow: hidden; 
+  text-overflow: ellipsis; 
+  white-space: nowrap;
 }
 
 /* Remove column separator lines */
@@ -96,7 +95,7 @@
   }
 
   .MuiDataGrid-root {
-    font-size: 1.5rem; /* Adjust font size for smaller screens */
+    font-size: 1.5rem; 
   }
 
   .MuiDataGrid-columnHeader {

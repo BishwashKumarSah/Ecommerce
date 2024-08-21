@@ -38,7 +38,7 @@ export default orderSlice.reducer;
 
 // Create A New Order
 export const createNewOrder = (order) => {
-    return async function createNewOrderThunk(dispatch, getState) {
+    return async function createNewOrderThunk(dispatch) {
         dispatch(setStatus(STATUSES.LOADING))
         try {
             const config = {
@@ -60,7 +60,7 @@ export const createNewOrder = (order) => {
 }
 // Get The User Order From DB
 export const getMyOrders = () => {
-    return async function getMyOrdersThunk(dispatch, getState) {
+    return async function getMyOrdersThunk(dispatch) {
         dispatch(setStatus(STATUSES.LOADING))
         try {
             const { data } = await axios.get('/api/v1/orders/me', { withCredentials: true })

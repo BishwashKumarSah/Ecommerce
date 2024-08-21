@@ -1,10 +1,7 @@
 import React, { Fragment, useState, useEffect } from "react";
 import "./Forgot.css";
-// import Loader from "../layout/Loader/Loader";
 import MailOutlineIcon from "@mui/icons-material/MailOutline";
 import { useDispatch, useSelector } from "react-redux";
-// import { clearErrors, forgotPassword } from "../../actions/userAction";
-// import { useAlert } from "react-alert";
 import MetaData from "../../utils/MetaData";
 import Loader from "../../utils/Loader/Loader";
 import { forgotPassword } from "../../store/userSlice";
@@ -16,7 +13,7 @@ const ForgotPassword = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const { isUpdated, status, errorMessage } = useSelector(
+  const { isUpdated, status } = useSelector(
     (state) => state.user
   );
 

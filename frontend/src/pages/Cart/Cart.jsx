@@ -25,7 +25,7 @@ const Cart = () => {
     }
   };
 
-  const handleAddProducts = (id, price, quantity, stock) => {
+  const handleAddProducts = (id, quantity, stock) => {
     const newQuantity = quantity + 1;
     if (newQuantity < stock) {
       dispatch(addToCartItems(id, 1));
@@ -94,7 +94,6 @@ const Cart = () => {
                     onClick={() =>
                       handleAddProducts(
                         item.product_id,
-                        item.price,
                         item.quantity,
                         item.stock
                       )

@@ -100,7 +100,7 @@ export const fetchProductDetails = (id) => {
 };
 
 export const newReview = (myForm, productId) => {
-    return async function newReviewThunk(dispatch, getState) {
+    return async function newReviewThunk(dispatch) {
         dispatch(setStatus(STATUSES.LOADING));
         try {
             const { data } = await axios.put('/api/v1/review', myForm, {

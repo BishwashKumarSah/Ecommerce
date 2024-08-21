@@ -79,17 +79,14 @@ ul {
 .main_app {
     display: flex;
     flex-direction: column;
-    min-height: 100dvh;
-    /* Ensure the main container takes at least the full viewport height */
+    min-height: 100dvh;   
 }
 
 .main_content {
-    flex: 1;
-    /* Make the content area grow to fill the remaining space */
+    flex: 1;   
 }
 
-footer {  
-   
+footer {     
     padding: 1rem;
     text-align: center;
 }

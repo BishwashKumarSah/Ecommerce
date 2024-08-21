@@ -14,7 +14,7 @@ import Loader from "../../utils/Loader/Loader";
 
 const Home = () => {
   const dispatch = useDispatch();
-  const { featuredProducts, status, errorMessage } = useSelector(
+  const { featuredProducts, status } = useSelector(
     (state) => state.products
   );
 

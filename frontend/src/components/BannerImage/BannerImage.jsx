@@ -1,6 +1,4 @@
 import React, { useCallback, useEffect, useState } from "react";
-// import Images from "../../utils/ImagesArray";
-
 import "./BannerImage.css";
 import { IoIosArrowForward } from "react-icons/io";
 import { IoIosArrowBack } from "react-icons/io";

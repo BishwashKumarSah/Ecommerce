@@ -2,7 +2,7 @@ import { Fragment, useEffect, useRef, useState } from "react";
 import MailOutlineIcon from "@mui/icons-material/MailOutline";
 import LockOpenIcon from "@mui/icons-material/LockOpen";
 import "./LoginSignUp.css";
-import { Link, Navigate, useLocation } from "react-router-dom";
+import { Link,useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { STATUSES } from "../../store/statusEnums";
 import { setUserLogin } from "../../store/userSlice";
@@ -20,7 +20,7 @@ const LoginSignUp = () => {
   const navigate = useNavigate();
 
   // To check if /login?redirect=checkout, if so redirect to /checkout or else redirect to /account
-  const { search,pathname } = useLocation(); 
+  const { search } = useLocation(); 
   const queryParams = new URLSearchParams(search);
   const redirect = queryParams.get("redirect") || "account";
 

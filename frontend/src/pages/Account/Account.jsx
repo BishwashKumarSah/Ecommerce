@@ -1,7 +1,7 @@
 import React, { Fragment, useEffect } from "react";
 import { useSelector } from "react-redux";
 import MetaData from "../../utils/MetaData";
-import { Link, Navigate, useNavigate } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 import "./Account.css";
 import { STATUSES } from "../../store/statusEnums";
 import Loader from "../../utils/Loader/Loader";

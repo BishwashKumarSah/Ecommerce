@@ -1,7 +1,5 @@
 import React from "react";
 import { WorldMap } from "react-svg-worldmap";
-import "./WorldMapExample.css"; // Import CSS file
-
 const WorldMapExample = ({ worldMapData }) => {
 
   const data = worldMapData;

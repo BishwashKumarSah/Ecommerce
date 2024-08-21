@@ -1,6 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
 import "./Stepper.css";
-import { colors } from "@mui/material";
 
 const Stepper = ({ steps }) => {
   const [currentStep, setCurrentStep] = useState(1);

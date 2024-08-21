@@ -8,7 +8,7 @@ import { setIsUpdate } from "../../store/userSlice";
 const Update = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { isUpdated, user, isAuthenticated, status, errorMessage } =
+  const { isUpdated, isAuthenticated, status, errorMessage } =
     useSelector((state) => state.user);
   useEffect(() => {
     if (isUpdated) {

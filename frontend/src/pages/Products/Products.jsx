@@ -30,7 +30,7 @@ const Products = () => {
   const [activeCategory, setActiveCategory] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
 
-  const handleRatingChange = (event, newValue) => {
+  const handleRatingChange = (newValue) => {
     setRatings(newValue);
   };
 

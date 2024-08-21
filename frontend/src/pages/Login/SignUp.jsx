@@ -4,7 +4,7 @@ import {
   updateUser,
   updateUserPassword,
 } from "../../store/userSlice";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import PersonOutlineIcon from "@mui/icons-material/PersonOutline";
 import MailOutlineIcon from "@mui/icons-material/MailOutline";
 import LockOpenIcon from "@mui/icons-material/LockOpen";
@@ -15,9 +15,7 @@ import { Link } from "react-router-dom";
 const SignUp = ({
   updatePassword,
   isLoggedInUser,
-  isAuthenticated,
-  status,
-  errorMessage,
+  isAuthenticated,  
 }) => {
   const dispatch = useDispatch();
 

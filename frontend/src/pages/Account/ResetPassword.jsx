@@ -2,7 +2,7 @@ import React, { Fragment, useState, useEffect } from "react";
 import "./ResetPassword.css";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { redirect, useParams } from "react-router-dom";
+import {  useParams } from "react-router-dom";
 import MetaData from "../../utils/MetaData";
 import Loader from "../../utils/Loader/Loader";
 import LockOpenIcon from "@mui/icons-material/Lock";
@@ -16,7 +16,7 @@ const ResetPassword = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const { isUpdated, status, errorMessage } = useSelector(
+  const { isUpdated, status } = useSelector(
     (state) => state.user
   );
 

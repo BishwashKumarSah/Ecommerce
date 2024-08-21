@@ -180,7 +180,7 @@ export const editProduct = (id, product) => {
         try {
             // const config = { headers: { 'Content-Type': "multipart/form-data" }, withCredentials: true }
             const config = { headers: { "Content-Type": "multipart/form-data" }, withCredentials: true }
-            await axios.put(`/admin/product/${id}`, product, config)
+            await axios.put(`/api/v1/admin/product/${id}`, product, config)
 
             dispatch(setStatus(STATUSES.IDLE))
 
@@ -215,7 +215,7 @@ export const updateOrderStatus = (id, formData) => {
         try {
 
             const config = { withCredentials: true }
-            const { data } = await axios.put(`/api/v1/admin/order/${id}`, formData, config);
+            await axios.put(`/api/v1/admin/order/${id}`, formData, config);
             dispatch(getOrderDetails(id));
             dispatch(setStatus(STATUSES.IDLE))
         } catch (error) {
@@ -226,13 +226,13 @@ export const updateOrderStatus = (id, formData) => {
 }
 // Update Order Status (ADMIN)
 
-export const deleteOrder = (id, formData) => {
+export const deleteOrder = (id) => {
     return async function deleteOrderThunk(dispatch) {
         dispatch(setStatus(STATUSES.LOADING))
         try {
 
             const config = { withCredentials: true }
-            const { data } = await axios.delete(`/api/v1/admin/order/${id}`, config);
+            await axios.delete(`/api/v1/admin/order/${id}`, config);
             // dispatch(getAllOrders());
             dispatch(setStatus(STATUSES.IDLE))
         } catch (error) {

@@ -1,7 +1,6 @@
 .card_container{   
     display: flex;    
-    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
-    /* border: 1px solid red; */
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;   
     min-width: 12rem;
     min-height: 6rem;
     padding: 0 1rem;

@@ -13,7 +13,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { loadUser } from './store/userSlice';
 import Account from './pages/Account/Account';
 import ProtectedRoutes from './utils/ProtectedRoutes';
-import SignUp from './pages/Login/SignUp';
 import Update from './pages/Account/Update';
 import UpdatePassword from './pages/Account/UpdatePassword';
 import ForgotPassword from './pages/Account/Forgot';
@@ -62,13 +61,14 @@ function App() {
     }
   }, [isAuthenticated]);
 
-  // window.addEventListener('contextmenu',(e) => e.preventDefault())
+  window.addEventListener('contextmenu',(e) => e.preventDefault())
 
 
   return (
     <div className='main_app'>
       <Toaster />
       <Header />
+      
       <div className='main_content'>
         <Routes>
           <Route index path='/' element={<Home />} />
@@ -99,18 +99,13 @@ function App() {
               <Route path="allProducts" element={<AllProducts />} />
               <Route path="orders" element={<AllOrders />} />
               <Route path="users" element={<AllUsers />} />
-              <Route path="reviews" element={<AllReviews />} />
-
-              {/* Add other admin routes here */}
+              <Route path="reviews" element={<AllReviews />} />            
             </Route>
           </Route>
-
           <Route path='/password/forgot' element={<ForgotPassword />} />
-          <Route path="/user/password/reset/:token" element={<ResetPassword />} />
-          {/* <Route path='**' element={<PageNotFound />} */}
+          <Route path="/user/password/reset/:token" element={<ResetPassword />} />         
           <Route path="*" element={<PageNotFound />} />
         </Routes></div>
-
       <Footer />
     </div>
   );

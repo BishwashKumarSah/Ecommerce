@@ -237,7 +237,7 @@ const ProductDetails = () => {
               handleBuyNow={handleBuyNow}
               addSuccess={addSuccess}
               handleGoToCart={handleGoToCart}
-              onOpenReviewDialog={submitReviewToggle} // Pass handler function
+              onOpenReviewDialog={submitReviewToggle} 
             />
           </div>
           <div className="reviews_section">
@@ -266,7 +266,7 @@ const ProductDetails = () => {
             <DialogTitle>Submit Review</DialogTitle>
             <DialogContent>
               <Rating
-                onChange={(e, newValue) => setRating(newValue)}
+                onChange={(newValue) => setRating(newValue)}
                 value={rating}
                 size="large"
               />

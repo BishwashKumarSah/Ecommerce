@@ -80,16 +80,12 @@
 
 .price>p {
     font-size: 1.5rem;
-
-    /* Align text to the end by default */
 }
 
 .cart_subtotal_price {
     text-align: end;
 }
 
-
-/* By default, hide the sub_total */
 .sub_total {
     display: none;
 }
@@ -107,7 +103,6 @@
     justify-content: end;
     margin-bottom: 1rem;
     min-width: 100%;
-
 }
 
 .checkOutBtn {
@@ -276,7 +271,7 @@
         margin-bottom: 5px;
         min-height: 50px;
     }
-
+    
     .checkOutBtn {
         grid-column: 1 / 2;
     }

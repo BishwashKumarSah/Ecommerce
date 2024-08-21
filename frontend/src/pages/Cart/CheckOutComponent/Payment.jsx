@@ -21,7 +21,6 @@ import { createNewOrder } from "../../../store/orderSlice";
 const Payment = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-
   const stripe = useStripe();
   const elements = useElements();
   const paymentBtn = useRef(null);

@@ -164,11 +164,7 @@
     .confirm_order_page>div {
         padding: 10px;
     }
-
-    /* .shipping_item_card img {
-        width: 100%;
-    } */
-
+ 
     .shipping_item_card .item_details {
         font-size: 0.85rem;
     }
@@ -176,7 +172,6 @@
     .charges>div {
         font-size: 0.9rem;
     }
-
     .checkOut_btn {
         padding: 8px 16px;
         font-size: 0.9rem;

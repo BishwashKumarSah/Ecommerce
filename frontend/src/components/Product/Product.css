@@ -9,8 +9,7 @@
     width: 100%;
     overflow: hidden;
     text-overflow: ellipsis;
-    white-space: nowrap;    
-
+    white-space: nowrap;  
 }
 
 .card-content>.product_price {
@@ -19,11 +18,8 @@
 }
 
 .product-image {
-    width: 100%;
-    /* aspect-ratio: 500/100; */
-    height: clamp(15rem, 18vw + 1rem, 25rem);
-
-    /* height: auto; */
+    width: 100%; 
+    height: clamp(15rem, 18vw + 1rem, 25rem);  
 }
 
 .product-image>img {

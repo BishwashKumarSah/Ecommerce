@@ -12,8 +12,8 @@ const generateToken = (user, res, statusCode) => {
         expires: new Date(Date.now() + process.env.COOKIE_EXPIRE * 24 * 60 * 60 * 1000),
         httpOnly: true,
         sameSite: 'Lax',
-        // secure: process.env.NODE_ENV === 'production' // Set to true if using HTTPS
-        secure: false, // Set to true if using HTTPS i
+        secure: process.env.NODE_ENV === 'production' // Set to true if using HTTPS
+        // secure: false, // Set to true if using HTTPS i
     }
 
     res.status(statusCode).cookie('token', token, options).json({

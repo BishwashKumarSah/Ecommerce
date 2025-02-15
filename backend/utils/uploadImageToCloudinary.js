@@ -3,9 +3,8 @@ const ErrorHandler = require('./errorHandle');
 
 const uploadFileToCloudinary = async (req, res, next) => {
     let avatar = {};
-    if (!req.body.avatar) {
-        return null; // Return null if no file is provided
-    }
+    // console.log("avatar", req.body.avatar);
+    
     try {
         const myCloud = await cloudinary.v2.uploader.upload(req.body.avatar, {
             folder: 'avatars',
@@ -16,6 +15,7 @@ const uploadFileToCloudinary = async (req, res, next) => {
             public_id: myCloud.public_id,
             url: myCloud.secure_url,
         };
+        // console.log({ avatar });
 
     } catch (error) {
 

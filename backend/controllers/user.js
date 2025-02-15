@@ -10,19 +10,27 @@ const { uploadFileToCloudinary } = require('../utils/uploadImageToCloudinary')
 
 // Register User
 const registerUser = asyncHandler(async (req, res, next) => {
-    const { name, email, password } = req.body;
+    const { name, email, password, avatar } = req.body;
 
-    const avatar = await uploadFileToCloudinary(req, res, next)
-
+    let avatarResult = { public_id: "avatars/abm7czrmbnaphrvdfb9j", url: "https://res.cloudinary.com/dc42s3jrj/image/upload/v1739601345/avatars/abm7czrmbnaphrvdfb9j.avif" };
+    if (avatar !== "undefined") {
+        avatarResult = await uploadFileToCloudinary(req, res, next);
+    }
+    // console.log({ avatarResult });
     const user = await User.create({
         name,
         email,
         password,
-        avatar
+        avatar: avatarResult
     });
-
-    generateToken(user, res, 201)
-
+    if (user) {
+        // console.log("inside user...");
+        generateToken(user, res, 201)
+    }
+    else {
+        // console.log("error register");
+        return next(new ErrorHandler("Unauthorized", 401))
+    }
 })
 
 // Login User

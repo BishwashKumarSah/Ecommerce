@@ -1,6 +1,10 @@
 
 Hi! My name is **Bishwash Kumar Sah**, I have build this app using MERN stack and REDUX Toolkit.
 
+use this credential if you dont want to create a new account:
+email: demoadmin@gmail.com
+password: demoadminpassword
+
 # Install Dependencies
 
 **For Backend** - `npm i`

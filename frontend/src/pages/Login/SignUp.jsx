@@ -35,7 +35,7 @@ const SignUp = ({
   const [confirmPassword, setConfirmPassword] = useState("");
 
   const handleSignUpDataChange = (e) => {
-    if (e.target.name === "avatar") {
+    if (e.target.name === "avatar" && e.target.files.length > 0) {
       const file = e.target.files[0];
 
       const fileReader = new FileReader();

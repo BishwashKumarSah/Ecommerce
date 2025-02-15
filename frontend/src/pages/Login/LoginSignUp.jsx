@@ -63,8 +63,6 @@ const LoginSignUp = () => {
     dispatch(setUserLogin(loginEmail, loginPassword));
   };
 
- 
-
   useEffect(() => {
     if (status === STATUSES.IDLE && isAuthenticated === true) {
       navigate(`/${redirect}`);
@@ -110,7 +108,9 @@ const LoginSignUp = () => {
                     />
                     <LockOpenIcon className="login_signUp_logo" />
                   </div>
-                  <Link className="forgot_password">Forgot Password?</Link>
+                  <Link to="/password/forgot" className="forgot_password">
+                    Forgot Password?
+                  </Link>
                   <button className="login_btn" type="submit">
                     Login
                   </button>

@@ -37,6 +37,11 @@ const Header = () => {
         const response = await axios.get(
           `https://ecommerce-3r9r.onrender.com/api/v1/products?search=${encodeURIComponent(searchValue)}`
         );
+        const response2 = await axios.get(
+          `https://ecommerce-3r9r.onrender.com/api/v1/products?search=${searchValue}`
+        );
+        console.log('response',response)
+        console.log('response',response2)
         if (response.data?.data?.length > 0) {
           navigate(`/products?search=${searchValue}`);
         } else {

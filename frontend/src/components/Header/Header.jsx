@@ -33,12 +33,18 @@ const Header = () => {
     if (searchValue === "") {
       return;
     } else {
-      const response = await axios.get(
-        `/api/v1/products?search=${searchValue}`
-      );
-      if (response.data?.data?.length > 0) {
-        navigate(`/products?search=${searchValue}`);
-      } else {
+      try {
+        const response = await axios.get(
+          `https://ecommerce-3r9r.onrender.com/api/v1/products?search=${encodeURIComponent(searchValue)}`
+        );
+        if (response.data?.data?.length > 0) {
+          navigate(`/products?search=${searchValue}`);
+        } else {
+          navigate(`/products`);
+        }
+      } catch (error) {
+        console.error("Error fetching products:", error);
+        // Optionally, you can navigate to a fallback page or show a notification
         navigate(`/products`);
       }
     }

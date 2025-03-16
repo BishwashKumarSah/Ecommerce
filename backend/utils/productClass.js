@@ -1,5 +1,7 @@
+// here is the explanation https://chatgpt.com/share/67c87f7b-0dc0-8003-9d34-2e86a5796814
 class ProductClass {
     constructor(query, queryObj) {
+        // console.log('queryyyyyyyyyyyyyyyyyyy', query)
         this.query = query;
         this.queryObj = queryObj
     }
@@ -38,7 +40,7 @@ class ProductClass {
         // The reason we are returning this is because we can want to chain .sort().filter().search().
         //  since all of them are the methods of ProductClass so we can only use it on instance of ProductClass ie. const query = new ProductClass(Product.find(), req.query).search();
         // here  query is an instance of  new ProductClass. without this we cannot chain methods.
-
+        // console.log("searchThis", this)
         return this;
     }
 
@@ -50,9 +52,10 @@ class ProductClass {
         })
         queryObjCopy = JSON.stringify(queryObjCopy);
         queryObjCopy = queryObjCopy.replace(/\b(gt|gte|lt|lte)\b/g, (match) => `$${match}`)
-        
+
 
         this.query = this.query.find(JSON.parse(queryObjCopy));
+        // console.log("filterThiss", this)
         return this
     }
 
@@ -60,6 +63,7 @@ class ProductClass {
         const currentPage = this.queryObj.page || 1;
         const skip = resultPerPage * (currentPage - 1)
         this.query = this.query.limit(resultPerPage).skip(skip)
+        // console.log("paginationThis", this)
         return this
     }
 
